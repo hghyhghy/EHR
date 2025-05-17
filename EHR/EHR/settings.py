@@ -165,4 +165,5 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
+    # commented out this one cuz it will add authentication in all enspoint like login/register etc 
 }
