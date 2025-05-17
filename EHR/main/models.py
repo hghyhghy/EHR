@@ -8,6 +8,7 @@ class UserProfile(models.Model):
         ('O', 'Other'),
     ]
 
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     username = models.CharField(max_length=150)  # copy from User
     email = models.EmailField()                  # copy from User
@@ -19,3 +20,21 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.email
+
+class  FamilyMember(models.Model):
+    # each family member is pointing back to the parent user who created them
+    parent_user =  models.ForeignKey(User,on_delete=models.CASCADE,related_name='faamily_members')
+    # making each family member a unique user 
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='family_profile')
+
+    username=models.CharField(max_length=100)
+    email=models.EmailField()
+    password = models.CharField(max_length=120)
+
+    dob= models.DateField(verbose_name="Date of Birth")
+    gender = models.CharField(max_length=1 , choices=UserProfile.GENDER_CHOICES)
+    phone_number =  models.CharField(max_length=15)
+    created_at= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.username} is the family member of {self.parent_user.username}"
