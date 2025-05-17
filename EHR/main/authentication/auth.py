@@ -21,7 +21,7 @@ def register_user(request):
     data = request.data
     print("Received data:", data)  # debug
 
-    required_fields = ['username', 'name', 'email', 'gender', 'dob', 'phone_number', 'password']
+    required_fields = ['username',  'email', 'gender', 'dob', 'phone_number', 'password']
         
     for field in required_fields:
         if not data.get(field):
@@ -40,6 +40,9 @@ def register_user(request):
             )
             profile = UserProfile.objects.create(
                 user=user,
+                username=user.username,
+                email=user.email,
+                password=user.password,
                 dob=dob_value,
                 gender=data['gender'],
                 phone_number=data['phone_number']
