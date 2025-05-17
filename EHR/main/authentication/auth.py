@@ -8,9 +8,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models  import  User
 from  django.contrib.auth  import  login,logout,authenticate
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.csrf import csrf_exempt
 from django.db import  transaction
 from datetime import datetime
+import  json
+from django.http import JsonResponse
 
 @csrf_exempt
 @api_view(['POST'])
@@ -60,23 +61,24 @@ def register_user(request):
 @csrf_exempt
 @api_view(['POST'])
 def login_user(request):
-    try:
-        username = request.data.get('username')
-        password = request.data.get('password')
+    data = request.data
+    username = data.get('username')
+    password = data.get('password')
 
-        if not username or not password:
-            return Response({'error': 'Username and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+    if not username or not password:
+        return Response({'error': 'Username and password required'}, status=status.HTTP_400_BAD_REQUEST)
 
-        user = authenticate(request,username=username, password=password)
+    user = authenticate(username=username, password=password)
 
-        if user is not None:
-            login(request, user)
-            return Response({'message': 'Login successful'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-    except Exception as e:
-        # This will show you the error message instead of a blank 500 page
-        return Response({'error': f'Internal Server Error: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    if user is not None:
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'message': 'Login successful',
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        })
+    else:
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 @csrf_exempt
 @api_view(['POST'])
