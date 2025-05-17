@@ -13,4 +13,5 @@ urlpatterns = [
 
     #endpoint for edit  family members 
     path('edit-family-member/<int:member_id>/', edit_family_members, name='edit_family_member'),
+    # 
 ]
