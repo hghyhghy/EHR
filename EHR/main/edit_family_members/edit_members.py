@@ -56,6 +56,3 @@ def edit_family_members(request,member_id):
         traceback.print_exc()
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
-        # TOKEN=$(curl -s -X POST http://127.0.0.1:8000/login/ \
-    #     -H "Content-Type: application/json" \
-    #  -d '{"username": "subham sarkar", "password": "s123"}' | jq -r '.access')
