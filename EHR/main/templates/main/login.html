@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="card1">
+  <h2>Login</h2>
+  <form onsubmit="handleLogin(event)">
+    <div style=" display: flex ;flex-direction:row ;gap:2rem">
+        <h2 style=" font-size:15px ; color:black">Username</h2>
+        <input type="text" id="username" placeholder="Enter your username" required style="width:70rem">
+    </div>
+    <div style=" display: flex ;flex-direction:row ;gap:2rem" >
+        <h2 style=" font-size:15px; color:black"> Password </h2>
+
+        <input type="password" id="password" placeholder="Enter your password" required>
+    </div>
+    <div class="link">
+      <a href="{% url 'register' %}">Register Instead</a>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  async function handleLogin(event) {
+    event.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const response = await fetch("/api/login/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem("access", data.access);
+      localStorage.setItem("refresh", data.refresh);
+      alert("Login successful");
+      // Redirect or update UI
+    } else {
+      alert("Login failed: " + (data.detail || "Invalid credentials"));
+    }
+  }
+</script>
+{% endblock %}

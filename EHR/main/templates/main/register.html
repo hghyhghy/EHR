@@ -1,0 +1,86 @@
+
+{% extends "main/base.html" %}
+{% block  title %}Register {% endblock  %}
+
+{% block content %}
+
+<div class="card1">
+
+    <h2>
+        Register
+    </h2>
+    <form 
+    onsubmit="handleregister(event)"
+    >
+    <div  style=" display: flex ;flex-direction:row ;gap:2rem">
+        <h2 style=" font-size:15px ; color:black">Username</h2>
+
+        <input type="text" id="username" placeholder="Enter Your name" required>
+    </div>
+    <div  style=" display: flex ;flex-direction:row ;gap:2rem">
+        <h2 style=" font-size:15px ; color:black">Email</h2>
+
+        <input type="email"id="email" placeholder="Enter Your email" required style="margin-left:2rem">
+    </div>
+
+    <div  style=" display: flex ;flex-direction:row ;gap:2rem">
+        <h2 style=" font-size:15px ; color:black">Password</h2>
+
+        <input type="password"  id="password" placeholder="Enter Your password" required>
+    </div>
+    <div style=" display: flex ;flex-direction:row ;gap:2rem">
+        <h2 style=" font-size:15px ; color:black">Phone</h2>
+
+        <input type="text" id="phoen_number" placeholder="Enter Your Phone number" required style="margin-left:1.5rem">
+    </div>
+    <div class="link">
+            <a href="{% url "login" %}">Login Instead</a>
+
+    </div>
+    <div class='half' style="margin-left:3rem">
+        <input type="date" id="dob" required>
+        <select  id="gender" required>
+
+        <option value="">Select Gender</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+
+        </select>
+    </div>
+
+    <button type="submit">REgister</button>
+    </form>
+
+</div>
+{% endblock  %}
+{% block script %}
+    <script>
+
+async function handleRegister(event) {
+    event.preventDefault();
+    const data = {
+      username: document.getElementById("username").value,
+      email: document.getElementById("email").value,
+      dob: document.getElementById("dob").value,
+      gender: document.getElementById("gender").value,
+      password: document.getElementById("password").value,
+      phone_number: document.getElementById("phone_number").value
+    };
+
+    const response = await fetch("/api/register/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert("Registration successful");
+      window.location.href = "/login/";
+    } else {
+      alert("Registration failed: " + JSON.stringify(result));
+    }
+  }
+</script>
+    </script>
+{% endblock %}
