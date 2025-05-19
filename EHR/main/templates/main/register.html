@@ -10,9 +10,9 @@
     <h2>
         Register
     </h2>
-    <form 
-    onsubmit="handleRegister(event)"
-    method = "post">
+<form id="register-form">
+
+
     <div  style=" display: flex ;flex-direction:row ;gap:2rem">
         <h2 style=" font-size:15px ; color:black">Username</h2>
 
@@ -50,13 +50,12 @@
 
     </div>
 
-    <button type="submit">REgister</button>
+    <button type="submit">Register</button>
     </form>
 
 </div>
 {% endblock  %}
 {% block script %}
-  <script
-  src="{% static 'main/register.js' %}"
-  ></script>
+<script src="{% static 'main/register.js' %}"></script>
+
 {% endblock %}

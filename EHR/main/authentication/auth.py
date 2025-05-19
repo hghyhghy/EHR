@@ -36,7 +36,11 @@ def register_user(request):
             user = User.objects.create_user(
                 username=data['username'],
                 email=data['email'],
-                password=make_password(data['password'])
+                password=data['password']
+                #create_user() already hashes the password internally. Manually calling make_password() here will double-hash the password, so the password stored won't match the plain text password during authenticate(). that hwy when we call the 
+                #login then it called the double hashed password leading to the unauthorized error .. fixed 
+
+
             )
             profile = UserProfile.objects.create(
                 user=user,

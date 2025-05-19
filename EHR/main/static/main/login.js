@@ -1,28 +1,30 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("login-form");
+    if (form) {
+        form.addEventListener("submit", handleLogin);
+    }
+});
 
-async function handleLogin(event) 
-    
-{
+async function handleLogin(event) {
+    event.preventDefault();
 
-    event.preventDefault()
-    const username  =  document.getElementById('username').value
-    const password  =  document.getElementById('password').value
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-
-    const response=  await  fetch("/api/login/",{
-        method:'POST',
-        headers:{
-             "Content-Type": "application/json"
+    const response = await fetch("/api/login/", {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
         },
-        body:JSON.stringify({username,password})
+        body: JSON.stringify({ username, password })
     });
 
-    const data  =  await  response.json()
-    if (response.ok){
-        localStorage.setItem('access',data.access)
-        localStorage.setItem('refresh',data.refresh)
-        alert('login successful')
-        window.location.href = "/user_details/"
-    } else{
-        alert('login failed')
+    const data = await response.json();
+    if (response.ok) {
+        localStorage.setItem('access', data.access);
+        localStorage.setItem('refresh', data.refresh);
+        window.location.href = "/user_details/";
+    } else {
+        alert('login failed: ' + JSON.stringify(data));
     }
 }
