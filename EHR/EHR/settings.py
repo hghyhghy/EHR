@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
-
+from  datetime  import  timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,12 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&k_3x)rzl&6+xf#xc8*z!dn*$o75-^&($ij*4awwh@m*-9qbt7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
+STATIC_URL = '/static/'
 
-
+STATICFILES_DIRS = [
+    BASE_DIR / 'main' / 'static' / 'main',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -166,4 +170,9 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
     # commented out this one cuz it will add authentication in all enspoint like login/register etc 
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1440),
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
