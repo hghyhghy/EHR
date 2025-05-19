@@ -21,7 +21,7 @@ async function handleLogin(event)
         localStorage.setItem('access',data.access)
         localStorage.setItem('refresh',data.refresh)
         alert('login successful')
-        window.location.href = "/"
+        window.location.href = "/user_details/"
     } else{
         alert('login failed')
     }

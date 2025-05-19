@@ -5,8 +5,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.views.decorators.csrf import  csrf_exempt
-from get_user_details.serailizers import  Userprofileserializers,Familymemberserializers
+from ..get_user_details.serailizers import  Userprofileserializers,Familymemberserializers
 from  ..models  import  UserProfile,FamilyMember
+
 @csrf_exempt
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -19,7 +20,7 @@ def get_user_profile(request):
         profile_data =  Userprofileserializers(profile).data
 
         family_profile =  FamilyMember.objects.filter(parent_user =  user)
-        family_data =  Familymemberserializers(family_profile).data
+        family_data =  Familymemberserializers(family_profile,many=True).data
 
         return  Response(
             {

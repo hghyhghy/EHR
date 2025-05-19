@@ -5,7 +5,7 @@ from main.add_family_member.add_member import add_family_members
 from main.edit_family_members.edit_members import edit_family_members
 from main.delete_family_members.delete_members import delete_family_members
 from  django.views.generic import  TemplateView
-from  get_user_details.get_details import get_user_profile
+from  main.get_user_details.get_details import get_user_profile
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
     path('login/', TemplateView.as_view(template_name='main/login.html'), name='login'),
@@ -21,6 +21,7 @@ urlpatterns = [
     path('delete-family-member/<int:member_id>/', delete_family_members, name='delete_family_member'),
 
     # endpoint for the userprofile 
+    path('user_details/',TemplateView.as_view(template_name='main/user_details.html'),name='user_details'),
     path('api/user-details/', get_user_profile, name='get_user_details'),
 
 ]

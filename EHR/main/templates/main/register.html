@@ -34,11 +34,8 @@
 
         <input type="text" id="phoen_number" placeholder="Enter Your Phone number" required style="margin-left:1.5rem">
     </div>
-    <div class="link">
-            <a href="{% url "login" %}">Login Instead</a>
 
-    </div>
-    <div class='half' style="margin-left:3rem">
+    <div class='half' style="margin-left:6rem">
         <input type="date" id="dob" required>
         <select  id="gender" required>
 
@@ -47,6 +44,10 @@
         <option value="F">Female</option>
 
         </select>
+    </div>
+        <div class="link" style="margin-top:0.5rem">
+            <a href="{% url "login" %}">Already have acount ?Login Instead</a>
+
     </div>
 
     <button type="submit">REgister</button>

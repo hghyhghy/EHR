@@ -1,0 +1,142 @@
+#header {
+    background-color: #4d94e5;
+    height: 4rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    padding-top: 5rem;
+}
+
+#header1 {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1rem;
+    column-gap: 2rem;
+    color: azure;
+    font-weight: 100;
+    font-size: 20px;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+
+
+#add_member {
+    background-color:#13539d;
+    height: 4rem;
+    margin-left: 4rem;
+}
+
+#add_member:hover {
+    background-color: #093b73;
+    transform: translateY(-2px);
+}
+#profile-card {
+    background: linear-gradient(145deg, #e6f2ff, #ffffff);
+    padding: 24px;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    max-width: 25rem;
+}
+
+#profile-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+#profile-card .avatar {
+    background-color: #cce0ff;
+    color: #0a4588;
+    font-size: 2.25rem;
+    font-weight: 600;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+}
+
+#profile-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+#profile-card p {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+#profile-card a {
+    font-size: 0.875rem;
+    color: #2563eb;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+#profile-card a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+#user-info-card {
+    /* box-shadow: 0 4px 12px rgba(0,0,0,0.06); */
+    padding: 1rem 1rem;
+    width: 100%;
+    max-width: 28rem;
+
+    /* Center it horizontally */
+    margin: 1rem auto 1rem auto; /* Top margin pushes below header */
+    text-align: center;
+}
+
+#user-info-card p {
+  margin: 0;
+  color: #3c4149;
+}
+
+#user-info-card p + p {
+  margin-top: 0.25rem; /* small space between the two paragraphs */
+}
+
+#user-info-card #user-username {
+  color: #050506;
+  font-size: 1.9rem;
+  font-weight: bold;
+}
+
+#user-info-card #user-email {
+  color: #9ca3af;
+  font-size: 1rem;
+  margin-bottom: 2rem; /* or less, depending on your layout needs */
+  top: 2rem;
+  margin-right: 3.8rem;
+}
+
+#user-info-card .user-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  /* Or center it above, if you want */
+  text-align: center;
+  width: 100%;
+}
