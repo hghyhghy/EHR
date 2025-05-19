@@ -1,15 +1,15 @@
 
-async function handeRegister(event) {
+async function handleRegister(event) {
 
     event.preventDefault()
     const data = {
 
-        username:document.getElementById('username').value(),
-        email:document.getElementById('email').value(),
-        dob:document.getElementById('dob').value(),
-        password:document.getElementById('password').value(),
-        gender:document.getElementById('gender').value(),
-        phone_number:document.getElementById('phone_number').value(),
+        username:document.getElementById('username').value,
+        email:document.getElementById('email').value,
+        dob:document.getElementById('dob').value,
+        password:document.getElementById('password').value,
+        gender:document.getElementById('gender').value,
+        phone_number:document.getElementById('phone_number').value,
     }
 
     const response  =  await  fetch("/api/register/",

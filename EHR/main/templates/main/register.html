@@ -11,33 +11,33 @@
         Register
     </h2>
     <form 
-    onsubmit="handleregister(event)"
-    >
+    onsubmit="handleRegister(event)"
+    method = "post">
     <div  style=" display: flex ;flex-direction:row ;gap:2rem">
         <h2 style=" font-size:15px ; color:black">Username</h2>
 
-        <input type="text" id="username" placeholder="Enter Your name" required>
+        <input type="text"  name = "username" id="username" placeholder="Enter Your name" required>
     </div>
     <div  style=" display: flex ;flex-direction:row ;gap:2rem">
         <h2 style=" font-size:15px ; color:black">Email</h2>
 
-        <input type="email"id="email" placeholder="Enter Your email" required style="margin-left:2rem">
+        <input type="email" id="email" name = "email" placeholder="Enter Your email" required style="margin-left:2rem">
     </div>
 
     <div  style=" display: flex ;flex-direction:row ;gap:2rem">
         <h2 style=" font-size:15px ; color:black">Password</h2>
 
-        <input type="password"  id="password" placeholder="Enter Your password" required>
+        <input type="password"  id="password" name ="password" placeholder="Enter Your password" required>
     </div>
     <div style=" display: flex ;flex-direction:row ;gap:2rem">
         <h2 style=" font-size:15px ; color:black">Phone</h2>
 
-        <input type="text" id="phoen_number" placeholder="Enter Your Phone number" required style="margin-left:1.5rem">
+        <input type="text" id="phone_number" name ="phone_number" placeholder="Enter Your Phone number" required style="margin-left:1.5rem">
     </div>
 
     <div class='half' style="margin-left:6rem">
         <input type="date" id="dob" required>
-        <select  id="gender" required>
+        <select  id="gender" name ="gender" required>
 
         <option value="">Select Gender</option>
         <option value="M">Male</option>
@@ -46,7 +46,7 @@
         </select>
     </div>
         <div class="link" style="margin-top:0.5rem">
-            <a href="{% url "login" %}">Already have acount ?Login Instead</a>
+            <a href="{% url "login" %}">Already have account ?Login Instead</a>
 
     </div>
 

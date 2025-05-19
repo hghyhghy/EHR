@@ -12,13 +12,12 @@ from django.db import  transaction
 from datetime import datetime
 import  json
 from django.http import JsonResponse
+from datetime import datetime
+import logging
 
 @csrf_exempt
 @api_view(['POST'])
 def register_user(request):
-    from datetime import datetime
-    import logging
-
     data = request.data
     print("Received data:", data)  # debug
 
@@ -34,7 +33,7 @@ def register_user(request):
         print("Parsed DOB:", dob_value)
 
         with transaction.atomic():
-            user = User.objects.create(
+            user = User.objects.create_user(
                 username=data['username'],
                 email=data['email'],
                 password=make_password(data['password'])
