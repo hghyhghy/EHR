@@ -140,3 +140,36 @@
   text-align: center;
   width: 100%;
 }
+
+.button-group {
+  display: flex  !important;
+  gap: 0.5rem !important; /* space between buttons */
+}
+
+.button-group button {
+  padding: 0.25rem 0.5rem; /* smaller padding */
+  font-size: 0.875rem; /* smaller font size */
+  /* no rounded corners */
+  border: 1px solid transparent; /* base border */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-group .delete-btn {
+  background-color: #616bde; /* Tailwind red-500 */
+  border-color: #a4add6;
+  padding: 1rem;
+  border-radius: 7px;
+  
+}
+
+
+
+.button-group .edit-btn {
+  color: #3b82f6; /* Tailwind blue-500 */
+  border-color: #3b82f6;
+  background-color: transparent;
+  border-radius: 7px;
+}
+
+

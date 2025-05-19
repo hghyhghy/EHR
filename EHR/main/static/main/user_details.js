@@ -41,9 +41,16 @@ document.addEventListener('DOMContentLoaded',async() =>  {
         <td class="px-6 py-4">${member.dob || '-'}</td>
         <td class="px-6 py-4">${member.gender || '-'}</td>
         <td class="px-6 py-4">${member.phone_number || '-'}</td>
-        <button class="delete-btn text-red-500 hover:underline" data-member-id = "${member.id}">
-                    Delete 
-        </button>
+<td class="button-group">
+  <button class="delete-btn" data-member-id = "${member.id}">
+    Delete
+  </button>
+  <button class="edit-btn" data-member-id = "${member.id}">
+    Edit
+  </button>
+</td>
+
+
         `;
         tbody.appendChild(row)
     }); 
