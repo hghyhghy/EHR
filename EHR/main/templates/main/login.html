@@ -4,21 +4,21 @@
 {% block content %}
 <div class="card1">
   <h2>Login</h2>
-  <form id="login-form">
+  <form id="login-form" method = "post">
 
     <div style=" display: flex ;flex-direction:row ;gap:2rem">
         <h2 style=" font-size:15px ; color:black">Username</h2>
-        <input type="text" id="username" placeholder="Enter your username" required style="width:70rem">
+        <input type="text" id="username" name = "username" placeholder="Enter your username" required style="width:70rem">
     </div>
     <div style=" display: flex ;flex-direction:row ;gap:2rem" >
         <h2 style=" font-size:15px; color:black"> Password </h2>
 
-        <input type="password" id="password" placeholder="Enter your password" required>
+        <input type="password" id="password" name = "password" placeholder="Enter your password" required>
     </div>
     <div class="link">
       <a href="{% url 'register' %}">Dont have an account Register </a>
     </div>
-    <button type="submit">Login</button>
+    <button type="submit" class = "submit">Login</button>
   </form>
 </div>
 {% endblock %}
