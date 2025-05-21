@@ -70,4 +70,9 @@ document.addEventListener('click', function (e) {
                 });
         }
     }
+
+    if (e.target.classList.contains('edit-btn')){
+        const memberId =  e.target.getAttribute('data-member-id')
+        window.location.href = `/edit_family_member/${memberId}`
+    }
 });

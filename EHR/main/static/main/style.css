@@ -339,3 +339,16 @@ body {
   font-size: small;
   border-radius: 4px;
 }
+.edit_family_member_button{
+  width: 100px;
+  border-radius: 5px;
+  font-size:medium;
+  font-weight: 100;
+}
+.class_name_to_show{
+  font-weight:400;
+  font-size: large;
+}
+.edit_class_show{
+  font-weight: 600;
+}
