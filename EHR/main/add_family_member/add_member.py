@@ -12,11 +12,10 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
 
-@csrf_exempt
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
-def add_family_members(request):
+def add_family_member(request):
     data =  request.data
     required_fields  = ['username','email','dob','gender','phone_number','password']
 

@@ -1,85 +1,73 @@
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('access');
 
-document.addEventListener('DOMContentLoaded',async() =>  {
-    const token  =  localStorage.getItem('access')
-
-    const response =  await  fetch('/api/user-details/',{
-        method:'GET',
-        headers:{
-                  "Authorization": `Bearer ${token}`,
-         "Accept": "application/json"
+    const response = await fetch('/api/user-details/', {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json"
         }
     });
 
-    const data =  await  response.json()
-    // rendering the profile page 
+    const data = await response.json();
 
-    const profile =  data.profile
-    const profileCard =  document.getElementById('profile-card');
-    profileCard.innerHTML =  
-    `
-    <div class="profile-card">
+    // Render user profile
+    const profile = data.profile;
+    document.getElementById('user-username').textContent = profile.username;
+    // Add more fields if needed...
 
-      <p><strong>Username:</strong> ${profile.username}</p>
-      <p><strong>Email:</strong> ${profile.email}</p>
-      <p><strong>DOB:</strong> ${profile.dob}</p>
-      <p><strong>Gender:</strong> ${profile.gender}</p>
-      <p><strong>Phone:</strong> ${profile.phone_number}</p>
-    </div>
-    `;
+    // Render family members in flex layout
+    const familyBody = document.getElementById('family-body');
+    familyBody.innerHTML = ''; // clear placeholder
 
-    document.getElementById('user-username').textContent = profile.username
-    document.getElementById('user-email').textContent = profile.email
+    data.family.forEach((member,index) => {
+        const row = document.createElement('div');
+        row.className = 'family-row';
+        row.setAttribute('data-member-id', member.id); // useful for deletion
 
-
-    // rendering the family table
-    const tbody  = document.querySelector("#family-table tbody")
-    data.family.forEach(member => {
-        const row =  document.createElement('tr')
         row.innerHTML = `
-        <td class="px-6 py-4">${member.username}</td>
-        <td class="px-6 py-4">${member.email}</td>
-        <td class="px-6 py-4">${member.dob || '-'}</td>
-        <td class="px-6 py-4">${member.gender || '-'}</td>
-        <td class="px-6 py-4">${member.phone_number || '-'}</td>
-<td class="button-group">
-  <button class="delete-btn" data-member-id = "${member.id}">
-    Delete
-  </button>
-  <button class="edit-btn" data-member-id = "${member.id}">
-    Edit
-  </button>
-</td>
-
+            <div class="family-cell">${index + 1}</div> 
+            <div class="family-cell">${member.username}</div>
+            <div class="family-cell">${member.email}</div>
+            <div class="family-cell" style="margin-left:3rem">${member.dob || '-'}</div>
+            <div class="family-cell" style="margin-left:2rem">${member.gender || '-'}</div>
+            <div class="family-cell">
+                <div class="button-group">
+                    <button class="delete-btn" data-member-id="${member.id}">Delete</button>
+                    <button class="edit-btn" data-member-id="${member.id}">Edit</button>
+                </div>
+            </div>
 
         `;
-        tbody.appendChild(row)
-    }); 
-})
 
-document.addEventListener('click', function(e){
-    if (e.target.classList.contains('delete-btn')){
-        const memberId =  e.target.getAttribute('data-member-id');
-        if (confirm("Are you sure you want to delete this memeber")){
+        familyBody.appendChild(row);
+    });
+});
+
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('delete-btn')) {
+        const memberId = e.target.getAttribute('data-member-id');
+        if (confirm("Are you sure you want to delete this member?")) {
             fetch(`/delete-family-member/${memberId}/`, {
-                method:'DELETE',
-                headers:{
+                method: 'DELETE',
+                headers: {
                     "Authorization": `Bearer ${localStorage.getItem("access")}`,
                     "Content-Type": "application/json"
                 }
             })
-            .then(res =>  res.json())
-            .then(data =>  {
-                if (data.message){
-                    e.target.closest('tr').remove();
-                    alert('Family member removed successfully')
-                } else{
-                    alert('Error removing the member')
-                }
-            })
-            .catch(err =>  {
-                console.error("Failed to delete member", err);
-                alert("An error occurred.");
-            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        document.querySelector(`.family-row[data-member-id="${memberId}"]`).remove();
+                        alert('Family member removed successfully');
+                    } else {
+                        alert('Error removing the member');
+                    }
+                })
+                .catch(err => {
+                    console.error("Failed to delete member", err);
+                    alert("An error occurred.");
+                });
         }
     }
-})
+});

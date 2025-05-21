@@ -1,77 +1,131 @@
+
+.user_details_section{
+  width: 100rem;
+  padding: 5rem;
+  background-color:  rgb(241, 235, 235);
+  min-height: 100vh;
+  padding-top: 4rem;
+  margin-left: 200px;
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+/* .sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 200px;
+  background-color: #1f2937;
+  z-index: 100;
+} */
+/* 
 #header {
-    background-color: #4d94e5;
-    height: 4rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 200px;
+  top: 0;
+  width: calc(100% - 200px);
+  background-color: #1f2937;
+} */
+
+
+.sidebar {
+  width: 200px;
+  background-color: #1f2937;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 20px;
+  display: flex;
+  flex-flow: column;
+  column-gap: 20px;
+}
+.sidebar h2 {
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+
+}
+.sidebar a {
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.sidebar a:hover {
+  background-color: #374151;
+}
+.sidebar svg {
+  margin-right: 10px;
+}
+#family_table {
+  width: 30rem;
 }
 
-.container {
-    padding-top: 5rem;
-}
 
-#header1 {
+
+
+
+/* #header {
+  background-color: #1f2937;
+  height: 4rem;
+  position: fixed;
+  top: 0;
+  left: 200px;
+  width: calc(100% - 200px);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+} */
+
+
+
+
+/* #header1 {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-right: 1rem;
     column-gap: 2rem;
-    color: azure;
+    color: rgb(213, 230, 230);
     font-weight: 100;
     font-size: 20px;
     margin-right: 2rem;
     cursor: pointer;
-}
+} */
 
 
 
-#add_member {
-    background-color:#13539d;
-    height: 4rem;
-    margin-left: 4rem;
-}
 
-#add_member:hover {
-    background-color: #093b73;
-    transform: translateY(-2px);
-}
-#profile-card {
-    background: rgb(236, 247, 247);
+
+/* #profile-card1 {
+    background-color:rgb(255, 255, 255);
     padding: 24px;
     border-radius: 1rem;
     margin-bottom: 2rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    width: 100%;
-    max-width: 25rem;
-}
+    width:50rem;
+} */
 
-#profile-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-}
 
-#profile-card .avatar {
-    background-color: #cce0ff;
-    color: #0a4588;
-    font-size: 2.25rem;
-    font-weight: 600;
-    width: 5rem;
-    height: 5rem;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
-}
+    
+/* .container1 {
+  width: 80%;
+  margin: 0 auto;
+  background-color: white;
+} */
+
 
 #profile-card h3 {
     font-size: 1.5rem;
@@ -87,21 +141,17 @@
 
 #profile-card a {
     font-size: 0.875rem;
-    color: #2563eb;
+    color: #e3e6ec;
     font-weight: 500;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-#profile-card a:hover {
-    color: #1d4ed8;
-    text-decoration: underline;
-}
 
 #user-info-card {
     /* box-shadow: 0 4px 12px rgba(0,0,0,0.06); */
     padding: 1rem 1rem;
-    width: 100%;
+    width: 50rem;
     max-width: 28rem;
 
     /* Center it horizontally */
@@ -109,37 +159,10 @@
     text-align: center;
 }
 
-#user-info-card p {
-  margin: 0;
-  color: #3c4149;
-}
 
-#user-info-card p + p {
-  margin-top: 0.25rem; /* small space between the two paragraphs */
-}
 
-#user-info-card #user-username {
-  color: #050506;
-  font-size: 1.9rem;
-  font-weight: bold;
-}
 
-#user-info-card #user-email {
-  color: #9ca3af;
-  font-size: 1rem;
-  margin-bottom: 2rem; /* or less, depending on your layout needs */
-  top: 2rem;
-  margin-right: 3.8rem;
-}
 
-#user-info-card .user-icon {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.5rem;
-  /* Or center it above, if you want */
-  text-align: center;
-  width: 100%;
-}
 
 .button-group {
   display: flex  !important;
@@ -173,3 +196,116 @@
 }
 
 
+/* Header Container */
+
+
+/* Flex layout */
+
+/* Align links to the right */
+.nav-links {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
+}
+
+/* Nav item style */
+.nav-item {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.nav-item:hover {
+  text-decoration: none;
+}
+
+/* Button style (already exists, just for completeness) */
+#add_member {
+  background-color: #e3e7ee;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+#add_member:hover {
+  background-color: #2563eb;
+}
+
+
+
+
+.family-container {
+  position: relative;
+  right: 70px;
+  width: 112%;
+  margin-top: -1rem;
+  font-family: sans-serif;
+  border-radius: 8px; /* Apply visible rounding */
+  background-color: #f9fafb; /* Give it a visible background */
+  border: 1px solid #d1d5db; /* Optional: border to show rounding clearly */
+  overflow: hidden; /* Ensure children don’t break the rounded corners */
+}
+.family-header, .family-row {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #c9cacc;
+  font-size: 14px;
+}
+
+
+.family-header {
+  font-weight: bold;
+  color: #374151; /* gray-800 */
+  background-color: #d8d9db; 
+  font-weight:bold;/* slightly darker for header */
+  color: black;
+}
+
+.family-cell {
+  flex: 1;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem; /* space between buttons */
+}
+
+.button-group button {
+    padding: 6px 12px;
+    background-color: #f3f4f6;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.family-row{
+  background-color: white;
+}
+#family-body{
+  margin-right: 1rem;
+}
+.add-user-button{
+  background-color: rgb(94, 94, 192);
+  width: 109px;
+  border-radius: 4px;
+  position: relative;
+  left: 3rem;
+  font-weight: 700;
+  cursor: pointer;
+  height: 35px;
+  font-size: smaller;
+}
+
+#username_name{
+  position:relative;
+  top: 0.5rem;
+  left: 40rem;
+  width: 230px;
+}

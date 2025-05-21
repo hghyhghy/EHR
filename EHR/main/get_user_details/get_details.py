@@ -8,7 +8,6 @@ from django.views.decorators.csrf import  csrf_exempt
 from ..get_user_details.serailizers import  Userprofileserializers,Familymemberserializers
 from  ..models  import  UserProfile,FamilyMember
 
-@csrf_exempt
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([JWTAuthentication])

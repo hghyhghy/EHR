@@ -2,80 +2,109 @@
 {% load static %}
 {% block content %}
 
-<!-- Fixed Header -->
-<div id="header">
-    <header id="header1">
-        <span class="text-white text-sm font-medium hover:underline">Home</span>
-        <span class="text-white text-sm font-medium hover:underline">Settings</span>
-        <span class="text-white text-sm font-medium hover:underline">Logout</span>
-                    <span>
 
-            <button id='add_member' >
-                 Add  Member
-            </button>
-        </span>
-    </header>
-
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg>
+        Dashboard
+    </a>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        </svg>
+        Users
+    </a>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 2a10 10 0 0 0-7 17.31M12 2a10 10 0 0 1 7 17.31M12 2v20" />
+        </svg>
+        Services
+    </a>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M3 3h18v18H3zM9 3v18M15 3v18M3 9h18M3 15h18" />
+        </svg>
+        Orders
+    </a>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        </svg>
+        Customers
+    </a>
+    <a href={% url "add_family_member" %}>
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        </svg>
+        Add  Member
+    </a>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+        </svg>
+        Logout
+    </a>
 </div>
 
-<!-- Page Content -->
-<div class="container mx-auto px-4 py-8 max-w-5xl bg-gray-50 min-h-screen">
-<div id="user-info-card" class="bg-white shadow rounded-xl p-4 mb-6 border border-gray-100 w-full max-w-lg transition-all hover:shadow-md">
-    <div class="user-icon" style="width: 40px; height: 40px; margin: 0 auto 0.5rem auto;">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#4B5563" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="7" r="4" />
-        <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
-      </svg>
-    </div>
-    <p class="text-gray-700 text-base"><strong></strong> <span id="user-username">Loading...</span></p>
-    <p class="text-gray-300 text-base"><strong></strong> <span id="user-email">Loading...</span></p>
+<div class="user_details_section">
+
+            
+
+    <!-- Page Content -->
+    <div class="container1">
+        <div id="user-info-card" >
+            {% comment %} <div class="user-icon" style="width: 40px; height: 40px; margin: 0 auto 0.5rem auto;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#4B5563" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+                </svg>
+            </div> {% endcomment %} 
+            <div id="username_name">
+
+                <p ><span>Welcome,</span> <strong id="user-username">Loading...</strong></p>
+                <button
+                class="add-user-button"
+                >
+                    + Add User
+                </button>
+            </div>
+        </div>
+
+        <!-- Profile Card -->
+        <div id="profile-card1" >
+            
+
+                {% comment %} <div>
+                    <h3 class="text-xl font-semibold text-gray-800">Loading...</h3>
+                    <p class="text-sm text-gray-500">User details will appear here</p>
+                    <a href="#" class="text-blue-600 text-sm font-medium hover:underline">Edit Profile</a>
+                </div> {% endcomment %}
+            </div>
+        </div>
+
+        <!-- Family Members Section -->
+<div class="family-container">
+  <!-- Header Row -->
+  <div class="family-header">
+    <div class="family-cell">Sl no</div>
+
+    <div class="family-cell">Name</div>
+    <div class="family-cell">Email</div>
+    <div class="family-cell">DOB</div>
+    <div class="family-cell">Gender</div>
+    <div class="family-cell">Actions</div>
+  </div>
+
+  <!-- Data Rows (to be rendered dynamically by JS) -->
+  <div id="family-body">
+
+  </div>
 </div>
 
-
-    <!-- Profile Card -->
-    <div id="profile-card" class="bg-white shadow-lg rounded- 2xl p-6 mb-8 border border-gray-100 transition-all hover:shadow-xl">
-        <div class="flex items-center spafffce-x-6">
-            <div class="avatar">
-                JD
-            </div>
-            <div>
-                <h3 class="text-xl font-semibold text-gray-800">Loading...</h3>
-                <p class="text-sm text-gray-500">User details will appear here</p>
-                <a href="#" class="text-blue-600 text-sm font-medium hover:underline">Edit Profile</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Family Members Section -->
-    <div class="bg-white shadow-lg rounded-2xl p-6 border border-gray-100">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-xl font-semibold text-gray-800">Family Members</h3>
-
-        </div>
-
-        <div class="overflow-x-auto">
-            <table id="family-table" class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50 text-gray-600 text-xs font-semibold uppercase">
-                    <tr>
-                        <th class="px-6 py-3 text-left">Name</th>
-                        <th class="px-6 py-3 text-left">Email</th>
-                        <th class="px-6 py-3 text-left">DOB</th>
-                        <th class="px-6 py-3 text-left">Gender</th>
-                        <th class="px-6 py-3 text-left">Phone</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-100">
-                    <!-- Placeholder until JS loads real data -->
-                    <tr class="animate-pulse">
-                        <td class="px-6 py-4"><div class="h-4 bg-gray-200 rounded w-3/4"></div></td>
-                        <td class="px-6 py-4"><div class="h-4 bg-gray-200 rounded w-3/4"></div></td>
-                        <td class="px-6 py-4"><div class="h-4 bg-gray-200 rounded w-1/2"></div></td>
-                        <td class="px-6 py-4"><div class="h-4 bg-gray-200 rounded w-1/3"></div></td>
-                        <td class="px-6 py-4"><div class="h-4 bg-gray-200 rounded w-2/3"></div></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>
 
