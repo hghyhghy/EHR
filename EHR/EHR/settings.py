@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+from urllib.parse import urlparse
 from  datetime  import  timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,13 +80,10 @@ WSGI_APPLICATION = 'EHR.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# Replace the DATABASES section of your settings.py with this
+tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
 
 
 # Password validation
@@ -128,16 +126,30 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DATABASE_URL= 'postgresql://neondb_owner:npg_bpETsi9P0OvD@ep-polished-surf-a59y5fes-pooler.us-east-2.aws.neon.tech/EHR?sslmode=require'
+tmpPostgres = urlparse(os.getenv(DATABASE_URL))
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': tmpPostgres.path[1:],
+#         'USER': tmpPostgres.username,
+#         'PASSWORD': tmpPostgres.password,
+#         'HOST': tmpPostgres.hostname,
+#         'PORT': 5432,
+#     }
+# }  
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'EHR',
         'USER': 'root',
-        'PASSWORD': 'subham0902003@#',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'PASSWORD': 'Babu@2002',
+        'HOST': 'localhost',   # or IP/remote host like 'db.example.com'
+        'PORT': '3306',        # default MySQL port
     }
 }
+
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",  # Just in case you're using this too

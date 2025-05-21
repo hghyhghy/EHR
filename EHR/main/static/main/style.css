@@ -185,7 +185,9 @@ body {
   border-radius: 4px;
   
 }
-
+.submit:hover{
+  box-shadow: 10px 10px 10px blue ;
+}
 
 
 .button-group .edit-btn {
