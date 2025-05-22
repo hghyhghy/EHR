@@ -9,7 +9,7 @@ from  main.get_user_details.get_details import get_user_profile
 from  main.get_family_members_details.family_details  import get_family_member_details
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
-    path('login/', TemplateView.as_view(template_name='main/login.html'), name='login'),
+    path('', TemplateView.as_view(template_name='main/login.html'), name='login'),
     path('register/', TemplateView.as_view(template_name='main/register.html'), name='register'),
 
     # Actual API endpoints (used in fetch)

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-&k_3x)rzl&6+xf#xc8*z!dn*$o75-^&($ij*4awwh@m*-9qbt7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','ehr-umif.onrender.com','0.0.0.0']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','ehr-umif.onrender.com']
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'

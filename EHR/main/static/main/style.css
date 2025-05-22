@@ -13,6 +13,23 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
 }
+
+.link {
+  text-align: right;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+.link a {
+  color: #347DFF;
+  text-decoration: none;
+  font-size: 14px;
+  position:relative;
+  top:2rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 /* .sidebar {
   position: fixed;
   left: 0;
@@ -242,7 +259,7 @@ body {
 .family-container {
   position: relative;
   right: 70px;
-  width: 110%;
+  width: 109%;
   margin-top: -1rem;
   font-family: sans-serif;
   border-radius: 8px; /* Apply visible rounding */
