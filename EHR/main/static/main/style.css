@@ -14,6 +14,11 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+.login_email{
+  width: 70rem;
+  margin-left: 2rem;
+}
+
 .link {
   text-align: right;
   margin-top: -10px;

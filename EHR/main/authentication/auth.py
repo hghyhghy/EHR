@@ -65,13 +65,18 @@ def register_user(request):
 @api_view(['POST'])
 def login_user(request):
     data = request.data
-    username = data.get('username')
+    email = data.get('email')
     password = data.get('password')
 
-    if not username or not password:
-        return Response({'error': 'Username and password required'}, status=status.HTTP_400_BAD_REQUEST)
+    if not email or not password:
+        return Response({'error': 'email and password required'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        user  =  User.objects.get(email=email)
+    except  User.DoesNotExist:
+        return  Response({'message':'Invalid email  or password'}, status=status.HTTP_404_NOT_FOUND)
 
-    user = authenticate(username=username, password=password)
+    user = authenticate(username=user.username, password=password)
 
     if user is not None:
         refresh = RefreshToken.for_user(user)
@@ -81,7 +86,7 @@ def login_user(request):
             'access': str(refresh.access_token)
         })
     else:
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'error': 'Invalid  email and password '}, status=status.HTTP_401_UNAUTHORIZED)
 
 @csrf_exempt
 @api_view(['POST'])
