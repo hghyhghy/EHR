@@ -25,11 +25,24 @@ const csrfToken = getCookie("csrftoken");
 async function handleRegister(event) {
     event.preventDefault();
 
+    const password = document.getElementById("password").value;
+
+    // Updated password policy checks
+    const lengthCheck = password.length >= 5;
+    const uppercaseCheck = /[A-Z]/.test(password);
+    const numberCheck = /\d/.test(password);
+    const specialCharCheck = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (!lengthCheck || !uppercaseCheck || !numberCheck || !specialCharCheck) {
+        alert("Password must be at least 5 characters and include an uppercase letter, a number, and a special character.");
+        return;
+    }
+
     const data = {
         username: document.getElementById("username").value,
         email: document.getElementById("email").value,
         dob: document.getElementById("dob").value,
-        password: document.getElementById("password").value,
+        password: password,
         gender: document.getElementById("gender").value,
         phone_number: document.getElementById("phone_number").value,
     };
