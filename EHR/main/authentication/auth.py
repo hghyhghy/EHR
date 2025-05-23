@@ -93,3 +93,5 @@ def login_user(request):
 def logout_user(request):
     logout(request)  # ends session
     return Response({'message': 'Logged out successfully'}, status=200)
+
+

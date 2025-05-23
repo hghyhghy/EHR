@@ -38,3 +38,32 @@ class  FamilyMember(models.Model):
 
     def __str__(self):
         return f"{self.username} is the family member of {self.parent_user.username}"
+
+class Category(models.Model):
+    CATEGORY_CHOICES = [
+        ('Cardiologist', 'Cardiologist'),
+        ('Dentist', 'Dentist'),
+        ('Pediatrician', 'Pediatrician'),
+        ('Neurologist', 'Neurologist'),
+        ('Dermatologist', 'Dermatologist'),
+        ('General', 'General Physician'),
+    ]
+    category_name  =  models.CharField(max_length=255,choices=CATEGORY_CHOICES)
+
+
+class DoctorProfile(models.Model):
+
+    user =  models.OneToOneField(User,on_delete=models.CASCADE,related_name='doctor_profile')
+
+    username =  models.CharField(max_length=100)
+    email=models.EmailField()
+    password=models.CharField(max_length=255)
+    category_id =  models.ForeignKey(Category,on_delete=models.DO_NOTHING)
+    degree =  models.CharField(max_length=255)
+    dob=models.DateTimeField(verbose_name='Date of Birth',null=True)
+    gender =  models.CharField(max_length=1,choices=UserProfile.GENDER_CHOICES)
+    phone_number=models.CharField(max_length=15)
+    created_at=  models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Dr. {self.name} ({self.category_id.category_name})"

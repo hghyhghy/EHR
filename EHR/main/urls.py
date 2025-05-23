@@ -7,6 +7,8 @@ from main.delete_family_members.delete_members import delete_family_members
 from  django.views.generic import  TemplateView
 from  main.get_user_details.get_details import get_user_profile
 from  main.get_family_members_details.family_details  import get_family_member_details
+from  main.get_all_category.category_views import get_category_name
+from  main.doctor_login_register.doctor_auth import  register_view_of_doctors,login_view_for_doctor
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
     path('', TemplateView.as_view(template_name='main/login.html'), name='login'),
@@ -30,6 +32,14 @@ urlpatterns = [
 
     path('api/add-family-members/', add_family_member, name='add_family_members'),
 
-    path('api/get-family-details/<int:member_id>/',get_family_member_details,name='family-details')
+    path('api/get-family-details/<int:member_id>/',get_family_member_details,name='family-details'),
+
+    path('api/categories/', get_category_name,name="category_name"),
+
+    path('api/doctor-register/', register_view_of_doctors,name="doctor-register"),
+    path('api/doctor-login/', login_view_for_doctor,name="doctor-login"),
+
+
+
 ]
 

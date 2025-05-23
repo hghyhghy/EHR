@@ -45,7 +45,7 @@ async function handleRegister(event) {
 
     const result = await response.json();
     if (response.ok) {
-        window.location.href = "/login/";
+        window.location.href = "/";
     } else {
         alert("Registration unsuccessful: " + JSON.stringify(result));
     }
