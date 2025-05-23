@@ -1,9 +1,10 @@
+
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Login{% endblock %}
+{% block title %} Login{% endblock %}
 {% block content %}
 <div class="card1">
-  <h2>Admin Login</h2>
+  <h2> Doctor Login</h2>
   <form id="login-form" method = "post">
 
     <div style=" display: flex ;flex-direction:row ;gap:2rem">
@@ -18,16 +19,13 @@
     
     <button type="submit" class = "submit">Login</button>
     <div class="link">
-      <a href="{% url 'register' %}">Dont have an account Register </a>
-      <a href="{% url 'doctor_login' %}">Login into  doctor Account </a>
-
-      
+      <a href="{% url 'doctor_registration' %}">Dont have an account Register </a>
     </div>
   </form>
 </div>
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'main/login.js' %}"></script>
+<script src="{% static 'main/doctor_login.js' %}"></script>
 
 {% endblock %}

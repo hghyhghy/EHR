@@ -39,6 +39,10 @@ urlpatterns = [
     path('api/doctor-register/', register_view_of_doctors,name="doctor-register"),
     path('api/doctor-login/', login_view_for_doctor,name="doctor-login"),
 
+    path('doctor_login/', TemplateView.as_view(template_name='main/doctor_login.html'), name='doctor_login'),
+    path('doctor_registration/', TemplateView.as_view(template_name='main/doctor_registration.html'), name='doctor_registration'),
+    
+
 
 
 ]

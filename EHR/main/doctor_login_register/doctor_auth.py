@@ -15,7 +15,7 @@ from datetime import datetime
 import logging
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-
+@csrf_exempt
 @api_view(['POST'])
 
 
@@ -29,7 +29,7 @@ def register_view_of_doctors(request):
             return Response({'message':f"Missing the required field {fields}"},status=status.HTTP_400_BAD_REQUEST)
         
     try:
-        category   =  Category.objects.get(category_name= data['category'])
+        category   =  Category.objects.get(id= data['category'])
     except  Category.DoesNotExist:
         return Response({'message':"Category Does not exist"},status=status.HTTP_400_BAD_REQUEST)
 
@@ -49,7 +49,7 @@ def register_view_of_doctors(request):
                 username=user.username,
                 email=user.email,
                 password=user.password,
-                category=category,
+                category_id=category,
                 degree=data['degree'],
                 dob=dob_value,
                 gender=data['gender'],
@@ -63,6 +63,7 @@ def register_view_of_doctors(request):
         traceback.print_exc()  # full traceback in terminal
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@csrf_exempt
 @api_view(['POST'])
 
 

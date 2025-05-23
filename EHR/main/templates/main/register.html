@@ -45,12 +45,15 @@
 
         </select>
     </div>
-        <div class="link" style="margin-top:0.5rem">
-            <a href="{% url "login" %}">Already have account ?Login Instead</a>
 
-    </div>
 
     <button type="submit">Register</button>
+            <div class="link" style="margin-top:0.5rem">
+            <a href="{% url "login" %}">Already have account ?Login Instead To  Admin Account</a>
+            <a href="{% url 'doctor_registration' %}">Register to Doctor Account </a>
+
+
+    </div>
     </form>
 
 </div>
