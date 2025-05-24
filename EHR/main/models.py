@@ -67,3 +67,24 @@ class DoctorProfile(models.Model):
 
     def __str__(self):
         return f"Dr. {self.name} ({self.category_id.category_name})"
+
+class tests(models.Model):
+    name = models.CharField(max_length=255)
+    scheduled_on = models.DateTimeField(auto_now_add=True)
+  
+class medicines(models.Model):
+    name = models.CharField(max_length=255)
+    dosage = models.IntegerField(default=0)
+    duration_left = models.DateTimeField(auto_created=True)
+    quantity = models.IntegerField(default=0)
+class Appointments(models.Model):
+    reports = models.CharField(max_length = 255)
+    prescription_file = models.CharField(max_length = 255)
+    prescribed_tests = models.ForeignKey(tests,on_delete=models.CASCADE,null=True)
+    prescribed_medicines = models.ForeignKey(medicines,on_delete=models.CASCADE,null = True)
+    user_id = models.ForeignKey(UserProfile,on_delete=models.DO_NOTHING)
+    doctor_id = models.ForeignKey(DoctorProfile,on_delete=models.DO_NOTHING)
+    catagory_id = models.ForeignKey(Category,on_delete=models.DO_NOTHING)
+    scheduled_on = models.DateTimeField()
+    venue = models.CharField(max_length=255)
+        
