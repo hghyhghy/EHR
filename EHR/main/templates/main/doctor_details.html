@@ -1,7 +1,9 @@
 {% extends "main/base.html" %}
 {% load static %}
-{% block content %}
 
+{% block title %}Title{% endblock title %}
+{% block content %}
+    <div>
 
 <!-- Sidebar -->
 <div class="sidebar">
@@ -12,13 +14,13 @@
         </svg>
         Dashboard
     </a>
-    <a href="#">
+    <a href={% url "user_details" %}>
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
         </svg>
         Users
     </a>
-    <a href={% url "doctor_details" %}>
+    <a href="#">
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M12 2a10 10 0 0 0-7 17.31M12 2a10 10 0 0 1 7 17.31M12 2v20" />
         </svg>
@@ -50,58 +52,36 @@
     </a>
 </div>
 
-<div class="user_details_section">
 
-            
 
-    <!-- Page Content -->
-    <div class="container1">
-        <div id="user-info-card" >
-            {% comment %} <div class="user-icon" style="width: 40px; height: 40px; margin: 0 auto 0.5rem auto;">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#4B5563" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="7" r="4" />
-                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
-                </svg>
-            </div> {% endcomment %} 
-            <div id="username_name">
+    <div class="doctor_details_section">
 
-                <p ><span>Welcome,</span> <strong id="user-username">Loading...</strong></p>
-                <button
-                class="add-user-button"
-                >
-                    <a href={% url "add_family_member" %} style="color:white ;text-decoration:none">+ Add Member</a>
-                </button>
+
+        <div>
+            <h2 class="Available-doctor" 
+                Available Doctors 
+            </h2>
+        </div>
+            <div class="search-bar-container">
+                <input type="text" id="doctor-search-input" placeholder="Search by Category (e.g. Dermatologist)">
+                <button id="doctor-search-btn">Search</button>
             </div>
+
+        <div class="grid-views" id="doctor-body">
+        <div class='doctor-container'>
+
+
+        </div>
         </div>
 
-        <!-- Profile Card -->
-        <div id="profile-card1" >
-            
-
-            </div>
         </div>
-
-        <!-- Family Members Section -->
-<div class="family-container">
-  <!-- Header Row -->
-  <div class="family-header">
-      
-      <div class="family-cell">Sl no</div>
-    <div class="family-cell">Name</div>
-    <div class="family-cell">Email</div>
-    <div class="family-cell">DOB</div>
-    <div class="family-cell">Gender</div>
-    <div class="family-cell">Actions</div>
-  </div>
-
-  <!-- Data Rows (to be rendered dynamically by JS) -->
-  <div id="family-body">
-
-  </div>
-</div>
-
     </div>
-</div>
+    {% comment %} end {% endcomment %}
+    </div>
 
-<script src="{% static 'main/user_details.js' %}"></script>
-{% endblock content %}
+    {% comment %}  {% endcomment %}
+{% endblock  %}
+{% block script %}
+<script src="{% static 'main/doctor_details.js' %}"></script>
+
+{% endblock script %}

@@ -9,6 +9,8 @@ from  main.get_user_details.get_details import get_user_profile
 from  main.get_family_members_details.family_details  import get_family_member_details
 from  main.get_all_category.category_views import get_category_name
 from  main.doctor_login_register.doctor_auth import  register_view_of_doctors,login_view_for_doctor
+from  main.show_doctor_details.show_details import  get_doctor_details
+from  main.search_doctors.search_views import searh_doctors_by_category
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
     path('', TemplateView.as_view(template_name='main/login.html'), name='login'),
@@ -41,6 +43,11 @@ urlpatterns = [
 
     path('doctor_login/', TemplateView.as_view(template_name='main/doctor_login.html'), name='doctor_login'),
     path('doctor_registration/', TemplateView.as_view(template_name='main/doctor_registration.html'), name='doctor_registration'),
+
+    path('doctor_details/',TemplateView.as_view(template_name='main/doctor_details.html'),name='doctor_details'),
+    path('api/all-doctors/', get_doctor_details, name='list_all_doctors'),
+    path('api/search-doctors/', searh_doctors_by_category, name='search_doctors'),
+
     
 
 

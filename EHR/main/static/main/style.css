@@ -9,6 +9,16 @@
 }
 
 
+.doctor_details_section {
+  padding: 2rem;
+  background-color: rgb(255, 251, 251);
+  min-height: 100vh;
+  margin-left: 200px; /* enough space for sidebar */
+  box-sizing: border-box;
+  width:83rem;
+}
+
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -280,6 +290,34 @@ body {
   font-size: 14px;
 }
 
+.doctor-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  width: 280px;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* Add transition for smooth scaling and shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect: scale and stronger shadow */
+.doctor-container:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* .doctor-header,
+.doctor-row {
+
+} */
+/*  */
+
 
 .family-header {
   font-weight: bold;
@@ -296,6 +334,24 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+.doctor-header {
+  font-weight: bold;
+  color: #374151; /* gray-800 */
+  background-color: #d8d9db; 
+  font-weight:bold;/* slightly darker for header */
+  color: black;
+}
+/* 
+.doctor-cell {
+  flex: 1;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+
 .button-group {
     display: flex;
     flex-direction: row;
@@ -316,6 +372,10 @@ body {
 #family-body{
   margin-right: 1rem;
 }
+#doctor-body{
+  margin-right: 1rem;
+}
+
 .add-user-button{
   background-color: rgb(94, 94, 192);
   width: 150px;
@@ -453,4 +513,127 @@ button[type="submit"]:hover {
 
 .form-link a:hover {
     text-decoration: underline;
+}
+
+
+/* doctor */
+.doctor-username {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.main-category-degree {
+  display: flex;
+  justify-content: start;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.doctor-phone_number {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.book-appointment-btn {
+  padding: 0.6rem 1rem;
+  background-color: #1500ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.book-appointment-btn:hover {
+  background-color: #0024ad;
+}
+
+.book-appointment-btn{
+  background-color: blue;
+  color: white;
+  height: 3rem;
+  width: 10rem;
+  font-size: small;
+  margin-top: 1rem;
+  border-radius: 5px;
+  font-weight: 100;
+}
+.grid-views {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+  justify-items: start;
+}
+
+
+/* Optional: make it responsive */
+/* @media (max-width: 1024px) {
+  .doctor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .doctor-grid {
+    grid-template-columns: 1fr;
+  }
+} */
+.doctor-row {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 320px;
+  text-align: start;
+  transition: transform 0.3s ease;
+}
+.doctor-row:hover {
+  transform: translateY(-5px);
+}
+
+.Available-doctor{
+  position: relative;
+  right: 29rem;
+  top: 10px;
+  font-size: 2rem;
+}
+
+.search-bar-container {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    display: flex;
+    flex-direction:  row;
+    justify-content: end;
+    align-items: end;
+    margin-right: 4rem;
+}
+
+#doctor-search-input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+
+}
+
+#doctor-search-btn {
+    padding: 9px 12px;
+    background-color: #1463b7;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 80px;
+    margin-bottom: 1rem;
+}
+
+#doctor-search-btn:hover {
+    background-color: #0056b3;
 }
