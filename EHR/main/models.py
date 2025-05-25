@@ -87,4 +87,10 @@ class Appointments(models.Model):
     category_id = models.ForeignKey(Category,on_delete=models.DO_NOTHING)
     scheduled_on = models.DateTimeField()
     venue = models.CharField(max_length=255)
+    status_types = (
+        (0,"Pending"),
+        (1,"Accepted"),
+        (2,"Rejected"),
+    )
+    status = models.IntegerField(status_types,default=0)
         
