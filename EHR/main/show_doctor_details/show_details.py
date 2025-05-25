@@ -21,6 +21,7 @@ def get_doctor_details(request):
     for doctor  in  doctors:
         doctor_list.append({
             
+            'id':doctor.id,
             'username':doctor.username,
             'email':doctor.email,
             'degree':doctor.degree,

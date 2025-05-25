@@ -11,6 +11,9 @@ from  main.get_all_category.category_views import get_category_name
 from  main.doctor_login_register.doctor_auth import  register_view_of_doctors,login_view_for_doctor
 from  main.show_doctor_details.show_details import  get_doctor_details
 from  main.search_doctors.search_views import searh_doctors_by_category
+from  main.book_appointment_with_doctor.appointment_views import request_appointment
+from  main.request_appointment_views.request_appointment_views import listed_appointments
+
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
     path('', TemplateView.as_view(template_name='main/login.html'), name='login'),
@@ -47,6 +50,9 @@ urlpatterns = [
     path('doctor_details/',TemplateView.as_view(template_name='main/doctor_details.html'),name='doctor_details'),
     path('api/all-doctors/', get_doctor_details, name='list_all_doctors'),
     path('api/search-doctors/', searh_doctors_by_category, name='search_doctors'),
+
+    path('api/request-appointment/<int:doctor_id>/', request_appointment, name='request_appointment'),
+    path('api/doctor-appointments/', listed_appointments, name='doctor_appointments')
 
     
 

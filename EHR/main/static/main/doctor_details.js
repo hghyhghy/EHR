@@ -23,10 +23,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="doctor-category">${doctor.category}</div>
                 </div>
                 <div class="doctor-phone_number"> <span>Contact At:</span> ${doctor.phone_number}</div>
-                <button class="book-appointment-btn">Request Appointment</button>
+                <button class="book-appointment-btn"  data-doctor-id  = ${doctor.id}>Request Appointment</button>
                 `;
                 doctorBody.appendChild(row)
         });
+
+        const bookbuttons  =  document.querySelectorAll('.book-appointment-btn')
+        bookbuttons.forEach(button => {
+            button.addEventListener('click' , () => {
+                const doctor_id  =  button.getAttribute('data-doctor-id')
+                if (doctor_id){
+                    window.location.href = `/book-appointment/${doctor_id}/`
+                } else{
+                    alert('Doctor id is not found')
+                }
+            })
+        })
     }
 
     function  fetchDoctors(query = ""){
