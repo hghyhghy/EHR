@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         row.setAttribute('data-member-id', member.id); // useful for deletion
 
         row.innerHTML = `
+            
             <div class="family-cell">${index + 1}</div> 
             <div class="family-cell">${member.username}</div>
             <div class="family-cell">${member.email}</div>
@@ -40,8 +41,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="family-cell" style="margin-left:2rem">${member.gender || '-'}</div>
             <div class="family-cell">
                 <div class="button-group">
-                    <button class="delete-btn" data-member-id="${member.id}">Delete</button>
-                    <button class="edit-btn" data-member-id="${member.id}">Edit</button>
+                    <i class='bx  bx-trash delete-btn' role = 'button' tabindex="0" data-member-id="${member.id}"></i>
+                    <i class='bx  bx-edit edit-btn' role = 'button' tabindex="0" data-member-id="${member.id}"></i>
                 </div>
             </div>
 
