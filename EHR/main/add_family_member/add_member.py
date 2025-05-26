@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.db import transaction
 from datetime import datetime
-from ..models import FamilyMember
+from ..models import FamilyMember,UserProfile
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
@@ -27,10 +27,10 @@ def add_family_member(request):
         dob=  datetime.strptime(data['dob'],'%Y-%m-%d').date()
 
         with transaction.atomic():
-            family_user=  User.objects.create(
+            family_user=  User.objects.create_user(
                 username = data['username'],
                 email = data['email'],
-                password=make_password(data['password'])
+                password=data['password']
             )
 
             family_member = FamilyMember.objects.create(
@@ -43,6 +43,17 @@ def add_family_member(request):
                 gender=data['gender'],
                 phone_number= data['phone_number']
             ) 
+
+            UserProfile.objects.create(
+                user=  family_user,
+                username =family_user.username,
+                email=family_user.email,
+                dob=dob,
+                gender = data['gender'],
+                phone_number=data['phone_number'],
+                password=family_user.password
+
+            )
             print('Fmaily member created',family_member)
 
         return  Response({'message':'Fmaily member added successfully'},status=status.HTTP_201_CREATED)

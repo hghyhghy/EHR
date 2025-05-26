@@ -6,6 +6,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from ..models import FamilyMember
+from ..get_user_details.serailizers import  Familymemberserializers
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -15,18 +17,21 @@ def get_family_member_details(request,member_id):
     try:
         
         family_member =  FamilyMember.objects.get(id=member_id,parent_user=request.user)
+        family_profile= Familymemberserializers(family_member).data
         
-        data = {
-            'id':family_member.id,
-            'username':family_member.username,
-            'dob':family_member.dob,
-            'email':family_member.email,
-            'phone_number':family_member.phone_number,
-            'password':family_member.password,
-            'gender':family_member.gender
-        }
+        # data = {
+        #     'id':family_member.id,
+        #     'username':family_member.username,
+        #     'dob':family_member.dob,
+        #     'email':family_member.email,
+        #     'phone_number':family_member.phone_number,
+        #     'password':family_member.password,
+        #     'gender':family_member.gender
+        # }
         
-        return Response(data,  status=status.HTTP_200_OK)
+        return Response({
+            "profile":family_profile
+        },  status=status.HTTP_200_OK)
     
     except  FamilyMember.DoesNotExist:
         return Response({'message':'Family member does not exist  or unauthorized'},status=status.HTTP_404_NOT_FOUND)

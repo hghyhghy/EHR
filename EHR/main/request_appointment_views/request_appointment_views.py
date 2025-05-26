@@ -19,7 +19,10 @@ def listed_appointments(request):
         patient  = app.user_id
 
         data.append({
-            
+            'Application_id':app.id,
+            'Appointed_doctor':doctor.username,
+            'Degree':doctor.degree,
+            'category':doctor.category_id.category_name,
             'name':patient.username,
             'dob':patient.dob,
             'gender':patient.gender,

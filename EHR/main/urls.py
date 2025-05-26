@@ -52,6 +52,8 @@ urlpatterns = [
     path('api/search-doctors/', searh_doctors_by_category, name='search_doctors'),
 
     path('api/request-appointment/<int:doctor_id>/', request_appointment, name='request_appointment'),
+    path('doctor_profile/',TemplateView.as_view(template_name='main/doctor_profile.html'),name='doctor_profile'),
+
     path('api/doctor-appointments/', listed_appointments, name='doctor_appointments')
 
     

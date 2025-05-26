@@ -23,7 +23,7 @@ class UserProfile(models.Model):
 
 class  FamilyMember(models.Model):
     # each family member is pointing back to the parent user who created them
-    parent_user =  models.ForeignKey(User,on_delete=models.CASCADE,related_name='faamily_members')
+    parent_user =  models.ForeignKey(User,on_delete=models.CASCADE,related_name='family_members')
     # making each family member a unique user 
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='family_profile')
 

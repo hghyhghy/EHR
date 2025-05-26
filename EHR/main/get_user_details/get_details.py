@@ -18,9 +18,10 @@ def get_user_profile(request):
         profile =   UserProfile.objects.get(user=user)
         profile_data =  Userprofileserializers(profile).data
 
-        family_profile =  FamilyMember.objects.filter(parent_user =  user)
-        family_data =  Familymemberserializers(family_profile,many=True).data
-
+        direct_family   =  FamilyMember.objects.filter(parent_user=user)
+        nested_family =  FamilyMember.objects.filter(parent_user__in=[f.user for f in  direct_family])
+        all_family =  list(direct_family)+list(nested_family)
+        family_data =  Familymemberserializers(all_family,many=True).data
         return  Response(
             {
                 "profile":profile_data,

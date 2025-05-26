@@ -13,13 +13,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Render user profile
     const profile = data.profile;
-    document.getElementById('user-username').textContent = profile.username;
+    const profile1  = data.family
+    if (data.profile){
+
+        document.getElementById('user-username').textContent = profile.username  
+    }  else if(data.family){
+        document.getElementById('user-username').textContent =  profile1.username;
+
+    }
     // Add more fields if needed...
 
     // Render family members in flex layout
     const familyBody = document.getElementById('family-body');
     familyBody.innerHTML = ''; // clear placeholder
-
+    
     data.family.forEach((member,index) => {
         const row = document.createElement('div');
         row.className = 'family-row';
@@ -42,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         familyBody.appendChild(row);
     });
+    // end
 });
 
 document.addEventListener('click', function (e) {
