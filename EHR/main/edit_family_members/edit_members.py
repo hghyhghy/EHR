@@ -31,7 +31,7 @@ def edit_family_members(request,member_id):
             family_user.email =data['email']
             family_member.email =data['email']
 
-        if  'password' in data:
+        if  'password' in data and data['password'].strip():
             family_user.password=make_password(data['password'])
             family_member.password= family_user.password
 
