@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="family-cell">${index + 1}</div> 
             <div class="family-cell">${member.username}</div>
             <div class="family-cell">${member.email}</div>
-            <div class="family-cell" style="margin-left:3rem">${member.dob || '-'}</div>
-            <div class="family-cell" style="margin-left:2rem">${member.gender || '-'}</div>
+            <div class="family-cell" style="margin-left:2rem">${member.dob || '-'}</div>
+            <div class="family-cell">${member.gender || '-'}</div>
             <div class="family-cell">
                 <div class="button-group">
                     <i class='bx  bx-trash delete-btn' role = 'button' tabindex="0" data-member-id="${member.id}"></i>

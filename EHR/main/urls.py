@@ -16,7 +16,8 @@ from  main.request_appointment_views.request_appointment_views import listed_app
 
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
-    path('', TemplateView.as_view(template_name='main/login.html'), name='login'),
+    path('', TemplateView.as_view(template_name='main/homepage.html'), name='homepage'),
+    path('login/', TemplateView.as_view(template_name='main/login.html'), name='login'),
     path('register/', TemplateView.as_view(template_name='main/register.html'), name='register'),
 
     # Actual API endpoints (used in fetch)

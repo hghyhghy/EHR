@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EHR</title>
+  <link rel="stylesheet" href="{% static 'main/homepage_style.css' %}">
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script src = "{% static 'main/cover_page.js' %}"></script>
+</head>
+<body>
+  <div class="background">
+    {% load static %}
+    <div class="bg-image" style="background-image: url('{% static 'main/image2.jpg' %}')"></div>
+    <div class="bg-image" style="background-image: url('/static/main/image1.jpg')"></div>
+    <div class="bg-image" style="background-image: url('/static/main/image3.jpg')"></div>
+
+  </div>
+  
+  <div class="welcome">Welcome to EHR</div>
+  <h1 class="ehr-heading">EHR</h1>
+  <div class="main-content">
+    <div class="left-half">
+      
+      <p class="quote"></p>
+    </div>
+    <div class="right-half">
+      <div>
+        <a href="{% url 'doctor_login' %}"><img src="{% static 'main/doctor_logo.png' %}" alt="Doctor pic" class ="doctor_image"></a>
+ 
+        <p  class = "doctor_portal_label">Doctor Portal</p>
+      </div>
+      <div>
+        <a href="{% url 'login' %}"><img src="{% static 'main/patient_logo.jpg' %}" alt="Patient pic" class = "patient_image"></a>
+        <p class="portal-label">User Portal</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
