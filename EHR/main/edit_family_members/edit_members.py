@@ -9,17 +9,36 @@ from datetime import datetime
 from ..models import FamilyMember
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
+from  django.views.decorators.cache  import  never_cache
 
+def get_all_descendants(user):
 
+    descendants =[]
+    queue = [user]
+
+    while queue:
+        
+        current_user  =  queue.pop(0)
+        direct_family=   FamilyMember.objects.filter(parent_user=current_user)
+        descendants.extend(direct_family)
+        queue.extend([member.user for member in  direct_family])
+    return  descendants
+    
 @csrf_exempt
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([JWTAuthentication])
+@never_cache
 def edit_family_members(request,member_id):
 
     data =  request.data
+    user  =  request.user
+    all_descendants  =  get_all_descendants(user)
     try:
-        family_member =  FamilyMember.objects.get(id=member_id,parent_user =  request.user)
+        family_member =  FamilyMember.objects.get(id=member_id)
+        if family_member not  in  all_descendants:
+            return Response({'error': 'Unauthorized to edit this family member'}, status=status.HTTP_403_FORBIDDEN)
+
         family_user =  family_member.user
 
         # update fields provide in the request
