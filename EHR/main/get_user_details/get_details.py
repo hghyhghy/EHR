@@ -8,19 +8,31 @@ from django.views.decorators.csrf import  csrf_exempt
 from ..get_user_details.serailizers import  Userprofileserializers,Familymemberserializers
 from  ..models  import  UserProfile,FamilyMember
 
+
+
+def get_all_descendends(user):
+    reuslt=[]
+    queue = [user]
+
+    while queue:
+        current_user = queue.pop(0)
+        direct_family = FamilyMember.objects.filter(parent_user=current_user)
+        reuslt.extend(direct_family)
+        queue.extend([member.user for member in  direct_family])
+
+    return reuslt
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([JWTAuthentication])
-
 def get_user_profile(request):
     user =  request.user
     try:
         profile =   UserProfile.objects.get(user=user)
         profile_data =  Userprofileserializers(profile).data
 
-        direct_family   =  FamilyMember.objects.filter(parent_user=user)
-        nested_family =  FamilyMember.objects.filter(parent_user__in=[f.user for f in  direct_family])
-        all_family =  list(direct_family)+list(nested_family)
+
+        all_family =   get_all_descendends(user)
         family_data =  Familymemberserializers(all_family,many=True).data
         return  Response(
             {

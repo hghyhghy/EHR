@@ -22,15 +22,16 @@ document.addEventListener('DOMContentLoaded',function(){
     })
     .then(response =>  response.json())
     .then(data =>  {
-        if (data.username){
-            document.getElementById('username').value =  data.username;
-            document.getElementById('email').value =  data.email;
-            document.getElementById('gender').value =  data.gender;
-            document.getElementById('dob').value =  data.dob;
-            document.getElementById('password').value =  data.password;
-            document.getElementById('phone_number').value =  data.phone_number;
+        const profile =  data.profile
+        if (profile &&  profile.username){
+            document.getElementById('username').value =  profile.username;
+            document.getElementById('email').value =  profile.email;
+            document.getElementById('gender').value =  profile.gender;
+            document.getElementById('dob').value =  profile.dob;
+            document.getElementById('password').value =  profile.password;
+            document.getElementById('phone_number').value =  profile.phone_number;
 
-            document.getElementById("name_to_show").textContent =  data.username
+            document.getElementById("name_to_show").textContent =  profile.username
             document.getElementById("name_to_show").style.color ="blue"
 
         } else{
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded',function(){
                 email:document.getElementById('email').value,
                 gender:document.getElementById('gender').value,
                 dob:document.getElementById('dob').value,
-                password:document.getElementById('password').value,
+                password:document.getElementById('password').value ="",
                 phone_number:document.getElementById('phone_number').value,
 
             };
