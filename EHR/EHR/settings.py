@@ -58,6 +58,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Session persists until logout or browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Optionally, set a longer expiry duration
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7  # 7 days
+
+# Save session data only if it was modified
+SESSION_SAVE_EVERY_REQUEST = False
+
 ROOT_URLCONF = 'EHR.urls'
 
 TEMPLATES = [
@@ -150,6 +159,16 @@ DATABASES = {
         'PORT': '33385',        # default MySQL port
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ehr',
+#         'USER': 'root',
+#         'PASSWORD': 'Babu@2002',
+#         'HOST': 'localhost',   # or IP/remote host like 'db.example.com'
+#         'PORT': '3306',        # default MySQL port
+#     }
+# }
 
 
 CORS_ALLOWED_ORIGINS = [
@@ -179,6 +198,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     )
 }
 

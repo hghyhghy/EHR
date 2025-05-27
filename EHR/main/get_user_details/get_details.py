@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.authentication import SessionAuthentication
 from django.views.decorators.csrf import  csrf_exempt
 from ..get_user_details.serailizers import  Userprofileserializers,Familymemberserializers
 from  ..models  import  UserProfile,FamilyMember
@@ -25,6 +25,7 @@ def get_all_descendends(user):
 
 @csrf_protect
 @api_view(['GET'])
+@authentication_classes([SessionAuthentication])  
 @permission_classes([IsAuthenticated])
 def get_user_profile(request):
     user =  request.user

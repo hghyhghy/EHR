@@ -8,6 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models  import  User
 from  django.contrib.auth  import  login,logout,authenticate
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authentication import SessionAuthentication
 from django.db import  transaction
 from datetime import datetime
 import  json
