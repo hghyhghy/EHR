@@ -4,8 +4,8 @@
 {% block content %}
 <div class="card1">
   <h2>Admin Login</h2>
-  <form id="login-form" method = "post">
-
+  <form id="login-form" method = "POST">
+    {% csrf_token %}
     <div style=" display: flex ;flex-direction:row ;gap:2rem">
         <h2 style=" font-size:15px ; color:black">Email</h2>
         <input type="email" id="email" name = "email" class="login_email" placeholder="Enter your email" required >
@@ -28,6 +28,10 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'main/login.js' %}"></script>
+<script src="{% static 'main/login.js' %}">
+
+  const csrfToken = '{{ csrf_token }}';
+
+</script>
 
 {% endblock %}

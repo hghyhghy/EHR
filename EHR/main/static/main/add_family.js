@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded",function(){
 })
 
 
-const token   =  localStorage.getItem('access')
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 console.log("Sending token:", token);
 
 async function  handleAddFamilyMember(event) {
@@ -30,7 +31,7 @@ async function  handleAddFamilyMember(event) {
             method:'POST',
             headers:{
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                'X-CSRFToken': csrfToken
             },
             body:JSON.stringify(data)
         });

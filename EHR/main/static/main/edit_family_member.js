@@ -10,13 +10,14 @@ document.addEventListener('DOMContentLoaded',function(){
         alert('No member id is found')
         return
     }
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    const token  =  localStorage.getItem('access')
+    // const token  =  localStorage.getItem('access')
     const form  =  document.getElementById("edit_family_member_form")
     fetch(`/api/get-family-details/${member_id}`,{
         method:'GET',
         headers:{
-                        "Authorization": `Bearer ${token}`
+                        'X-CSRFToken': csrfToken
 
         }
     })
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded',function(){
                 method:'PUT',
                 headers:{
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                'X-CSRFToken': csrfToken
                 },
                 body:JSON.stringify(updatedData)
             }).then(res =>  {

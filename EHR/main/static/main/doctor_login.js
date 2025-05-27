@@ -8,6 +8,8 @@
 
         const email  =  document.getElementById('email').value.trim()
         const  password =  document.getElementById('password').value.trim()
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 
         try {
             
@@ -15,6 +17,7 @@
                 method:"POST",
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
                 },
                 body:JSON.stringify({email,password})
             });

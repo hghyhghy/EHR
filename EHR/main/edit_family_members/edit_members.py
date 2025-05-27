@@ -10,6 +10,7 @@ from ..models import FamilyMember
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from  django.views.decorators.cache  import  never_cache
+from  django.views.decorators.csrf import  csrf_protect
 
 def get_all_descendants(user):
 
@@ -23,11 +24,10 @@ def get_all_descendants(user):
         descendants.extend(direct_family)
         queue.extend([member.user for member in  direct_family])
     return  descendants
-    
-@csrf_exempt
+
+@csrf_protect
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([JWTAuthentication])
 @never_cache
 def edit_family_members(request,member_id):
 
