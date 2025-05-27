@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const token = localStorage.getItem('access');
+    // const token = localStorage.getItem('access');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     const response = await fetch('/api/user-details/', {
         method: 'GET',
         headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/json"
+            "Accept": "application/json",
+            'X-CSRFToken': csrfToken
         }
     });
 
@@ -56,12 +57,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.addEventListener('click', function (e) {
     if (e.target.classList.contains('delete-btn')) {
         const memberId = e.target.getAttribute('data-member-id');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         if (confirm("Are you sure you want to delete this member?")) {
             fetch(`/delete-family-member/${memberId}/`, {
                 method: 'DELETE',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("access")}`,
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'X-CSRFToken': csrfToken
+
                 }
             })
                 .then(res => res.json())

@@ -8,11 +8,11 @@ from rest_framework import status
 from ..models import DoctorProfile
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
+from  django.views.decorators.csrf import  csrf_protect
 
-@csrf_exempt
+@csrf_protect
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([JWTAuthentication])
 
 def get_doctor_details(request):        
     doctors =  DoctorProfile.objects.all()

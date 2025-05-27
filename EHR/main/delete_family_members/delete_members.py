@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from ..models import FamilyMember,UserProfile
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
+from  django.views.decorators.csrf import  csrf_protect
 
 def recursively_find_the_main_user(user):
     # traverse to the top until we found the main user  
@@ -17,11 +18,9 @@ def recursively_find_the_main_user(user):
         except FamilyMember.DoesNotExist:
             return user #this is the main user
 
-
-@csrf_exempt
+@csrf_protect
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([JWTAuthentication])
 def delete_family_members(request, member_id):
     try:
         # Get the family member by ID and make sure it belongs to the logged-in user

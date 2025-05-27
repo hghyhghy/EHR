@@ -14,8 +14,10 @@ from django.http import JsonResponse
 from datetime import datetime
 import logging
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from  django.views.decorators.csrf import  csrf_protect
 
-@csrf_exempt
+
+
 @api_view(['POST'])
 
 
@@ -63,7 +65,7 @@ def register_view_of_doctors(request):
         traceback.print_exc()  # full traceback in terminal
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@csrf_exempt
+@csrf_protect
 @api_view(['POST'])
 
 
@@ -84,12 +86,9 @@ def login_view_for_doctor(request):
     user=  authenticate(username=user.username,password=password)
 
     if user is not None:
-        refresh = RefreshToken.for_user(user)
-        return Response({
-            'message': 'Login successful',
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
-        })
+        login(request,user)
+
+        return Response({'message': 'Login successful (session set)'})
     else:
-        return Response({'error': 'Invalid  email and password '}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
 

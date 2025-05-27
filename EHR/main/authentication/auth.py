@@ -14,8 +14,8 @@ import  json
 from django.http import JsonResponse
 from datetime import datetime
 import logging
+from  django.views.decorators.csrf import  csrf_protect
 
-@csrf_exempt
 @api_view(['POST'])
 def register_user(request):
     data = request.data
@@ -61,7 +61,7 @@ def register_user(request):
 
 
 
-@csrf_exempt
+@csrf_protect
 @api_view(['POST'])
 def login_user(request):
     data = request.data
@@ -79,14 +79,20 @@ def login_user(request):
     user = authenticate(username=user.username, password=password)
 
     if user is not None:
-        refresh = RefreshToken.for_user(user)
-        return Response({
-            'message': 'Login successful',
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
-        })
+    #     refresh = RefreshToken.for_user(user)
+    #     return Response({
+    #         'message': 'Login successful',
+    #         'refresh': str(refresh),
+    #         'access': str(refresh.access_token)
+    #     })
+    # else:
+    #     return Response({'error': 'Invalid  email and password '}, status=status.HTTP_401_UNAUTHORIZED)
+        login(request,user)
+        return Response({'message': 'Login successful (session set)'})
     else:
-        return Response({'error': 'Invalid  email and password '}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
 
 @csrf_exempt
 @api_view(['POST'])

@@ -7,6 +7,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.views.decorators.csrf import  csrf_exempt
 from ..get_user_details.serailizers import  Userprofileserializers,Familymemberserializers
 from  ..models  import  UserProfile,FamilyMember
+from  django.views.decorators.csrf import  csrf_protect
 
 
 
@@ -22,9 +23,9 @@ def get_all_descendends(user):
 
     return reuslt
 
+@csrf_protect
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([JWTAuthentication])
 def get_user_profile(request):
     user =  request.user
     try:

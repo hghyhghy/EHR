@@ -3,10 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (form) {
         form.addEventListener("submit", handleLogin);
     }
+
 });
 
 async function handleLogin(event) {
     event.preventDefault();
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -15,6 +18,7 @@ async function handleLogin(event) {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
+            'X-CSRFToken':csrfToken
         },
         body: JSON.stringify({ email, password })
     });

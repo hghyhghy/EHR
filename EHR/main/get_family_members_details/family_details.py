@@ -8,6 +8,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from ..models import FamilyMember
 from ..get_user_details.serailizers import  Familymemberserializers
 from  django.views.decorators.cache import never_cache
+from  django.views.decorators.csrf import  csrf_protect
 
 def get_all_descendants(user):
 
@@ -23,9 +24,9 @@ def get_all_descendants(user):
     return  descendants
 
 
+@csrf_protect
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([JWTAuthentication])
 @never_cache
 def get_family_member_details(request,member_id):
 

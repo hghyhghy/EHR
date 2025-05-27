@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const token  =  localStorage.getItem('access')
     const doctorBody  =  document.getElementById('doctor-body')
     const searchInput  =  document.getElementById('doctor-search-input')
     const searchButton  =  document.getElementById('doctor-search-btn')
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 
   
     function  renderDoctors(doctors){
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(url , {
             method:'GET',
             headers:{
-                  'Authorization': `Bearer ${token}`
+                  'X-CSRFToken': csrfToken
             }
         })
         .then(response => response.json())

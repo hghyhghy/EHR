@@ -11,9 +11,10 @@ from ..models import FamilyMember,UserProfile
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
+from  django.views.decorators.csrf import  csrf_protect
 
+@csrf_protect
 @api_view(['POST'])
-@authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def add_family_member(request):
     data =  request.data

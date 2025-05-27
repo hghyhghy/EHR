@@ -7,11 +7,12 @@ from  rest_framework.decorators import  api_view,permission_classes,authenticati
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from  django.views.decorators.csrf import  csrf_protect
 
-@csrf_exempt
+
+@csrf_protect
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([JWTAuthentication])
 
 def searh_doctors_by_category(request):
 
