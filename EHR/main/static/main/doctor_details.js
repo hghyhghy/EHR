@@ -64,10 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     fetchDoctors()
-    if (searchButton && searchInput){
-        searchButton.addEventListener('click',() => {
+    if (searchInput){
+        let debounceTimeout  =  null
+        searchInput.addEventListener('input',() => {
             const query   =  searchInput.value.trim()
-            fetchDoctors(query)
+            clearTimeout(debounceTimeout)
+            debounceTimeout=setTimeout(() => {
+                fetchDoctors(query)
+            },100)
         })
 
         searchInput.addEventListener('input',() => {
@@ -77,119 +81,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //   fetch('/api/all-doctors/',{
-    //     method:'GET',
-    //     headers:{
-    //         'Authorization':`Bearer ${token}`
-    //     }
-    // })
-    // .then(response  =>  response.json())
-    // .then(data => {
-        
-    //     doctorBody.innerHTML = ""
-    //     data.forEach((doctor,index) => {
-            
-    //         const  row  =  document.createElement('div')
-    //         row.className='doctor-row'
-    //         row.innerHTML = `
-    //             <div class ="doctor-username">${doctor.username} ⚕️</div> 
-    //             <div class= "main-category-degree">
-    //                                 <div class ="doctor-degree">${doctor.degree} In</div>
-    //                                 <div class ="doctor-category">${doctor.category}</div>
-    //             </div>
-
-
-    //             <div class ="doctor-phone_number"> <span>  Contact At : </span> ${doctor.phone_number}</div>
-
-    //             <button class="book-appointment-btn">
-    //                 Request Appointment
-    //             </button>
-    //         `
-
-    //         doctorBody.appendChild(row)
-    //     });
-    // })
-    // .catch(error => {
-    //     alert('Error getting doctor details')
-    //     console.log(error);
-        
-    // })
 })
