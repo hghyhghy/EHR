@@ -607,19 +607,20 @@ button[type="submit"]:hover {
     gap: 10px;
     display: flex;
     flex-direction:  row;
-    justify-content: end;
-    align-items: end;
+    justify-content: center;
+    align-items: center;
     margin-right: 4rem;
+    max-width: 100rem;
+    
 }
 
 #doctor-search-input {
     padding: 10px;
-    width: 250px;
+    width:max-content;
     border-radius: 8px;
     border: 1px solid #ccc;
 
 }
-
 #doctor-search-btn {
     padding: 9px 12px;
     background-color: #1463b7;

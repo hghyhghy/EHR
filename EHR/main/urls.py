@@ -23,7 +23,7 @@ urlpatterns = [
     # Actual API endpoints (used in fetch)
     path('api/register/', register_user, name='register_api'),
     path('api/login/', login_user, name='login_api'),
-    path('logout/', logout_user, name='logout'),
+    path('api/logout/', logout_user, name='logout'),
 
 
     path('edit_family_member/<int:member_id>/',TemplateView.as_view(template_name='main/edit_family_member.html'),name='edit_member'),

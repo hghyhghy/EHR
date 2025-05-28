@@ -19,6 +19,10 @@ from  django.views.decorators.csrf import  csrf_protect
 
 @api_view(['POST'])
 def register_user(request):
+    if request.user.is_authenticated:
+        return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
+
+
     data = request.data
     print("Received data:", data)  # debug
 
@@ -65,6 +69,8 @@ def register_user(request):
 @csrf_protect
 @api_view(['POST'])
 def login_user(request):
+    if request.user.is_authenticated:
+        return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
     data = request.data
     email = data.get('email')
     password = data.get('password')
@@ -80,14 +86,6 @@ def login_user(request):
     user = authenticate(username=user.username, password=password)
 
     if user is not None:
-    #     refresh = RefreshToken.for_user(user)
-    #     return Response({
-    #         'message': 'Login successful',
-    #         'refresh': str(refresh),
-    #         'access': str(refresh.access_token)
-    #     })
-    # else:
-    #     return Response({'error': 'Invalid  email and password '}, status=status.HTTP_401_UNAUTHORIZED)
         login(request,user)
         return Response({'message': 'Login successful (session set)'})
     else:
@@ -97,6 +95,7 @@ def login_user(request):
 
 @csrf_exempt
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def logout_user(request):
     logout(request)  # ends session
     return Response({'message': 'Logged out successfully'}, status=200)

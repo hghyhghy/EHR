@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const doctorBody  =  document.getElementById('doctor-body')
     const searchInput  =  document.getElementById('doctor-search-input')
-    const searchButton  =  document.getElementById('doctor-search-btn')
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 
