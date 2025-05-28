@@ -1,13 +1,14 @@
 
 document.addEventListener('DOMContentLoaded', ()=> {
 
-    const token  =  localStorage.getItem('access')
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     const tbody =  document.getElementById('appointments-body')
 
     fetch('/api/doctor-appointments/', {
         method:'GET',
         headers:{
-                        'Authorization': `Bearer ${token}`,
+            'X-CSRFToken': csrfToken
 
         }
     })  

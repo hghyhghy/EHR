@@ -54,10 +54,6 @@
 {% block script %}
 <script src="{% static 'main/doctor-appointments.js' %}"></script>
 <script>
-    // Pass Django context to JavaScript
-    const authToken = "{{ request.session.auth_token|default:'YOUR_TOKEN_HERE' }}";
-    // Call the fetch functions from doctor-appointments.js
-    fetchDoctorProfile(authToken);
-    fetchAppointments(authToken);
+
 </script>
 {% endblock script %}

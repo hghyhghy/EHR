@@ -3,11 +3,12 @@ from  rest_framework.decorators  import  api_view,permission_classes,authenticat
 from rest_framework.permissions  import  IsAuthenticated
 from  ..models  import  Appointments
 from rest_framework.response import  Response
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from  rest_framework import  status
+from  django.views.decorators.csrf import  csrf_protect
+
+@csrf_protect
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([JWTAuthentication])
 
 def listed_appointments(request):
 
