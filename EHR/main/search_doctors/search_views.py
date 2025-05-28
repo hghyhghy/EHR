@@ -16,12 +16,13 @@ from  django.views.decorators.csrf import  csrf_protect
 
 def searh_doctors_by_category(request):
 
-    query =  request.GET.get('category','').strip()
+    query =  request.GET.get('query','').strip()
 
     if query:
         
         doctor =  DoctorProfile.objects.filter(
-            category_id__category_name__icontains =  query
+            Q(category_id__category_name__icontains =  query)|
+            Q(username__icontains=query)
         )
     else:
         doctor =  DoctorProfile.objects.all()

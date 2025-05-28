@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function  fetchDoctors(query = ""){
         const url =  query ? 
-        `/api/search-doctors/?category=${encodeURIComponent(query)}`
+        `/api/search-doctors/?query=${encodeURIComponent(query)}`
         :
         `/api/all-doctors`;
 
