@@ -22,6 +22,8 @@ from  django.views.decorators.csrf import  csrf_protect
 
 
 def register_view_of_doctors(request):
+    if request.user.is_authenticated:
+        return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
     data  =  request.data
 
     required_fields = ['username','email','password','category','degree','dob','gender','phone_number']
@@ -70,6 +72,8 @@ def register_view_of_doctors(request):
 
 
 def login_view_for_doctor(request):
+    if request.user.is_authenticated:
+        return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
     data  =  request.data
     email = data.get('email')
     password=data.get('password')
