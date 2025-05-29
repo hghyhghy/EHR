@@ -616,7 +616,7 @@ button[type="submit"]:hover {
 
 #doctor-search-input {
     padding: 10px;
-    width:max-content;
+    width:100rem;
     border-radius: 8px;
     border: 1px solid #ccc;
 

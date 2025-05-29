@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from ..models import FamilyMember
-from ..get_user_details.serailizers import  Familymemberserializers
+from ..get_user_details.serailizers import  Familymemberserializers1
 from  django.views.decorators.cache import never_cache
 from  django.views.decorators.csrf import  csrf_protect
 
@@ -38,7 +38,7 @@ def get_family_member_details(request,member_id):
         if family_member not in all_descendants:
             return  Response({'message':'Unauthorized to view this family details'},status=status.HTTP_403_FORBIDDEN)
 
-        family_profile =  Familymemberserializers(family_member).data
+        family_profile =  Familymemberserializers1(family_member).data
         
         return Response({
             "profile":family_profile

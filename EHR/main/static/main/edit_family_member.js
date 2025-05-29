@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded',function(){
             document.getElementById('email').value =  profile.email;
             document.getElementById('gender').value =  profile.gender;
             document.getElementById('dob').value =  profile.dob;
-            document.getElementById('password').value =  profile.password;
+            // document.getElementById('password').value =  profile.password;
             document.getElementById('phone_number').value =  profile.phone_number;
 
             document.getElementById("name_to_show").textContent =  profile.username
@@ -48,10 +48,12 @@ document.addEventListener('DOMContentLoaded',function(){
                 email:document.getElementById('email').value,
                 gender:document.getElementById('gender').value,
                 dob:document.getElementById('dob').value,
-                password:document.getElementById('password').value ="",
+                password:document.getElementById('password').value,
                 phone_number:document.getElementById('phone_number').value,
 
             };
+            console.log(updatedData.password);
+            
             fetch(`/api/edit_family_member/${member_id}/`,{
                 method:'PUT',
                 headers:{

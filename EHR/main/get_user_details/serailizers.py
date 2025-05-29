@@ -13,4 +13,9 @@ class  Familymemberserializers(serializers.ModelSerializer):
     class Meta:
         model = FamilyMember
         fields = [ 'id','username','email','dob','gender','phone_number','password']
+        
+class  Familymemberserializers1(serializers.ModelSerializer):
+    class Meta:
+        model = FamilyMember
+        fields = [ 'id','username','email','dob','gender','phone_number']
 
