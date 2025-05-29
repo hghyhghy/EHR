@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-console.log("Sending token:", token);
+console.log("Sending token:", csrfToken);
 
 async function  handleAddFamilyMember(event) {
     

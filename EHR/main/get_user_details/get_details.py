@@ -12,14 +12,18 @@ from  django.views.decorators.csrf import  csrf_protect
 
 
 def get_all_descendends(user):
+    all_members =  FamilyMember.objects.select_related('user','parent_user')
+    user_map={}
+    for member in all_members:
+        user_map.setdefault(member.parent_user_id,[]).append(member)
     reuslt=[]
-    queue = [user]
+    queue = [user.id]
 
     while queue:
         current_user = queue.pop(0)
-        direct_family = FamilyMember.objects.filter(parent_user=current_user)
-        reuslt.extend(direct_family)
-        queue.extend([member.user for member in  direct_family])
+        children  =  user_map.get(current_user,[])
+        reuslt.extend(children)
+        queue.extend([child.user_id for child in  children])
 
     return reuslt
 
@@ -30,7 +34,7 @@ def get_all_descendends(user):
 def get_user_profile(request):
     user =  request.user
     try:
-        profile =   UserProfile.objects.get(user=user)
+        profile =   UserProfile.objects.select_related('user').get(user=user)
         profile_data =  Userprofileserializers(profile).data
 
 
