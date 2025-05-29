@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded",function(){
 })
 
 
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const csrfToken1 = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-console.log("Sending token:", csrfToken);
+console.log("Sending token:", csrfToken1);
 
 async function  handleAddFamilyMember(event) {
     
@@ -31,7 +31,7 @@ async function  handleAddFamilyMember(event) {
             method:'POST',
             headers:{
                 "Content-Type": "application/json",
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': csrfToken1
             },
             body:JSON.stringify(data)
         });
