@@ -8,7 +8,7 @@ from  django.views.generic import  TemplateView
 from  main.get_user_details.get_details import get_user_profile
 from  main.get_family_members_details.family_details  import get_family_member_details
 from  main.get_all_category.category_views import get_category_name
-from  main.doctor_login_register.doctor_auth import  register_view_of_doctors,login_view_for_doctor
+from  main.doctor_login_register.doctor_auth import  register_view_of_doctors,login_view_for_doctor,logout_doctor
 from  main.show_doctor_details.show_details import  get_doctor_details
 from  main.search_doctors.search_views import searh_doctors_by_category
 from  main.book_appointment_with_doctor.appointment_views import request_appointment
@@ -44,6 +44,8 @@ urlpatterns = [
 
     path('api/doctor-register/', register_view_of_doctors,name="doctor-register"),
     path('api/doctor-login/', login_view_for_doctor,name="doctor-login"),
+    path('api/doctor-logout/', logout_doctor,name="doctor-logout"),
+
 
     path('doctor_login/', TemplateView.as_view(template_name='main/doctor_login.html'), name='doctor_login'),
     path('doctor_registration/', TemplateView.as_view(template_name='main/doctor_registration.html'), name='doctor_registration'),

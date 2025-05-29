@@ -92,3 +92,10 @@ def login_view_for_doctor(request):
     else:
         return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
 
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout_doctor(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return Response({'message': 'Logged out successfully'}, status=200)
