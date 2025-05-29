@@ -206,3 +206,9 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1440),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+CSRF_TRUSTED_ORIGINS = [
+    "https://ehr-umif.onrender.com",
+]
+CORS_ALLOWED_ORIGINS = [
+    "https://ehr-umif.onrender.com",
+]
