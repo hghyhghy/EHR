@@ -1,15 +1,15 @@
 
 from rest_framework.decorators import  api_view,permission_classes,authentication_classes
 from rest_framework.permissions  import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from  rest_framework.response  import  Response
 from  rest_framework import  status
 from  ..models  import  DoctorProfile,Appointments,UserProfile
 from  django.utils.dateparse import  parse_datetime
+from  django.views.decorators.csrf import  csrf_protect
 
+@csrf_protect
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([JWTAuthentication])
 
 
 def request_appointment(requset,doctor_id):

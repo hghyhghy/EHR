@@ -1,10 +1,10 @@
 
 .user_details_section{
-  width: 100rem;
+  width:110rem;
   padding: 5rem;
   background-color:  rgb(241, 235, 235);
   min-height: 100vh;
-  padding-top: 4rem;
+  padding-top: 1rem;
   margin-left: 200px;
 }
 
