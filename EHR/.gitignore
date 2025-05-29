@@ -11,4 +11,4 @@ main/get_all_category/__pycache__/
 main/get_family_members_details/__pycache__/
 main/get_user_details/__pycache__/
 main/migrations/__pycache__/
-EHR/settings.py
+# EHR/settings.py
