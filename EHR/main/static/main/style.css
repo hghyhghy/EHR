@@ -264,11 +264,12 @@ body {
   background-color: #2563eb;
 }
 
+
 .family-container {
   position: relative;
   text-align: center;
   right: 70px;
-  width: 109%;
+  width: 110%;
   margin-top: -1rem;
   font-family: sans-serif;
   border-radius: 8px; /* Apply visible rounding */
@@ -276,14 +277,54 @@ body {
   border: 1px solid #d1d5db; /* Optional: border to show rounding clearly */
   overflow: hidden; /* Ensure children don’t break the rounded corners */
 }
-.family-header, .family-row {
+.family-header, .family-row  {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #c9cacc;
   font-size: 14px;
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 2;
+  text-decoration: none;
+
+
+  
 }
+.family-header {
+  font-weight: bold;
+  color: #374151; /* gray-800 */
+  background-color: #d8d9db; 
+  font-weight:bold;/* slightly darker for header */
+  color: black;
+  
+}
+
+.family-cell {
+  flex: 2;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.family-cell1{
+  margin-right: 4rem;
+}
+#family-index {
+  background-color: #9a96c2 !important;
+  min-width: 2rem !important;
+  border-radius: 3rem;
+  padding-inline: 1rem;
+  padding-block: 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 6rem;
+} 
+
 
 .doctor-container {
   background-color: white;
@@ -314,21 +355,7 @@ body {
 /*  */
 
 
-.family-header {
-  font-weight: bold;
-  color: #374151; /* gray-800 */
-  background-color: #d8d9db; 
-  font-weight:bold;/* slightly darker for header */
-  color: black;
-}
 
-.family-cell {
-  flex: 1;
-  padding: 0 0.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 
 .doctor-header {
@@ -646,9 +673,9 @@ button[type="submit"]:hover {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    body {
+    /* body {
 
-    }
+    } */
 
 .wrapper {
     display: flex;
@@ -856,6 +883,4 @@ button[type="submit"]:hover {
         text-align: center;
     }
 }
-
-    
 

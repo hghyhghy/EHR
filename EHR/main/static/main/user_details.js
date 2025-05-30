@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         row.setAttribute('data-member-id', member.uuid); // useful for deletion
 
         row.innerHTML = `
-            <div class="family-cell">${index + 1}</div> 
+            <div id="family-index">${index + 1}</div> 
             <div class="family-cell">${member.username}</div>
             <div class="family-cell">${member.email}</div>
             <div class="family-cell" style="margin-left:2rem">${member.dob || '-'}</div>
