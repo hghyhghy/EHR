@@ -39,7 +39,8 @@ def get_user_profile(request):
 
 
         all_family =   get_all_descendends(user)
-        family_data =  Familymemberserializers(all_family,many=True).data
+        sorted_family =  sorted(all_family,key=lambda member :  member.username.lower())
+        family_data =  Familymemberserializers(sorted_family,many=True).data
         return  Response(
             {
                 "profile":profile_data,
