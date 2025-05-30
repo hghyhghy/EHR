@@ -1,7 +1,7 @@
 
 from rest_framework import  serializers
 from  ..models import  UserProfile,FamilyMember
-
+from django.core import  signing
 
 class Userprofileserializers(serializers.ModelSerializer):
     class Meta:
@@ -12,10 +12,12 @@ class Userprofileserializers(serializers.ModelSerializer):
 class  Familymemberserializers(serializers.ModelSerializer):
     class Meta:
         model = FamilyMember
-        fields = [ 'id','username','email','dob','gender','phone_number','password']
+        fields = [ 'uuid','username','email','dob','gender','phone_number','password']
         
 class  Familymemberserializers1(serializers.ModelSerializer):
+
+    
     class Meta:
         model = FamilyMember
-        fields = [ 'id','username','email','dob','gender','phone_number']
+        fields = [ 'uuid','username','email','dob','gender','phone_number']
 

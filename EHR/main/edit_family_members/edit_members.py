@@ -35,7 +35,7 @@ def edit_family_members(request,member_id):
     user  =  request.user
     all_descendants  =  get_all_descendants(user)
     try:
-        family_member =  FamilyMember.objects.get(id=member_id)
+        family_member =  FamilyMember.objects.get(uuid=member_id)
         if family_member not  in  all_descendants:
             return Response({'error': 'Unauthorized to edit this family member'}, status=status.HTTP_403_FORBIDDEN)
 

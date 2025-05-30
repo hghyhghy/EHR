@@ -24,7 +24,7 @@ def recursively_find_the_main_user(user):
 def delete_family_members(request, member_id):
     try:
         # Get the family member by ID and make sure it belongs to the logged-in user
-        family_member = FamilyMember.objects.get(id=member_id)
+        family_member = FamilyMember.objects.get(uuid=member_id)
         family_user  =  family_member.user
         # family_user =  family_member.user
         # user_profile =  UserProfile.objects.get(user=family_user)

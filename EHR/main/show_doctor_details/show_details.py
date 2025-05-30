@@ -9,7 +9,7 @@ from ..models import DoctorProfile
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from  django.views.decorators.csrf import  csrf_protect
-
+from django.core.signing import dumps
 @csrf_protect
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -19,9 +19,10 @@ def get_doctor_details(request):
     doctor_list= []
 
     for doctor  in  doctors:
+        doctor_id = dumps(doctor.id)
         doctor_list.append({
             
-            'id':doctor.id,
+            'id':doctor_id,
             'username':doctor.username,
             'email':doctor.email,
             'degree':doctor.degree,

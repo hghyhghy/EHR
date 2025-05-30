@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import  uuid
 class UserProfile(models.Model):
     GENDER_CHOICES = [
         ('M', 'Male'),
@@ -22,6 +22,7 @@ class UserProfile(models.Model):
         return self.user.email
 
 class  FamilyMember(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     # each family member is pointing back to the parent user who created them
     parent_user =  models.ForeignKey(User,on_delete=models.DO_NOTHING,related_name='family_members')
     # making each family member a unique user 

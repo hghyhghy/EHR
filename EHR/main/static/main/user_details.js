@@ -14,27 +14,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Render user profile
     const profile = data.profile;
-    const profile1  = data.family
-    if (data.profile){
-
-        document.getElementById('user-username').textContent = profile.username  
-    }  else if(data.family){
-        document.getElementById('user-username').textContent =  profile1.username;
-
+    const profile1 = data.family;
+    if (profile) {
+        document.getElementById('user-username').textContent = profile.username;
+    } else if (data.family) {
+        document.getElementById('user-username').textContent = profile1.username;
     }
-    // Add more fields if needed...
 
     // Render family members in flex layout
     const familyBody = document.getElementById('family-body');
     familyBody.innerHTML = ''; // clear placeholder
-    
-    data.family.forEach((member,index) => {
+
+    data.family.forEach((member, index) => {
         const row = document.createElement('div');
         row.className = 'family-row';
-        row.setAttribute('data-member-id', member.id); // useful for deletion
+        row.setAttribute('data-member-id', member.uuid); // useful for deletion
 
         row.innerHTML = `
-            
             <div class="family-cell">${index + 1}</div> 
             <div class="family-cell">${member.username}</div>
             <div class="family-cell">${member.email}</div>
@@ -42,21 +38,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="family-cell">${member.gender || '-'}</div>
             <div class="family-cell">
                 <div class="button-group">
-                    <i class='bx  bx-trash delete-btn' role = 'button' tabindex="0" data-member-id="${member.id}"></i>
-                    <i class='bx  bx-edit edit-btn' role = 'button' tabindex="0" data-member-id="${member.id}"></i>
+                    <i class='bx bx-trash delete-btn' role='button' tabindex="0" data-member-id="${member.uuid}"></i>
+                    <i class='bx bx-edit edit-btn' role='button' tabindex="0" data-member-id="${member.uuid}"></i>
                 </div>
             </div>
-
         `;
 
         familyBody.appendChild(row);
     });
-    // end
 });
 
 document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('delete-btn')) {
-        const memberId = e.target.getAttribute('data-member-id');
+    // Find closest delete button element clicked
+    const deleteBtn = e.target.closest('.delete-btn');
+    if (deleteBtn) {
+        const memberId = deleteBtn.getAttribute('data-member-id');
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         if (confirm("Are you sure you want to delete this member?")) {
@@ -65,7 +61,6 @@ document.addEventListener('click', function (e) {
                 headers: {
                     "Content-Type": "application/json",
                     'X-CSRFToken': csrfToken
-
                 }
             })
                 .then(res => res.json())
@@ -82,10 +77,17 @@ document.addEventListener('click', function (e) {
                     alert("An error occurred.");
                 });
         }
+        return; // Stop further processing after delete
     }
 
-    if (e.target.classList.contains('edit-btn')){
-        const memberId =  e.target.getAttribute('data-member-id')
-        window.location.href = `/edit_family_member/${memberId}`
+    // Find closest edit button element clicked
+    const editBtn = e.target.closest('.edit-btn');
+    if (editBtn) {
+        const memberId = editBtn.getAttribute('data-member-id');
+        if (!memberId) {
+            alert('Member ID not found!');
+            return;
+        }
+        window.location.href = `/edit_family_member/${memberId}`;
     }
 });

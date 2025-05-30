@@ -26,9 +26,9 @@ urlpatterns = [
     path('api/logout/', logout_user, name='logout'),
 
 
-    path('edit_family_member/<int:member_id>/',TemplateView.as_view(template_name='main/edit_family_member.html'),name='edit_member'),
-    path('api/edit_family_member/<int:member_id>/', edit_family_members, name='edit_family_member'),
-    path('delete-family-member/<int:member_id>/', delete_family_members, name='delete_family_member'),
+    path('edit_family_member/<uuid:member_id>/',TemplateView.as_view(template_name='main/edit_family_member.html'),name='edit_member'),
+    path('api/edit_family_member/<uuid:member_id>/', edit_family_members, name='edit_family_member'),
+    path('delete-family-member/<uuid:member_id>/', delete_family_members, name='delete_family_member'),
 
     # endpoint for the userprofile 
     path('user_details/',TemplateView.as_view(template_name='main/user_details.html'),name='user_details'),
@@ -38,7 +38,7 @@ urlpatterns = [
 
     path('api/add-family-members/', add_family_member, name='add_family_members'),
 
-    path('api/get-family-details/<int:member_id>/',get_family_member_details,name='family-details'),
+    path('api/get-family-details/<uuid:member_id>/',get_family_member_details,name='family-details'),
 
     path('api/categories/', get_category_name,name="category_name"),
 

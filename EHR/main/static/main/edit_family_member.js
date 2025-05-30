@@ -3,9 +3,8 @@ console.log("Edit member JS loaded");
 document.addEventListener('DOMContentLoaded',function(){
 
 
-    const pathUrls = window.location.pathname.split("/")
-    const member_id =  pathUrls[pathUrls.length -2]
-
+const pathUrls = window.location.pathname.split("/").filter(part => part); 
+const member_id = pathUrls[pathUrls.length - 1];
     if (!member_id){
         alert('No member id is found')
         return
@@ -34,6 +33,8 @@ document.addEventListener('DOMContentLoaded',function(){
 
             document.getElementById("name_to_show").textContent =  profile.username
             document.getElementById("name_to_show").style.color ="blue"
+            console.log(member_id)
+
 
         } else{
             alert('Failed to get the user details ')

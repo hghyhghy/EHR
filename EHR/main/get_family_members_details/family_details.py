@@ -9,7 +9,6 @@ from ..models import FamilyMember
 from ..get_user_details.serailizers import  Familymemberserializers1
 from  django.views.decorators.cache import never_cache
 from  django.views.decorators.csrf import  csrf_protect
-
 def get_all_descendants(user):
 
     descendants =[]
@@ -34,7 +33,7 @@ def get_family_member_details(request,member_id):
     all_descendants =  get_all_descendants(user)
     try:
         
-        family_member =  FamilyMember.objects.get(id=member_id)
+        family_member =  FamilyMember.objects.get(uuid=member_id)
         if family_member not in all_descendants:
             return  Response({'message':'Unauthorized to view this family details'},status=status.HTTP_403_FORBIDDEN)
 
