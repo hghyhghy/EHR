@@ -5,3 +5,4 @@ PyJWT>=2.6.0
 mysqlclient == 2.2.7
 django-cors-headers == 4.7.0
 python-dotenv == 1.1.0
+psycopg[binary]

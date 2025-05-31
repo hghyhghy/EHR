@@ -178,6 +178,7 @@
      }
 
      .quote {
-         max-width: 100%;
+        font-size: 2rem;
+        max-width: 50%;
      }
  }

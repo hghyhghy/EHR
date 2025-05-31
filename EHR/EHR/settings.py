@@ -152,12 +152,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #mysql://root:@hopper.proxy.rlwy.net:32071/railway
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',
-        'USER': 'root',
-        'PASSWORD': 'xOXfmOFDWWlosNdYFzDCrcathAnCKTCY',
-        'HOST': 'hopper.proxy.rlwy.net',   # or IP/remote host like 'db.example.com'
-        'PORT': '32071',        # default MySQL port
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'instaily2025',
+        'HOST': 'db.efnxobqifzeznmsztpcn.supabase.co',   # or IP/remote host like 'db.example.com'
+        'PORT': '5432',        # default MySQL port
     }
 }
 # DATABASES = {
