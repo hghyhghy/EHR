@@ -13,6 +13,8 @@ from  main.show_doctor_details.show_details import  get_doctor_details
 from  main.search_doctors.search_views import searh_doctors_by_category
 from  main.book_appointment_with_doctor.appointment_views import request_appointment
 from  main.request_appointment_views.request_appointment_views import listed_appointments
+from django.conf import  settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
@@ -54,14 +56,13 @@ urlpatterns = [
     path('api/all-doctors/', get_doctor_details, name='list_all_doctors'),
     path('api/search-doctors/', searh_doctors_by_category, name='search_doctors'),
 
-    path('api/request-appointment/<int:doctor_id>/', request_appointment, name='request_appointment'),
+    path('book-appointment/<str:doctor_id>/', TemplateView.as_view(template_name='main/book-appointment.html'), name='book_appointment'),
+    path('api/request-appointment/<str:doctor_id>/', request_appointment, name='request_appointment'),
     path('doctor_profile/',TemplateView.as_view(template_name='main/doctor_profile.html'),name='doctor_profile'),
 
     path('api/doctor-appointments/', listed_appointments, name='doctor_appointments')
 
-    
-
-
-
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

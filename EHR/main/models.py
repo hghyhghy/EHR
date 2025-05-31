@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 import  uuid
+from  django.core.exceptions  import  ValidationError
+from django.conf import settings
+import os
+
 class UserProfile(models.Model):
     GENDER_CHOICES = [
         ('M', 'Male'),
@@ -78,11 +82,24 @@ class medicines(models.Model):
     dosage = models.IntegerField(default=0)
     duration_left = models.DateTimeField(auto_created=True)
     quantity = models.IntegerField(default=0)
+
+
+def  validate_file_size(file):
+    max_size =  settings.MAX_UPLOAD_SIZE
+    if file.size >  max_size:
+        raise ValidationError(f"File size should not exceed {max_size // (1024 * 1024)} MB.")
+
+def upload_to_unique(instance,filename):
+    ext =  filename.split('.')[-1]
+    unique_name  =  f"{uuid.uuid4}.{ext}"
+    return  os.path.join('uploads/',unique_name)
+
+
 class Appointments(models.Model):
-    reports = models.CharField(max_length = 255,null=True)
-    prescription_file = models.CharField(max_length = 255,null=True)
-    prescribed_tests = models.ForeignKey(tests,on_delete=models.CASCADE,null=True)
-    prescribed_medicines = models.ForeignKey(medicines,on_delete=models.CASCADE,null = True)
+    reports = models.FileField(upload_to=upload_to_unique , blank=True   ,null=True,  validators=[validate_file_size])
+    prescription_file = models.FileField(upload_to=upload_to_unique, blank=True   ,null=True,  validators=[validate_file_size])
+    prescribed_tests = models.ForeignKey(tests,on_delete=models.SET_NULL,null=True)
+    prescribed_medicines = models.ForeignKey(medicines,on_delete=models.SET_NULL,null = True)
     user_id = models.ForeignKey(UserProfile,on_delete=models.DO_NOTHING)
     doctor_id = models.ForeignKey(DoctorProfile,on_delete=models.DO_NOTHING)
     category_id = models.ForeignKey(Category,on_delete=models.DO_NOTHING)

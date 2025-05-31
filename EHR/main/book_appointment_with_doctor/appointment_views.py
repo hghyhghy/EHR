@@ -3,33 +3,40 @@ from rest_framework.decorators import  api_view,permission_classes,authenticatio
 from rest_framework.permissions  import IsAuthenticated
 from  rest_framework.response  import  Response
 from  rest_framework import  status
-from  ..models  import  DoctorProfile,Appointments,UserProfile
+from  ..models  import  DoctorProfile,Appointments,UserProfile,tests,medicines
 from  django.utils.dateparse import  parse_datetime
 from  django.views.decorators.csrf import  csrf_protect
+from django.core.signing import  loads,BadSignature
+import  mimetypes
+
+ALLOWED_MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/png']
+
+def is_valid_file(file):
+    mime_tye,_ =  mimetypes.guess_type(file.name)
+    return  mime_tye in ALLOWED_MIME_TYPES
 
 @csrf_protect
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-
-
-def request_appointment(requset,doctor_id):
-    user  =  requset.user
+def request_appointment(request,doctor_id):
+    user  =  request.user
 
     try:
         user_id  =  user.profile
     except  UserProfile.DoesNotExist:
         return  Response({'message':'User with this id does not exist'},status=status.HTTP_404_NOT_FOUND)
 
-    venue  =  requset.data.get('venue')
-    scheduled_on  =requset.data.get('scheduled_on')
+    venue  =  request.data.get('venue')
+    scheduled_on  =request.data.get('scheduled_on')
 
     if not all([venue,scheduled_on]):
         return  Response({'message':'Those fields are required'},status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        doctor =  DoctorProfile.objects.get(id=doctor_id)
+        real_doctor_id =  loads(doctor_id)
+        doctor =  DoctorProfile.objects.get(id=real_doctor_id)
 
-    except  DoctorProfile.DoesNotExist:
+    except  (BadSignature,DoctorProfile.DoesNotExist):
         return  Response({'message':'Doctor with this id does not exist'},status=status.HTTP_404_NOT_FOUND)
 
     try:
@@ -39,6 +46,35 @@ def request_appointment(requset,doctor_id):
         
     except ValueError:
         return  Response({'message':'Need scheduled time  in ISO format'},status=status.HTTP_400_BAD_REQUEST)
+    
+    reports_file   = request.FILES.get('reports')
+    prescription_file   = request.FILES.get('prescription_file')
+
+    if reports_file and not is_valid_file(reports_file):
+        return  Response({'message':'Invalid reports file format allowed only  PDF,JPG,PNG'},status=status.HTTP_400_BAD_REQUEST)
+
+    if prescription_file and not is_valid_file(prescription_file):
+        return  Response({'message':'Invalid prescription file format allowed file format is PDF,JPG,PNG'},status=status.HTTP_400_BAD_REQUEST)
+    
+    test_id = request.data.get('prescribed_tests')
+    medicine_id = request.data.get('prescribed_medicines')
+
+    prescribed_test = None
+    prescribed_medicine = None
+
+    if test_id:
+        try:
+            prescribed_test=tests.objects.get(id=test_id)
+
+        except  tests.DoesNotExist:
+            return  Response({'message':'Test could not be found'},status=status.HTTP_400_BAD_REQUEST)
+
+    if medicine_id:
+        try:
+            prescribed_medicine = medicines.objects.get(id=medicine_id)
+        except  medicines.DoesNotExist:
+            return  Response({'message':'Medicines could not be found'},status=status.HTTP_400_BAD_REQUEST)
+
 
     appointment  =  Appointments.objects.create(
 
@@ -47,11 +83,16 @@ def request_appointment(requset,doctor_id):
         category_id  =  doctor.category_id,
         scheduled_on=scheduled_datetime,
         venue=venue,
+        reports=reports_file,
+        prescription_file=prescription_file,
+        prescribed_tests=prescribed_test,
+        prescribed_medicines=prescribed_medicine
         
     )
 
     return  Response({
         'message':'Appointment booked successfully',
         'appointment_id':appointment.id,
-        'user_id':user.id
+        'user_id':user.id,
+        
     },status=status.HTTP_201_CREATED)

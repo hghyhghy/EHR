@@ -2,7 +2,7 @@
 .user_details_section{
   width:110rem;
   padding: 5rem;
-  background-color:  rgb(241, 235, 235);
+  background-color:  #211a1a;
   min-height: 100vh;
   padding-top: 1rem;
   margin-left: 200px;
@@ -22,6 +22,7 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
+  background-color: #211a1a;
 }
 
 .login_email{
@@ -269,12 +270,12 @@ body {
   position: relative;
   text-align: center;
   right: 70px;
-  width: 110%;
+  width: 108%;
   margin-top: -1rem;
   font-family: sans-serif;
   border-radius: 8px; /* Apply visible rounding */
-  background-color: #f9fafb; /* Give it a visible background */
-  border: 1px solid #d1d5db; /* Optional: border to show rounding clearly */
+  background-color: #211a1a; /* Give it a visible background */
+   /* Optional: border to show rounding clearly */
   overflow: hidden; /* Ensure children don’t break the rounded corners */
 }
 .family-header, .family-row  {
@@ -296,7 +297,7 @@ body {
 .family-header {
   font-weight: bold;
   color: #374151; /* gray-800 */
-  background-color: #d8d9db; 
+  background-color: #f7fafc; 
   font-weight:bold;/* slightly darker for header */
   color: black;
   
@@ -307,7 +308,7 @@ body {
   padding: 0 0.5rem;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis;  
 }
 
 .family-cell1{
@@ -390,7 +391,8 @@ body {
     font-size: 14px;
 }
 .family-row{
-  background-color: white;
+  background-color: #211a1a;
+  color: white;
 }
 #family-body{
   margin-right: 1rem;
@@ -421,7 +423,7 @@ body {
   width: 230px;
 }
 .family_member_main_card{
-  background-color: white;
+  background-color: #211a1a;
   width:75rem ;
   padding: 3rem;
   position: relative;
@@ -645,7 +647,7 @@ button[type="submit"]:hover {
 
 #doctor-search-input {
     padding: 10px;
-    width:max-content;
+    width:100rem;
     border-radius: 8px;
     border: 1px solid #ccc;
 
@@ -688,7 +690,7 @@ button[type="submit"]:hover {
 
 .sidebar_doctor {
   position: relative;
-  left: -10.7rem;
+  left: 0.101m;
     display: flex;
     flex-direction:column;
     align-items: start;
@@ -697,7 +699,7 @@ button[type="submit"]:hover {
     background-color: #1a202c;
     color: #ffffff;
     padding: 24px;
-    height:60.4rem;
+    /* height:60.4rem; */
     overflow-y: auto;
 }
 
@@ -736,7 +738,7 @@ button[type="submit"]:hover {
         flex-direction: column;
         align-items: start;
         justify-content: start;
-        margin-left: -1rem;
+        margin-left:-0.7rem;
     }
 
     .nav-links li {
@@ -765,8 +767,9 @@ button[type="submit"]:hover {
 .main-content {
     /* margin-left: 250px;  <-- REMOVE THIS LINE */
     flex-grow: 1;
-    padding: 30px 24px;
-    background-color: #ffffff;
+    padding: 30px 3px;
+    background-color: #211a1a;
+    width: max-content;
 }
 
     .container {
@@ -776,12 +779,12 @@ button[type="submit"]:hover {
 
     .appointments {
       position: relative;
-      left:  -20rem;
-        background-color: #ffffff;
+      left:  -8rem;
+        background-color: #1f1c1c;
         padding: 24px;
         border-radius: 12px;
         /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); */
-        width: 100rem;
+        width: 80rem;
     }
 
     .appointments h2 {
@@ -801,6 +804,7 @@ button[type="submit"]:hover {
         padding: 14px 16px;
         text-align: left;
         border-bottom: 1px solid #edf2f7;
+        color: white;
     }
 
     th {
@@ -884,3 +888,47 @@ button[type="submit"]:hover {
     }
 }
 
+
+
+/* appointment booking form  */
+.appointment-grid-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5em;
+    margin-bottom: 1.5em;
+    position: relative;
+    left: 6rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 0.5em;
+    font-size: 1em;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 1em;
+    position: relative;
+    left: 6rem;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
