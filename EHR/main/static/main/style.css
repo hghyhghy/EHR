@@ -11,7 +11,6 @@
 
 .doctor_details_section {
   padding: 2rem;
-  background-color: rgb(255, 251, 251);
   min-height: 100vh;
   margin-left: 200px; /* enough space for sidebar */
   box-sizing: border-box;
@@ -436,6 +435,7 @@ body {
   left: 13rem;
   font: bolder;
   font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: wheat;
 
 }
 .add_family_member_button{
@@ -449,7 +449,7 @@ body {
   border-radius: 4px;
 }
 .edit_family_member_button{
-  width: 100px;
+  width: 50px;
   border-radius: 5px;
   font-size:medium;
   font-weight: 100;
@@ -460,6 +460,7 @@ body {
 }
 .edit_class_show{
   font-weight: 600;
+  color: wheat;
 }
 
 /*  */
@@ -548,7 +549,7 @@ button[type="submit"]:hover {
 .doctor-username {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
+  color: #eeeded;
   margin-bottom: 0.5rem;
 }
 
@@ -612,7 +613,7 @@ button[type="submit"]:hover {
   }
 } */
 .doctor-row {
-  background-color: white;
+  background-color:#313233;
   padding: 1.5rem;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -915,7 +916,7 @@ button[type="submit"]:hover {
     font-size: 1em;
 }
 
-button[type="submit"] {
+.book-btn {
     width: 100%;
     padding: 0.8em;
     background-color: #007bff;

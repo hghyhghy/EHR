@@ -32,7 +32,7 @@ const member_id = pathUrls[pathUrls.length - 1];
             document.getElementById('phone_number').value =  profile.phone_number;
 
             document.getElementById("name_to_show").textContent =  profile.username
-            document.getElementById("name_to_show").style.color ="blue"
+            document.getElementById("name_to_show").style.color ="violet"
             console.log(member_id)
 
 
