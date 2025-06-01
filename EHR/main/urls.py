@@ -15,6 +15,8 @@ from  main.book_appointment_with_doctor.appointment_views import request_appoint
 from  main.request_appointment_views.request_appointment_views import listed_appointments
 from django.conf import  settings
 from django.conf.urls.static import static
+from  main.request_password_reset.request import request_password_reset
+from  main.reset_password.reset import reset_password
 
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
@@ -60,7 +62,12 @@ urlpatterns = [
     path('api/request-appointment/<str:doctor_id>/', request_appointment, name='request_appointment'),
     path('doctor_profile/',TemplateView.as_view(template_name='main/doctor_profile.html'),name='doctor_profile'),
 
-    path('api/doctor-appointments/', listed_appointments, name='doctor_appointments')
+    path('api/doctor-appointments/', listed_appointments, name='doctor_appointments'),
+
+    # reset password views
+    path('reset_password/', TemplateView.as_view(template_name='main/reset_password.html'), name='reset_password'),
+    path('api/reset/verify-email/', request_password_reset, name='verify-email'),
+    path('api/reset/set-password/', reset_password, name='verify-email'),
 
 ]
 

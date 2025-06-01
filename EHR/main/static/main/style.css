@@ -933,3 +933,53 @@ button[type="submit"]:hover {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+/* reset password  css */
+
+.reset-form {
+    background: #313233;;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    width: 350px;
+}
+
+.reset-form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: wheat;
+}
+
+.reset-form label {
+    display: block;
+    margin-top: 10px;
+    color: wheat;
+}
+
+.reset-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    outline: none;
+}
+
+.reset-form button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.reset-form button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+#message {
+    margin-top: 15px;
+    color: red;
+    text-align: center;
+}
