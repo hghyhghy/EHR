@@ -1,8 +1,10 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    // const token = localStorage.getItem('access');
+let nextPage = null;
+let prevPage = null;
+
+async function loadFamilyMembers(url = '/api/user-details/') {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    const response = await fetch('/api/user-details/', {
+    const response = await fetch(url, {
         method: 'GET',
         headers: {
             "Accept": "application/json",
@@ -11,30 +13,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     const data = await response.json();
+    const profile =  data.results.profile
+    const family =  data.results.family
 
-    // Render user profile
-    const profile = data.profile;
-    const profile1 = data.family;
+    // Set profile username
     if (profile) {
         document.getElementById('user-username').textContent = profile.username;
-    } else if (data.family) {
-        document.getElementById('user-username').textContent = profile1.username;
     }
 
-    // Render family members in flex layout
+    // Render family members
     const familyBody = document.getElementById('family-body');
-    familyBody.innerHTML = ''; // clear placeholder
+    familyBody.innerHTML = ''; // clear old rows
 
-    data.family.forEach((member, index) => {
+    family.forEach((member, index) => {
         const row = document.createElement('div');
         row.className = 'family-row';
-        row.setAttribute('data-member-id', member.uuid); // useful for deletion
+        row.setAttribute('data-member-id', member.uuid);
 
         row.innerHTML = `
-            <div id="family-index">${index + 1}</div> 
+            <div class='family-cell2'>${index + 1}</div>
             <div class="family-cell">${member.username}</div>
             <div class="family-cell">${member.email}</div>
-            <div class="family-cell" style="margin-left:2rem">${member.dob || '-'}</div>
+            <div class="family-cell">${member.dob || '-'}</div>
             <div class="family-cell">${member.gender || '-'}</div>
             <div class="family-cell">
                 <div class="button-group">
@@ -46,10 +46,52 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         familyBody.appendChild(row);
     });
+
+    // Update pagination links
+    nextPage = data.next;
+    prevPage = data.previous;
+
+    renderPaginationControls();
+}
+
+function renderPaginationControls() {
+    let controls = document.getElementById('pagination-controls');
+
+    if (!controls) {
+        controls = document.createElement('div');
+        
+        controls.id = 'pagination-controls';
+        controls.style.marginTop = '1rem';
+        controls.style.display = 'flex';
+        controls.style.justifyContent = 'center';
+        controls.style.gap = '10px';
+        document.querySelector('.family-container').appendChild(controls);
+    }
+
+    controls.innerHTML = '';
+
+    if (prevPage) {
+        const prevBtn = document.createElement('button');
+        prevBtn.textContent = 'Previous';
+        prevBtn.className='pagination-btn'
+        prevBtn.onclick = () => loadFamilyMembers(prevPage);
+        controls.appendChild(prevBtn);
+    }
+
+    if (nextPage) {
+        const nextBtn = document.createElement('button');
+        nextBtn.textContent = 'Next';
+        nextBtn.className='pagination-btn'
+        nextBtn.onclick = () => loadFamilyMembers(nextPage);
+        controls.appendChild(nextBtn);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadFamilyMembers();
 });
 
 document.addEventListener('click', function (e) {
-    // Find closest delete button element clicked
     const deleteBtn = e.target.closest('.delete-btn');
     if (deleteBtn) {
         const memberId = deleteBtn.getAttribute('data-member-id');
@@ -77,10 +119,9 @@ document.addEventListener('click', function (e) {
                     alert("An error occurred.");
                 });
         }
-        return; // Stop further processing after delete
+        return;
     }
 
-    // Find closest edit button element clicked
     const editBtn = e.target.closest('.edit-btn');
     if (editBtn) {
         const memberId = editBtn.getAttribute('data-member-id');

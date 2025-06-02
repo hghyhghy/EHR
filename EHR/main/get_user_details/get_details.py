@@ -8,8 +8,13 @@ from django.views.decorators.csrf import  csrf_exempt
 from ..get_user_details.serailizers import  Userprofileserializers,Familymemberserializers
 from  ..models  import  UserProfile,FamilyMember
 from  django.views.decorators.csrf import  csrf_protect
+from  rest_framework.pagination  import  PageNumberPagination
 
 
+class  FamilyPagination(PageNumberPagination):
+    page_size=4
+    page_size_query_param='page_size'
+    max_page_size=100
 
 def get_all_descendends(user):
     all_members =  FamilyMember.objects.select_related('user','parent_user')
@@ -40,8 +45,11 @@ def get_user_profile(request):
 
         all_family =   get_all_descendends(user)
         sorted_family =  sorted(all_family,key=lambda member :  member.username.lower())
-        family_data =  Familymemberserializers(sorted_family,many=True).data
-        return  Response(
+
+        paginator =  FamilyPagination()
+        paginated_family =  paginator.paginate_queryset(sorted_family,request)
+        family_data =  Familymemberserializers(paginated_family,many=True).data
+        return  paginator.get_paginated_response(
             {
                 "profile":profile_data,
                 'family':family_data

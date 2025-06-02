@@ -313,6 +313,11 @@ body {
 .family-cell1{
   margin-right: 4rem;
 }
+.family-cell2{
+  margin-right: 9rem;
+  position: relative;
+  left: 7rem;
+}
 #family-index {
   background-color: #9a96c2 !important;
   min-width: 2rem !important;
@@ -411,6 +416,7 @@ body {
   cursor: pointer;
   height: 35px;
   font-size: smaller;
+  margin-top: 1rem;
 }
 .add-user-button.a{
   color: white;
@@ -418,8 +424,8 @@ body {
 #username_name{
   position:relative;
   top: 0.5rem;
-  left: 41rem;
-  width: 230px;
+  left: 39rem;
+  width: 220px;
 }
 .family_member_main_card{
   background-color: #211a1a;
@@ -472,7 +478,7 @@ body {
 }
 .form-container {
     margin: 3rem auto;
-    background-color: #ffffff;
+    background-color: #313233;
     padding: 2.5rem 2rem;
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -481,7 +487,7 @@ body {
 .form-container h2 {
     text-align: center;
     margin-bottom: 1.5rem;
-    color: #343a40;
+    color: wheat;
 }
 
 .form-group {
@@ -493,7 +499,7 @@ body {
 label {
     font-size: 0.95rem;
     margin-bottom: 0.4rem;
-    color: #495057;
+    color: white;
 }
 
 input[type="text"],
@@ -982,4 +988,35 @@ button[type="submit"]:hover {
     margin-top: 15px;
     color: red;
     text-align: center;
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.pagination-buttons button {
+    padding: 0.5rem 1rem;
+    background-color: #4B5563;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination-btn {
+        position: relative;
+        right: 4rem;
+        margin-top: 1rem;
+        width: 90px;
+        padding: 12px;
+        background-color: #313233;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: 300;
+        font-size: 16px;
+        cursor: pointer;
 }
