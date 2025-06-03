@@ -156,7 +156,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres.efnxobqifzeznmsztpcn',    
         'PASSWORD': 'instaily2025',
-        'HOST':'aws-0-ap-south-1.pooler.supabase.com'  # or IP/remote host like 'db.example.com'
+        'HOST':'aws-0-ap-south-1.pooler.supabase.com',  # or IP/remote host like 'db.example.com'
         'PORT':'6543',        # default MySQL port
     }
 }
