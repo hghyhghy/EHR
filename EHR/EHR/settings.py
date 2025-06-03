@@ -154,10 +154,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'postgres',
+        'USER': 'postgres.efnxobqifzeznmsztpcn',    
         'PASSWORD': 'instaily2025',
-        'HOST': 'db.efnxobqifzeznmsztpcn.supabase.co',   # or IP/remote host like 'db.example.com'
-        'PORT': '5432',        # default MySQL port
+        'HOST':'aws-0-ap-south-1.pooler.supabase.com'  # or IP/remote host like 'db.example.com'
+        'PORT': '6543',        # default MySQL port
     }
 }
 # DATABASES = {
