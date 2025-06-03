@@ -13,7 +13,7 @@ const member_id = pathUrls[pathUrls.length - 1];
 
     // const token  =  localStorage.getItem('access')
     const form  =  document.getElementById("edit_family_member_form")
-    fetch(`/api/get-family-details/${member_id}`,{
+    fetch(`/api/get-family-details/${member_id}/`,{
         method:'GET',
         headers:{
                         'X-CSRFToken': csrfToken

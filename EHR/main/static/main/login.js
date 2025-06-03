@@ -13,6 +13,11 @@ async function handleLogin(event) {
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const recaptchaToken = grecaptcha.getResponse();
+    if (!recaptchaToken) {
+        alert("Please complete the reCAPTCHA.");
+        return;
+    }
 
     const response = await fetch("/api/login/", {
         method: 'POST',
@@ -20,7 +25,7 @@ async function handleLogin(event) {
             "Content-Type": "application/json",
             'X-CSRFToken':csrfToken
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password,recaptcha: recaptchaToken})
     });
 
     const data = await response.json();

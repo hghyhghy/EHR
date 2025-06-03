@@ -15,12 +15,23 @@ from datetime import datetime
 import logging
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from  django.views.decorators.csrf import  csrf_protect
+from  ..throttling import  RegisterRateThrottle,LoginRateThrottle
+from  rest_framework.decorators import throttle_classes
+import  requests
 
+def verify_captcha(captcha_response):
+    secret_key = '6LetAlQrAAAAAGYXwAiEApC0eqzks-vsbc_24RxJ'  # From Google reCAPTCHA dashboard
+    payload = {
+        'secret': secret_key,
+        'response': captcha_response
+    }
+    r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=payload)
+    result = r.json()
+    return result.get('success', False)
 
 
 @api_view(['POST'])
-
-
+@throttle_classes([RegisterRateThrottle])
 def register_view_of_doctors(request):
     if request.user.is_authenticated:
         return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
@@ -67,13 +78,16 @@ def register_view_of_doctors(request):
         traceback.print_exc()  # full traceback in terminal
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@csrf_protect
+
 @api_view(['POST'])
-
-
+@throttle_classes([LoginRateThrottle])
 def login_view_for_doctor(request):
     if request.user.is_authenticated:
         return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
+    capcha_response  =  request.data.get('recaptcha')
+    if not capcha_response or not verify_captcha(capcha_response):
+        return Response({'error': 'CAPTCHA validation failed.'}, status=400)
+
     data  =  request.data
     email = data.get('email')
     password=data.get('password')

@@ -129,6 +129,6 @@ document.addEventListener('click', function (e) {
             alert('Member ID not found!');
             return;
         }
-        window.location.href = `/edit_family_member/${memberId}`;
+        window.location.href = `/edit_family_member/${memberId}/`;
     }
 });

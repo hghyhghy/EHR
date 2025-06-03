@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
         const data  =  await  response.json()
         if (response.ok){
-                    window.location.href = "/"; // or redirect to login page
+                    window.location.href = "/login/"; // or redirect to login page
 
         } else{
             alert('Error logging out for the user ')

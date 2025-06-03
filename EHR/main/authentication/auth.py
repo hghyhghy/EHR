@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from ..models import UserProfile
 from django.contrib.auth.hashers import make_password, check_password
-from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models  import  User
 from  django.contrib.auth  import  login,logout,authenticate
 from django.views.decorators.csrf import csrf_exempt
@@ -16,8 +15,24 @@ from django.http import JsonResponse
 from datetime import datetime
 import logging
 from  django.views.decorators.csrf import  csrf_protect
+from  rest_framework.decorators import  throttle_classes
+from ..throttling import  RegisterRateThrottle,LoginRateThrottle
+import requests
+
+
+def verify_captcha(captcha_response):
+    secret_key = '6LetAlQrAAAAAGYXwAiEApC0eqzks-vsbc_24RxJ'  # From Google reCAPTCHA dashboard
+    payload = {
+        'secret': secret_key,
+        'response': captcha_response
+    }
+    r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=payload)
+    result = r.json()
+    return result.get('success', False)
+
 
 @api_view(['POST'])
+@throttle_classes([RegisterRateThrottle])
 def register_user(request):
     if request.user.is_authenticated:
         return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
@@ -67,10 +82,15 @@ def register_user(request):
 
 
 @csrf_protect
+@throttle_classes([LoginRateThrottle])
 @api_view(['POST'])
 def login_user(request):
     if request.user.is_authenticated:
         return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
+    captcha_response  =  request.data.get('recaptcha')
+    if not captcha_response or not verify_captcha(captcha_response):
+        return Response({'error': 'CAPTCHA validation failed.'}, status=400)
+
     data = request.data
     email = data.get('email')
     password = data.get('password')
