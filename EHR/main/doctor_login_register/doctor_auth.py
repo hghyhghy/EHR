@@ -31,7 +31,7 @@ def verify_captcha(captcha_response):
 
 
 @api_view(['POST'])
-@throttle_classes([RegisterRateThrottle])
+# @throttle_classes([RegisterRateThrottle])
 def register_view_of_doctors(request):
     if request.user.is_authenticated:
         return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
@@ -80,7 +80,7 @@ def register_view_of_doctors(request):
 
 
 @api_view(['POST'])
-@throttle_classes([LoginRateThrottle])
+# @throttle_classes([LoginRateThrottle])    
 def login_view_for_doctor(request):
     if request.user.is_authenticated:
         return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)

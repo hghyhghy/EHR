@@ -32,14 +32,14 @@ def verify_captcha(captcha_response):
 
 
 @api_view(['POST'])
-@throttle_classes([RegisterRateThrottle])
+# @throttle_classes([RegisterRateThrottle])
 def register_user(request):
     if request.user.is_authenticated:
         return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
 
 
     data = request.data
-    print("Received data:", data)  # debug
+    print("Received data:", data)  # debug  
 
     required_fields = ['username',  'email', 'gender', 'dob', 'phone_number', 'password']
         
@@ -82,7 +82,7 @@ def register_user(request):
 
 
 @csrf_protect
-@throttle_classes([LoginRateThrottle])
+# @throttle_classes([LoginRateThrottle])
 @api_view(['POST'])
 def login_user(request):
     if request.user.is_authenticated:
