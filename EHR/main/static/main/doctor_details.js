@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const url =  query ? 
         `/api/search-doctors/?query=${encodeURIComponent(query)}`
         :
-        `/api/all-doctors`;
+        `/api/all-doctors/`;
 
         fetch(url , {
             method:'GET',
