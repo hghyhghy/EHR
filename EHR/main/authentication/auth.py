@@ -21,7 +21,7 @@ import requests
 
 
 def verify_captcha(captcha_response):
-    secret_key = '6LetAlQrAAAAAGYXwAiEApC0eqzks-vsbc_24RxJ'  # From Google reCAPTCHA dashboard
+    secret_key = '6LfiRFQrAAAAAGY8mMc55B7GqzvLCeteIuCILhMA'  # From Google reCAPTCHA dashboard
     payload = {
         'secret': secret_key,
         'response': captcha_response

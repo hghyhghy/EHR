@@ -35,6 +35,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'main' / 'static' / 'main',
 ]
 # Application definition
+RECAPTCHA_PUBLIC_KEY = '6LfiRFQrAAAAAEvVlmv8xNpHwWJtKvCTbeTT5h5l'
+RECAPTCHA_PRIVATE_KEY = '6LfiRFQrAAAAAGY8mMc55B7GqzvLCeteIuCILhMA'
 
 INSTALLED_APPS = [
     'rest_framework',
