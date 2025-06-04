@@ -17,6 +17,7 @@ from django.conf import  settings
 from django.conf.urls.static import static
 from  main.request_password_reset.request import request_password_reset
 from  main.reset_password.reset import reset_password
+from  main.manage_medicalrecords.medical_records import  medical_records_view,delete_records
 
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
@@ -68,6 +69,10 @@ urlpatterns = [
     path('reset_password/', TemplateView.as_view(template_name='main/reset_password.html'), name='reset_password'),
     path('api/reset/verify-email/', request_password_reset, name='verify-email'),
     path('api/reset/set-password/', reset_password, name='verify-email'),
+
+    path('medical-records/', medical_records_view, name='medical_records'),
+    path('delete-record/<int:record_id>/', delete_records, name='delete_record'),
+
 
 ]
 
