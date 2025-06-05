@@ -111,37 +111,37 @@ async function saveRecord(formData) {
     }
 }
 
-async function deleteRecord(recordId) {
-    if (!confirm('Are you sure you want to delete this medical record?')) {
-        return;
-    }
+// async function deleteRecord(recordId) {
+//     if (!confirm('Are you sure you want to delete this medical record?')) {
+//         return;
+//     }
 
-    try {
-        const response = await fetch(`/api/medical-records/delete/${recordId}/`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken,
-            },
-            credentials: 'same-origin'
-        });
+//     try {
+//         const response = await fetch(`/api/medical-records/delete/${recordId}/`, {
+//             method: 'DELETE',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'X-CSRFToken': csrfToken,
+//             },
+//             credentials: 'same-origin'
+//         });
 
-        const result = await response.json();
+//         const result = await response.json();
 
-        if (response.ok) {
-            // Remove record from local array
-            medicalRecords = medicalRecords.filter(record => record.id !== recordId);
-            renderRecords();
-            showMessage('Record deleted successfully!', 'success');
-        } else {
-            throw new Error(result.error || 'Failed to delete record');
-        }
+//         if (response.ok) {
+//             // Remove record from local array
+//             medicalRecords = medicalRecords.filter(record => record.id !== recordId);
+//             renderRecords();
+//             showMessage('Record deleted successfully!', 'success');
+//         } else {
+//             throw new Error(result.error || 'Failed to delete record');
+//         }
 
-    } catch (error) {
-        console.error('Error deleting record:', error);
-        alert('Failed to delete record. Please try again.');
-    }
-}
+//     } catch (error) {
+//         console.error('Error deleting record:', error);
+//         alert('Failed to delete record. Please try again.');
+//     }
+// }
 
 // Rendering functions
 function renderRecords() {
@@ -151,7 +151,9 @@ function renderRecords() {
         container.innerHTML = '<div class="no-records">No medical records found. Click "Add New Medical Record" to get started.</div>';
         return;
     }
-
+{/* <span class="delete-btn" onclick="event.stopPropagation(); deleteRecord(${record.id})">
+    Delete
+</span> */}
     container.innerHTML = medicalRecords.map(record => `
         <button class="accordion" onclick="toggleAccordion(this)">
             <div>
@@ -159,9 +161,7 @@ function renderRecords() {
                 <br>
                 <small style="opacity: 0.8;">Uploaded: ${formatDate(record.uploaded_on)}</small>
             </div>
-            <span class="delete-btn" onclick="event.stopPropagation(); deleteRecord(${record.id})">
-                Delete
-            </span>
+            
             <span class="accordion-icon">▼</span>
         </button>
         <div class="panel">

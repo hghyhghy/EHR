@@ -109,17 +109,17 @@ def get_medical_records(request, member_id):
         logger.error(f"Error fetching records: {str(e)}")
         return Response({'error': 'Failed to fetch records'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
-def delete_medical_records(request, record_id):
-    try:
-        logger.info(f"Deleting record with ID: {record_id}")
-        record = get_object_or_404(MedicalRecord, id=record_id,user=request.user)
-        logger.info(f"Record {record_id} owned by user {record.user}, current user is {request.user}")
+# @api_view(['DELETE'])
+# @permission_classes([IsAuthenticated])
+# def delete_medical_records(request, record_id):
+#     try:
+#         logger.info(f"Deleting record with ID: {record_id}")
+#         record = get_object_or_404(MedicalRecord, id=record_id,user=request.user)
+#         logger.info(f"Record {record_id} owned by user {record.user}, current user is {request.user}")
 
-        record.delete()
-        logger.info(f"Record {record_id} deleted successfully")
-        return Response({'message': 'Record deleted successfully'}, status=status.HTTP_200_OK)
-    except Exception as e:
-        logger.error(f"Error deleting record: {str(e)}")
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#         record.delete()
+#         logger.info(f"Record {record_id} deleted successfully")
+#         return Response({'message': 'Record deleted successfully'}, status=status.HTTP_200_OK)
+#     except Exception as e:
+#         logger.error(f"Error deleting record: {str(e)}")
+#         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
