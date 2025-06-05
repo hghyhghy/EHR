@@ -15,6 +15,9 @@ from urllib.parse import urlparse
 from  datetime  import  timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# settings.py
+
+MAX_UPLOAD_SIZE = 5242880  # 5 MB (in bytes)
 
 
 # Quick-start development settings - unsuitable for production
@@ -215,3 +218,19 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOWED_ORIGINS = [
     "https://ehr-umif.onrender.com",
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'your_app_name': {  # Replace with your app name
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
+}

@@ -29,6 +29,7 @@ async function loadFamilyMembers(url = '/api/user-details/') {
         const row = document.createElement('div');
         row.className = 'family-row';
         row.setAttribute('data-member-id', member.uuid);
+        row.setAttribute('data-user-id', member.user_id);
 
         row.innerHTML = `
             <div class='family-cell2'>${index + 1}</div>
@@ -40,6 +41,7 @@ async function loadFamilyMembers(url = '/api/user-details/') {
                 <div class="button-group">
                     <i class='bx bx-trash delete-btn' role='button' tabindex="0" data-member-id="${member.uuid}"></i>
                     <i class='bx bx-edit edit-btn' role='button' tabindex="0" data-member-id="${member.uuid}"></i>
+                    <i class='bx bx-file-report record-btn' role='button' tabindex="0" data-user-id="${member.user_id}"></i>
                 </div>
             </div>
         `;
@@ -131,4 +133,18 @@ document.addEventListener('click', function (e) {
         }
         window.location.href = `/edit_family_member/${memberId}/`;
     }
+
+    const recordBtn = e.target.closest('.record-btn');
+    if (recordBtn) {
+        const memberId = recordBtn.getAttribute('data-user-id');
+        
+        if (!memberId) {
+            alert('Member ID not found!');
+            return;
+        }
+        window.location.href = `/medical_records/${memberId}/`;
+    }
 });
+
+   
+

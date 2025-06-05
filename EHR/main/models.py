@@ -114,7 +114,7 @@ class Appointments(models.Model):
         
 class  MedicalRecord(models.Model):
     user =  models.ForeignKey(User,on_delete=models.CASCADE,related_name='medical_records')
-    report_file =  models.FileField(upload_to=upload_to_unique,validators=[validate_file_size])
+    report_file =  models.FileField(upload_to=upload_to_unique,validators=[validate_file_size],)
     prescription_file =  models.FileField(upload_to=upload_to_unique,validators=[validate_file_size])
 
     medicines_name =  models.TextField(help_text="Comma-separated medicine names and dosages")

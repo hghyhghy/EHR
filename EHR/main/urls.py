@@ -17,7 +17,7 @@ from django.conf import  settings
 from django.conf.urls.static import static
 from  main.request_password_reset.request import request_password_reset
 from  main.reset_password.reset import reset_password
-from  main.manage_medicalrecords.medical_records import  medical_records_view,delete_records
+from  main.manage_medicalrecords.medical_records import *
 
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
@@ -70,8 +70,13 @@ urlpatterns = [
     path('api/reset/verify-email/', request_password_reset, name='verify-email'),
     path('api/reset/set-password/', reset_password, name='verify-email'),
 
-    path('medical-records/', medical_records_view, name='medical_records'),
-    path('delete-record/<int:record_id>/', delete_records, name='delete_record'),
+    # Template view for displaying the medical records page
+    path('medical_records/<int:member_id>/', TemplateView.as_view(template_name='main/medical_records.html'), name='medical_records_page'),
+    
+    # API endpoints
+    path('api/medical-records/<int:member_id>/', get_medical_records, name='get_medical_records'),
+    path('api/add-medical-records/<int:member_id>/', add_medical_records, name='add_medical_records'),
+    path('api/medical-records/delete/<int:record_id>/', delete_medical_records, name='delete_medical_record'),
 
 
 ]
