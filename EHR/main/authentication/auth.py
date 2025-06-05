@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from ..models import UserProfile
+from ..models import *
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models  import  User
 from  django.contrib.auth  import  login,logout,authenticate
@@ -23,6 +23,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.sessions.models import Session
 
 
 
@@ -78,7 +79,7 @@ def register_user(request):
                 gender=data['gender'],
                 phone_number=data['phone_number']
             )
-            # send_welcome_email(user)
+            send_welcome_email(user)
             print("UserProfile created:", profile)
 
         return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
@@ -86,73 +87,83 @@ def register_user(request):
         import traceback
         traceback.print_exc()  # full traceback in terminal
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
+   
+def send_welcome_email(user):
+    """Send welcome email with custom body"""
+    subject = 'Welcome to Our Website!'
     
-# def send_welcome_email(user):
-#     """Send welcome email with custom body"""
-#     subject = 'Welcome to Our Website!'
+    # Simple text body
+    message = f"""
+    Hello {user.first_name or user.username},
+
+    Welcome to our website! We're excited to have you join our community.
+
+    Your account details:
+    - Username: {user.username}
+    - Email: {user.email}
+    - Registration Date: {user.date_joined.strftime('%B %d, %Y')}
+
+    You can now log in and start exploring our features.
+
+    If you have any questions, feel free to contact our support team.
+
+    Best regards,
+    The Website Team
+    """
     
-#     # Simple text body
-#     message = f"""
-#     Hello {user.first_name or user.username},
-
-#     Welcome to our website! We're excited to have you join our community.
-
-#     Your account details:
-#     - Username: {user.username}
-#     - Email: {user.email}
-#     - Registration Date: {user.date_joined.strftime('%B %d, %Y')}
-
-#     You can now log in and start exploring our features.
-
-#     If you have any questions, feel free to contact our support team.
-
-#     Best regards,
-#     The Website Team
-#     """
-    
-#     send_mail(
-#         subject,
-#         message,
-#         settings.DEFAULT_FROM_EMAIL,
-#         [user.email],
-#         fail_silently=False,
-#     )
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user.email],
+        fail_silently=False,
+    )
     
 @csrf_protect
 # @throttle_classes([LoginRateThrottle])
 @api_view(['POST'])
 def login_user(request):
-    if request.user.is_authenticated:
-        logout(request)
-        login_user(request)
-    captcha_response  =  request.data.get('recaptcha')
+    captcha_response = request.data.get('recaptcha')
     if not captcha_response or not verify_captcha(captcha_response):
         return Response({'error': 'CAPTCHA validation failed.'}, status=400)
-
+    
     data = request.data
     email = data.get('email')
     password = data.get('password')
-
+    
     if not email or not password:
         return Response({'error': 'email and password required'}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
-        user  =  User.objects.get(email=email)
-    except  User.DoesNotExist:
-        return  Response({'message':'Invalid email  or password'}, status=status.HTTP_404_NOT_FOUND)
-
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response({'message': 'Invalid email or password'}, status=status.HTTP_404_NOT_FOUND)
+    
     user = authenticate(username=user.username, password=password)
-
+    
     if user is not None:
-        login(request,user)
+        # Terminate all existing sessions for this user
+        existing_sessions = UserSession.objects.filter(user=user)
+        for user_session in existing_sessions:
+            try:
+                session = Session.objects.get(session_key=user_session.session_key)
+                session.delete()
+            except Session.DoesNotExist:
+                pass
+            user_session.delete()
+        
+        # Login the user (creates new session)
+        login(request, user)
+        
+        # Track the new session
+        UserSession.objects.create(
+            user=user,
+            session_key=request.session.session_key
+        )
+        
         return Response({'message': 'Login successful (session set)'})
     else:
         return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
-
-
 
 @csrf_exempt
 @api_view(['POST'])
