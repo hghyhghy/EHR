@@ -159,9 +159,9 @@ function renderRecords() {
                 <br>
                 <small style="opacity: 0.8;">Uploaded: ${formatDate(record.uploaded_on)}</small>
             </div>
-            <button class="delete-btn" onclick="event.stopPropagation(); deleteRecord(${record.id})">
+            <span class="delete-btn" onclick="event.stopPropagation(); deleteRecord(${record.id})">
                 Delete
-            </button>
+            </span>
             <span class="accordion-icon">▼</span>
         </button>
         <div class="panel">
@@ -194,18 +194,25 @@ function renderRecords() {
 function toggleAccordion(element) {
     const panel = element.nextElementSibling;
 
-    // Close all other accordions
+    const isActive = element.classList.contains('active');
+
+    // Close all accordions and reset icons
     document.querySelectorAll('.accordion').forEach(acc => {
-        if (acc !== element) {
-            acc.classList.remove('active');
-            acc.nextElementSibling.classList.remove('active');
-        }
+        acc.classList.remove('active');
+        acc.nextElementSibling.classList.remove('active');
+        const icon = acc.querySelector('.accordion-icon');
+        if (icon) icon.textContent = '▼';
     });
 
-    // Toggle current accordion
-    element.classList.toggle('active');
-    panel.classList.toggle('active');
+    // Toggle the clicked accordion if it was not active
+    if (!isActive) {
+        element.classList.add('active');
+        panel.classList.add('active');
+        const icon = element.querySelector('.accordion-icon');
+        if (icon) icon.textContent = '▲';  // Up arrow when open
+    }
 }
+
 
 // Form functions
 function openForm() {

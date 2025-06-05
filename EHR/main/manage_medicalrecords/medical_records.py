@@ -55,7 +55,7 @@ def add_medical_records(request, member_id):
         if form.is_valid():
             logger.info("Form is valid, saving record")
             record = form.save(commit=False)
-            record.user = family_member  # Make sure this matches your model field name
+            record.user = family_member.user # Make sure this matches your model field name
             record.save()
             logger.info(f"Record saved with ID: {record.id}")
             return Response({
@@ -85,7 +85,7 @@ def get_medical_records(request, member_id):
         # Check if using FamilyMember relationship
         try:
             family_member = get_object_or_404(FamilyMember, id=member_id, user=request.user)
-            records = MedicalRecord.objects.filter(user=family_member).order_by('-uploaded_on')
+            records = MedicalRecord.objects.filter(user=family_member.user).order_by('-uploaded_on')
         except:
             # Fallback to direct user_id filtering (less secure)
             logger.warning("Using direct user_id filtering - consider security implications")
@@ -114,7 +114,9 @@ def get_medical_records(request, member_id):
 def delete_medical_records(request, record_id):
     try:
         logger.info(f"Deleting record with ID: {record_id}")
-        record = get_object_or_404(MedicalRecord, id=record_id, user__user=request.user)
+        record = get_object_or_404(MedicalRecord, id=record_id,user=request.user)
+        logger.info(f"Record {record_id} owned by user {record.user}, current user is {request.user}")
+
         record.delete()
         logger.info(f"Record {record_id} deleted successfully")
         return Response({'message': 'Record deleted successfully'}, status=status.HTTP_200_OK)
