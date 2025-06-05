@@ -18,6 +18,12 @@ from  django.views.decorators.csrf import  csrf_protect
 from  rest_framework.decorators import  throttle_classes
 from ..throttling import  RegisterRateThrottle,LoginRateThrottle
 import requests
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+from django.contrib import messages
+
 
 
 def verify_captcha(captcha_response):
@@ -35,6 +41,7 @@ def verify_captcha(captcha_response):
 # @throttle_classes([RegisterRateThrottle])
 def register_user(request):
     if request.user.is_authenticated:
+        
         return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
 
 
@@ -71,6 +78,7 @@ def register_user(request):
                 gender=data['gender'],
                 phone_number=data['phone_number']
             )
+            # send_welcome_email(user)
             print("UserProfile created:", profile)
 
         return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
@@ -81,12 +89,45 @@ def register_user(request):
 
 
 
+    
+# def send_welcome_email(user):
+#     """Send welcome email with custom body"""
+#     subject = 'Welcome to Our Website!'
+    
+#     # Simple text body
+#     message = f"""
+#     Hello {user.first_name or user.username},
+
+#     Welcome to our website! We're excited to have you join our community.
+
+#     Your account details:
+#     - Username: {user.username}
+#     - Email: {user.email}
+#     - Registration Date: {user.date_joined.strftime('%B %d, %Y')}
+
+#     You can now log in and start exploring our features.
+
+#     If you have any questions, feel free to contact our support team.
+
+#     Best regards,
+#     The Website Team
+#     """
+    
+#     send_mail(
+#         subject,
+#         message,
+#         settings.DEFAULT_FROM_EMAIL,
+#         [user.email],
+#         fail_silently=False,
+#     )
+    
 @csrf_protect
 # @throttle_classes([LoginRateThrottle])
 @api_view(['POST'])
 def login_user(request):
     if request.user.is_authenticated:
-        return Response({'error': 'You are already logged in.'}, status=status.HTTP_403_FORBIDDEN)
+        logout(request)
+        login_user(request)
     captcha_response  =  request.data.get('recaptcha')
     if not captcha_response or not verify_captcha(captcha_response):
         return Response({'error': 'CAPTCHA validation failed.'}, status=400)

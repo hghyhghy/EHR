@@ -10,3 +10,4 @@ django-sslserver
 django-recaptcha
 django-simple-captcha
 requests
+python-decouple
