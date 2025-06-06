@@ -1,0 +1,98 @@
+
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Book Appointments{% endblock title %}
+{% block content %}
+
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg>
+        Dashboard
+    </a>
+    <a href={% url "user_details" %}>
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        </svg>
+        Users
+    </a>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 2a10 10 0 0 0-7 17.31M12 2a10 10 0 0 1 7 17.31M12 2v20" />
+        </svg>
+        Doctors
+    </a>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M3 3h18v18H3zM9 3v18M15 3v18M3 9h18M3 15h18" />
+        </svg>
+        Orders
+    </a>
+    <a href="#">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        </svg>
+        Patients
+    </a>
+    <a class = "add_family_member" href={% url "add_family_member" %}>
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        </svg>
+        Add  Member
+    </a>
+    <a href="#" id="logout-btn">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+        </svg>
+        Logout
+    </a>
+</div>
+<div class='fonm-container1'>
+            <h2>
+            Book An Appointment
+        </h2>
+        
+         
+<form id="appointmentForm" enctype="multipart/form-data" method="POST" class="appointment-grid-form">
+    <div class="form-group">
+        <label for="venue">Venue:</label>
+        <input type="text" name="venue" id="venue" required>
+    </div>
+
+    <div class="form-group">
+        <label for="scheduled_on">Scheduled On:</label>
+        <input type="datetime-local" id="scheduled_on" name="scheduled_on" required>
+    </div>
+
+    <div class="form-group">
+        <label for="reports">Upload Reports:</label>
+        <input type="file" name="reports" id="reports" accept=".pdf,.jpg,.jpeg,.png">
+    </div>
+
+    <div class="form-group">
+        <label for="prescription_file">Upload Prescription:</label>
+        <input type="file" id="prescription_file" name="prescription_file" accept=".pdf,.jpg,.jpeg,.png">
+    </div>
+
+    <div class="form-group">
+        <label for="prescribed_tests">Prescribed Test:</label>
+        <input type="number" id="prescribed_tests" name="prescribed_tests">
+    </div>
+
+    <div class="form-group">
+        <label for="prescribed_medicines">Prescribed Medicine:</label>
+        <input type="number" id="prescribed_medicines" name="prescribed_medicines">
+    </div>
+</form>
+
+<button type="submit" form="appointmentForm" class='book-btn'>Book Appointment</button>
+<div id="responseMessage" class="message"></div>
+</div>
+
+{% block script %}
+<script src="{% static 'main/book-appointment.js' %}"></script>
+
+{% endblock script %}
+{% endblock content %}

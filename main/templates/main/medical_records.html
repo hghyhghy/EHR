@@ -1,0 +1,739 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{% static 'main/medical_records.js' %}"></script>
+    <title>Medical Records - Family Member</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: #211a1a;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin: 20px;
+            background-color: #313233;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #1f2937;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            display: flex;
+            flex-flow: column;
+            column-gap: 20px;
+        }
+
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .sidebar svg {
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .header {
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .add-button {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .add-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .add-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .records-section {
+            padding: 20px;
+            background-color: #313233;
+        }
+
+        .accordion {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #333;
+            cursor: pointer;
+            padding: 20px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            margin-bottom: 2px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .accordion:hover {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .accordion.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .accordion-icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 50px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .accordion:hover .delete-btn,
+        .accordion.active .delete-btn {
+            opacity: 1;
+        }
+
+        .delete-btn:hover {
+            background: #ff3742;
+            transform: scale(1.05);
+        }
+
+        .panel {
+            padding: 0;
+            background: white;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .panel.active {
+            max-height: 1000px;
+            padding: 25px;
+        }
+
+        .record-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .detail-item h4 {
+            color: #667eea;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .detail-item p {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .file-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .file-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .file-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .form-container {
+            background: #313233;
+            padding: 30px;
+            border-radius: 20px;
+            width: 50%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        .form-header h2 {
+            color: #e5e7eb;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: #9ca3af;
+            font-size: 0.9em;
+        }
+
+        #medicalRecordForm {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e5e7eb;
+            font-weight: 500;
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #6b7280;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #9ca3af;
+            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Custom File Upload Design */
+        .file-upload-container {
+            position: relative;
+            width: 100%;
+            padding: 25px;
+            background: #2a2b2c;
+            border: 2px dashed #6b7280;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-container.drag-active {
+            background: #2a2b2c;
+            border-color: #9ca3af;
+            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+        }
+
+        .file-upload-container input[type="file"] {
+            display: none;
+        }
+
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .file-upload-icon {
+            width: 48px;
+            height: 48px;
+            fill: none;
+            stroke: #6b7280;
+            stroke-width: 1.5;
+            position: relative;
+        }
+
+        .file-upload-icon::before,
+        .file-upload-icon::after {
+            content: '';
+            position: absolute;
+            background: #6b7280;
+            border-radius: 50%;
+        }
+
+        .file-upload-icon::before {
+            width: 8px;
+            height: 8px;
+            top: -10px;
+            left: 10px;
+        }
+
+        .file-upload-icon::after {
+            width: 6px;
+            height: 6px;
+            bottom: -5px;
+            right: 5px;
+        }
+
+        .file-upload-text {
+            color: #e5e7eb;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .file-upload-text span {
+            color: #9ca3af;
+            font-weight: 600;
+        }
+
+        .file-upload-button {
+            background: #4b5563;
+            color: #e5e7eb;
+            padding: 8px 18px;
+            border-radius: 25px;
+            border: none;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 12px;
+        }
+
+        .file-upload-button:hover {
+            background: #6b7280;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .file-upload-container .file-name {
+            color: #9ca3af;
+            font-size: 0.85em;
+            margin-top: 12px;
+            word-break: break-all;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 25px;
+            width: 100%;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #4b5563;
+            color: #e5e7eb;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #6b7280;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(107, 114, 128, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        .no-records {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #667eea;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #ff4757;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #2ed573;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .record-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 20px;
+                margin: 20px;
+                max-width: 100%;
+            }
+
+            .delete-btn {
+                opacity: 1;
+                position: static;
+                margin-left: 10px;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 15px;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .file-upload-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <a href="#">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M3 12h18M3 6h18M3 18h18" />
+            </svg>
+            Dashboard
+        </a>
+        <a href="{% url 'user_details' %}">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+            Users
+        </a>
+        <a href="{% url 'doctor_details' %}">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 2a10 10 0 0 0-7 17.31M12 2a10 10 0 0 1 7 17.31M12 2v20" />
+            </svg>
+            Doctors
+        </a>
+        <a href="#">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M3 3h18v18H3zM9 3v18M15 3v18M3 9h18M3 15h18" />
+            </svg>
+            Orders
+        </a>
+        <a href="#">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+            Patients
+        </a>
+        <a class="add_family_member" href="{% url 'add_family_member' %}">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+            Add Member
+        </a>
+        <a href="#" id="logout-btn">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+            </svg>
+            Logout
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="header">
+                <h1>Medical Records</h1>
+                <p>Personal Health Information</p>
+            </div>
+
+            <button class="add-button" onclick="openForm()" id="addButton">
+                <span>+</span>
+                Add New Medical Record
+            </button>
+
+            <div class="records-section">
+                <div id="recordsContainer">
+                    <div class="loading">Loading medical records...</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="formOverlay" class="form-overlay">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Add New Medical Record</h2>
+                    <p>Fill in the details below</p>
+                </div>
+                <div id="formMessages"></div>
+                <form id="medicalRecordForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="reportFile">Report File:</label>
+                        <div class="file-upload-container" id="reportFileContainer">
+                            <input type="file" id="reportFile" name="report_file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                            <label for="reportFile" class="file-upload-label">
+                                <svg class="file-upload-icon" viewBox="0 0 24 24">
+                                    <path d="M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0" />
+                                    <path d="M12 8v4" />
+                                    <path d="M10 10l2 -2l2 2" />
+                                </svg>
+                                <span class="file-upload-text">You can drag and drop your new medical record to <span>upload</span></span>
+                            </label>
+                            <button type="button" class="file-upload-button">Browse Computer</button>
+                            <span class="file-name" id="reportFileName">No file selected</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="prescriptionFile">Prescription File:</label>
+                        <div class="file-upload-container" id="prescriptionFileContainer">
+                            <input type="file" id="prescriptionFile" name="prescription_file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                            <label for="prescriptionFile" class="file-upload-label">
+                                <svg class="file-upload-icon" viewBox="0 0 24 24">
+                                    <path d="M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0" />
+                                    <path d="M12 8v4" />
+                                    <path d="M10 10l2 -2l2 2" />
+                                </svg>
+                                <span class="file-upload-text">You can drag and drop your new medical record to <span>upload</span></span>
+                            </label>
+                            <button type="button" class="file-upload-button">Browse Computer</button>
+                            <span class="file-name" id="prescriptionFileName">No file selected</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="medicinesName">Medicines (Name and Dosage):</label>
+                        <textarea id="medicinesName" name="medicines_name" placeholder="e.g., Paracetamol 500mg, Ibuprofen 200mg, Amoxicillin 250mg"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="prescribedTests">Prescribed Tests:</label>
+                        <textarea id="prescribedTests" name="prescribed_tests" placeholder="e.g., Blood Test, X-Ray, MRI Scan"></textarea>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-primary" id="saveButton" onclick="handleFormSubmit(event)">Save Record</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // Update file name display and handle drag-and-drop
+    function setupFileInput(containerId, inputId, fileNameId) {
+        const container = document.getElementById(containerId);
+        const input = document.getElementById(inputId);
+        const fileNameDisplay = document.getElementById(fileNameId);
+
+        // Update file name when a file is selected
+        input.addEventListener('change', function() {
+            const fileName = this.files.length > 0 ? this.files[0].name : 'No file selected';
+            fileNameDisplay.textContent = fileName;
+        });
+
+        // Handle drag-and-drop events
+        container.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            container.classList.add('drag-active');
+        });
+
+        container.addEventListener('dragleave', () => {
+            container.classList.remove('drag-active');
+        });
+
+        container.addEventListener('drop', (e) => {
+            e.preventDefault();
+            container.classList.remove('drag-active');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                input.files = files;
+                fileNameDisplay.textContent = files[0].name;
+            }
+        });
+
+        // Trigger file input click when "Browse Computer" button is clicked
+        const browseButton = container.querySelector('.file-upload-button');
+        browseButton.addEventListener('click', () => {
+            input.click();
+        });
+    }
+
+    // Initialize for both file inputs
+    setupFileInput('reportFileContainer', 'reportFile', 'reportFileName');
+    setupFileInput('prescriptionFileContainer', 'prescriptionFile', 'prescriptionFileName');
+</script>
+</html>
