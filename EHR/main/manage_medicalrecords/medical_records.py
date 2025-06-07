@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import render, get_object_or_404
 from ..forms import MedicalRecordForm
-from ..models import MedicalRecord
+from ..models import *
 from rest_framework import status
 import mimetypes
 import logging
@@ -55,8 +55,8 @@ def add_medical_records(request, member_id):
         if form.is_valid():
             logger.info("Form is valid, saving record")
             record = form.save(commit=False)
-            record.user = family_member.user # Make sure this matches your model field name
-            record.save()
+            record.user = family_member.user
+            record.save()  # The medical_category will be automatically handled by the form
             logger.info(f"Record saved with ID: {record.id}")
             return Response({
                 'message': 'Record added successfully',
@@ -75,12 +75,15 @@ def add_medical_records(request, member_id):
             'error': 'Internal server error',
             'details': str(e)
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_medical_records(request, member_id):
     try:
         logger.info(f"Fetching records for member_id: {member_id}")
+        
+        # Get category parameter once at the beginning
+        category = request.GET.get('category')
+        logger.info(f"Category filter: {category}")
         
         # Check if using FamilyMember relationship
         try:
@@ -90,7 +93,13 @@ def get_medical_records(request, member_id):
             # Fallback to direct user_id filtering (less secure)
             logger.warning("Using direct user_id filtering - consider security implications")
             records = MedicalRecord.objects.filter(user=member_id).order_by('-uploaded_on')
-
+        
+        # Apply category filter to records (regardless of which path above was taken)
+        if category and category.lower() != 'all':
+            # Filter by category_name field in the Category model
+            records = records.filter(medical_category__category_name__iexact=category)
+            logger.info(f"Applied category filter: {category}")
+            
         records_data = []
         for record in records:
             records_data.append({
@@ -99,16 +108,29 @@ def get_medical_records(request, member_id):
                 'prescription_file': record.prescription_file.url if record.prescription_file else None,
                 'medicines_name': record.medicines_name,
                 'prescribed_tests': record.prescribed_tests,
-                'uploaded_on': record.uploaded_on.isoformat()
+                'uploaded_on': record.uploaded_on.isoformat(),
+                'category': record.medical_category.category_name if record.medical_category else 'Uncategorized',
+                'category_id': record.medical_category.id if record.medical_category else None
             })
 
-        logger.info(f"Found {len(records_data)} records")
+        logger.info(f"Found {len(records_data)} records after filtering")
         return Response({'records': records_data}, status=status.HTTP_200_OK)
 
     except Exception as e:
         logger.error(f"Error fetching records: {str(e)}")
         return Response({'error': 'Failed to fetch records'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+# API endpoint to get all categories
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_categories(request):
+    try:
+        categories = Category.objects.all().values('id', 'category_name')
+        return Response(list(categories), status=status.HTTP_200_OK)
+    except Exception as e:
+        logger.error(f"Error fetching categories: {str(e)}")
+        return Response({'error': 'Failed to fetch categories'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 # @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
 # def delete_medical_records(request, record_id):

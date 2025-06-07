@@ -96,7 +96,7 @@
         }
 
         .add-button {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            background: linear-gradient(135deg, #667eea, #764ba2);;
             color: white;
             border: none;
             padding: 15px 30px;
@@ -530,7 +530,15 @@
             margin-bottom: 15px;
             text-align: center;
         }
-
+        .category-buttons{
+                display: flex;
+                align-items: center;
+                justify-content: space-around; 
+                color:white;
+            }
+        .category-btn{
+            padding:12px
+        }
         @media (max-width: 768px) {
             .record-details {
                 grid-template-columns: 1fr;
@@ -562,6 +570,8 @@
             .file-upload-container {
                 padding: 20px;
             }
+            
+        
         }
     </style>
 </head>
@@ -623,6 +633,8 @@
                 <span>+</span>
                 Add New Medical Record
             </button>
+            <div class="category-buttons" ></div>
+
 
             <div class="records-section">
                 <div id="recordsContainer">
@@ -639,6 +651,11 @@
                 </div>
                 <div id="formMessages"></div>
                 <form id="medicalRecordForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="categoryName">Category:</label>
+                        <select name="medical_category" class="category-dropdown" id="medical_category">
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="reportFile">Report File:</label>
                         <div class="file-upload-container" id="reportFileContainer">

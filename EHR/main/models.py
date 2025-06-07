@@ -114,11 +114,11 @@ class Appointments(models.Model):
         
 class  MedicalRecord(models.Model):
     user =  models.ForeignKey(User,on_delete=models.CASCADE,related_name='medical_records')
-    report_file =  models.FileField(upload_to=upload_to_unique,validators=[validate_file_size],)
-    prescription_file =  models.FileField(upload_to=upload_to_unique,validators=[validate_file_size])
-
-    medicines_name =  models.TextField(help_text="Comma-separated medicine names and dosages")
-    prescribed_tests =  models.TextField(help_text='comma separated test  names')
+    report_file =  models.FileField(upload_to=upload_to_unique,validators=[validate_file_size],null=True,blank = True)
+    prescription_file =  models.FileField(upload_to=upload_to_unique,validators=[validate_file_size],null=True,blank = True)
+    medical_category = models.ForeignKey(Category,on_delete=models.DO_NOTHING,default=6)
+    medicines_name =  models.TextField(help_text="Comma-separated medicine names and dosages",null=True,blank=True)
+    prescribed_tests =  models.TextField(help_text='comma separated test  names',null=True,blank=True)
 
     uploaded_on  =  models.DateTimeField(auto_now_add=True)
     def __str__(self):

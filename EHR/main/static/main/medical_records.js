@@ -1,6 +1,8 @@
 // Global variables
 let medicalRecords = [];
+let allMedicalRecords = [];
 let csrfToken = '';
+let selectedCategory = null;
 const pathParts = window.location.pathname.split('/');
 const memberID = pathParts[pathParts.length - 2] || pathParts[pathParts.length - 1]; 
 
@@ -39,11 +41,18 @@ function showMessage(message, type = 'success') {
     }, 5000);
 }
 
-// API calls
-async function fetchRecords() {
-    console.log("Function loaded! Member ID:", memberID);
+// API calls - Unified fetch function
+async function fetchRecords(categoryName = null) {
+    console.log("Fetching records - Member ID:", memberID, "Category:", categoryName);
+    
     try { 
-        const response = await fetch(`/api/medical-records/${memberID}/`, {
+        // Build URL with optional category parameter
+        let url = `/api/medical-records/${memberID}/`;
+        if (categoryName && categoryName.toLowerCase() !== 'all') {
+            url += `?category=${encodeURIComponent(categoryName)}`;
+        }
+        
+        const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,10 +64,24 @@ async function fetchRecords() {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
+        
         const result = await response.json();
-        medicalRecords = result.records || [];
+        const records = result.records || [];
+        
+        // Update global variables based on whether it's filtered or not
+        if (!categoryName || categoryName.toLowerCase() === 'all') {
+            // This is a fetch all records call
+            allMedicalRecords = [...records];
+            medicalRecords = [...records];
+            selectedCategory = null;
+        } else {
+            // This is a filtered call - don't update allMedicalRecords
+            medicalRecords = [...records];
+            selectedCategory = categoryName;
+        }
+        
         renderRecords();
+        console.log(`Loaded ${records.length} records${categoryName ? ` for category: ${categoryName}` : ''}`);
 
     } catch (error) {
         console.error('Error fetching records:', error);
@@ -90,13 +113,18 @@ async function saveRecord(formData) {
 
         if (response.ok) {
             console.log("Success");
-            const result = await response.json(); // Changed from response.text() to response.json()
+            const result = await response.json();
             console.log('Response result:', result);
             
             showMessage('Medical record added successfully!', 'success');
             setTimeout(() => {
                 closeForm();
-                fetchRecords(); // Refresh the records
+                // Refresh records - maintain current filter if active
+                if (selectedCategory) {
+                    fetchRecords(selectedCategory);
+                } else {
+                    fetchRecords(); // Fetch all records
+                }
             }, 1000);
         } else {
             // Handle error response
@@ -111,61 +139,34 @@ async function saveRecord(formData) {
     }
 }
 
-// async function deleteRecord(recordId) {
-//     if (!confirm('Are you sure you want to delete this medical record?')) {
-//         return;
-//     }
-
-//     try {
-//         const response = await fetch(`/api/medical-records/delete/${recordId}/`, {
-//             method: 'DELETE',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'X-CSRFToken': csrfToken,
-//             },
-//             credentials: 'same-origin'
-//         });
-
-//         const result = await response.json();
-
-//         if (response.ok) {
-//             // Remove record from local array
-//             medicalRecords = medicalRecords.filter(record => record.id !== recordId);
-//             renderRecords();
-//             showMessage('Record deleted successfully!', 'success');
-//         } else {
-//             throw new Error(result.error || 'Failed to delete record');
-//         }
-
-//     } catch (error) {
-//         console.error('Error deleting record:', error);
-//         alert('Failed to delete record. Please try again.');
-//     }
-// }
-
 // Rendering functions
 function renderRecords() {
     const container = document.getElementById('recordsContainer');
 
     if (medicalRecords.length === 0) {
-        container.innerHTML = '<div class="no-records">No medical records found. Click "Add New Medical Record" to get started.</div>';
+        const message = selectedCategory 
+            ? `No medical records found for category "${selectedCategory}". Try selecting a different category or add new records.`
+            : 'No medical records found. Click "Add New Medical Record" to get started.';
+        container.innerHTML = `<div class="no-records">${message}</div>`;
         return;
     }
-{/* <span class="delete-btn" onclick="event.stopPropagation(); deleteRecord(${record.id})">
-    Delete
-</span> */}
+
     container.innerHTML = medicalRecords.map(record => `
         <button class="accordion" onclick="toggleAccordion(this)">
             <div>
                 <strong>Medical Record - ${formatDate(record.uploaded_on).split(',')[0]}</strong>
                 <br>
-                <small style="opacity: 0.8;">Uploaded: ${formatDate(record.uploaded_on)}</small>
+                <small style="opacity: 0.8;">Category: ${record.category || 'Uncategorized'} | Uploaded: ${formatDate(record.uploaded_on)}</small>
             </div>
             
             <span class="accordion-icon">▼</span>
         </button>
         <div class="panel">
             <div class="record-details">
+                <div class="detail-item">
+                    <h4>Category</h4>
+                    <p>${record.category || 'Uncategorized'}</p>
+                </div>
                 <div class="detail-item">
                     <h4>Files</h4>
                     <div class="file-links">
@@ -213,6 +214,26 @@ function toggleAccordion(element) {
     }
 }
 
+// Simplified category filtering
+function filterByCategory(categoryName) {
+    console.log("Filtering by category:", categoryName);
+    
+    // Update active button styling
+    updateActiveButton(categoryName);
+    
+    // Fetch records with the selected category
+    fetchRecords(categoryName);
+}
+
+// Helper function to update active button styling
+function updateActiveButton(categoryName) {
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent === categoryName) {
+            btn.classList.add('active');
+        }
+    });
+}
 
 // Form functions
 function openForm() {
@@ -235,9 +256,10 @@ async function handleFormSubmit(e) {
     const form = document.getElementById('medicalRecordForm');
     const formData = new FormData(form);
     const reportFile = formData.get('report_file');
-    
+    const selectedCategory = formData.get('medical_category');
+    console.log('Selected category:', selectedCategory);
     const medicinesName = formData.get('medicines_name');
-   // For prescription_file
+    // For prescription_file
     const prescriptionFile = document.getElementById('prescription_file');
     if (prescriptionFile) {
         formData.append('prescription_file', prescriptionFile);
@@ -248,7 +270,6 @@ async function handleFormSubmit(e) {
     // For prescribed_tests
     const prescribedTests = formData.get('prescribed_tests');
 
-    // const prescribedTests = document.getElementById('prescribed_tests');
     if (prescribedTests) {
         formData.append('prescribed_tests', prescribedTests);
     } else {
@@ -274,5 +295,86 @@ async function handleFormSubmit(e) {
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function () {
     console.log("DOM loaded, member ID:", memberID);
-    fetchRecords();
+    
+    loadCategories();
+    loadCategoriesForForm() 
 });
+
+async function loadCategories() {
+    try {
+        const response = await fetch('/api/categories/');
+        const data = await response.json();
+        const container = document.querySelector('.category-buttons');
+
+        // Add "All" button
+        const allBtn = document.createElement('button');
+        allBtn.textContent = 'All';
+        allBtn.className = 'category-btn active'; // Start with "All" as active
+        allBtn.onclick = () => filterByCategory("All");
+        container.appendChild(allBtn);
+
+        // Add category buttons
+        data.forEach(category => {
+            const btn = document.createElement('button');
+            btn.className = 'category-btn';
+            btn.textContent = category.name;
+            btn.onclick = () => filterByCategory(category.name);
+            container.appendChild(btn);
+        });
+        
+        console.log("Categories loaded:", data);
+        
+        // Load all records initially
+        fetchRecords();
+        
+    } catch (err) {
+        console.error("Failed to load categories", err);
+        // Still try to load records even if categories fail
+        fetchRecords();
+    }
+}
+async function loadCategoriesForForm() {
+    console.log("Click detected")
+    try {
+        const response = await fetch('/api/categories/');
+        const data = await response.json();
+        console.log("Category for post", data);
+
+        // Get the existing select element
+        const selectElement = document.querySelector('.category-dropdown');
+
+        // Clear any existing options first
+        selectElement.innerHTML = '';
+
+        // Add a default option with null value
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';  // Changed from '' to 'null'
+        defaultOption.textContent = 'Select a category';
+        selectElement.appendChild(defaultOption);
+
+        // Add category options
+        data.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.textContent = category.name;
+            selectElement.appendChild(option);
+        });
+
+        // ADD THIS: Event listener to handle selection changes
+        selectElement.addEventListener('change', function() {
+            const selectedValue = this.value;
+            // console.log('Selected category ID:', selectedValue);
+            
+            // Optional: Store selected value for debugging
+            if (selectedValue) {
+                console.log('Category selected:', selectedValue);
+            } else {
+                console.log('No category selected (default option)');
+            }
+        });
+
+    }
+    catch {
+        alert("Not able to load categories!");
+    }
+}

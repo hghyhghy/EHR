@@ -80,6 +80,8 @@ urlpatterns = [
     # path('api/medical-records/delete/<int:record_id>/', delete_medical_records, name='delete_medical_record'),
 
     path('api/appointments/<int:appointment_id>/update-status/', update_request_status),
+    #endpoint for category rendering
+    path('api/categories/', get_categories, name='get_categories'),
 
 
 
