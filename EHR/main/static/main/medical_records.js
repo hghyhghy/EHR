@@ -246,7 +246,9 @@ async function handleFormSubmit(e) {
     }
 
     // For prescribed_tests
-    const prescribedTests = document.getElementById('prescribed_tests');
+    const prescribedTests = formData.get('prescribed_tests');
+
+    // const prescribedTests = document.getElementById('prescribed_tests');
     if (prescribedTests) {
         formData.append('prescribed_tests', prescribedTests);
     } else {

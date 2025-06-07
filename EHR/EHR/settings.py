@@ -155,26 +155,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # mysql://root:eQoNlGKBBohQUKzjExsEfFRnjildEIgb@yamanote.proxy.rlwy.net:33385/railway
 #mysql://root:@hopper.proxy.rlwy.net:32071/railway
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.efnxobqifzeznmsztpcn',    
-        'PASSWORD': 'instaily2025',
-        'HOST':'aws-0-ap-south-1.pooler.supabase.com',  # or IP/remote host like 'db.example.com'
-        'PORT':'6543',        # default MySQL port
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ehr',
-#         'USER': 'root',
-#         'PASSWORD': 'Babu@2002',
-#         'HOST': 'localhost',   # or IP/remote host like 'db.example.com'
-#         'PORT': '3306',        # default MySQL port
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres.efnxobqifzeznmsztpcn',    
+#         'PASSWORD': 'instaily2025',
+#         'HOST':'aws-0-ap-south-1.pooler.supabase.com',  # or IP/remote host like 'db.example.com'
+#         'PORT':'6543',        # default MySQL port
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'EHR',
+        'USER': 'root',
+        'PASSWORD': 'subham0902003@#',
+        'HOST': 'localhost',   # or IP/remote host like 'db.example.com'
+        'PORT': '3306',        # default MySQL port
+    }
+}
 
 
 CORS_ALLOWED_ORIGINS = [

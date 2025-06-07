@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from  main.request_password_reset.request import request_password_reset
 from  main.reset_password.reset import reset_password
 from  main.manage_medicalrecords.medical_records import *
+from  main.appointment_status_handle.status_handle import  *
 
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
@@ -77,6 +78,9 @@ urlpatterns = [
     path('api/medical-records/<int:member_id>/', get_medical_records, name='get_medical_records'),
     path('api/add-medical-records/<int:member_id>/', add_medical_records, name='add_medical_records'),
     # path('api/medical-records/delete/<int:record_id>/', delete_medical_records, name='delete_medical_record'),
+
+    path('api/appointments/<int:appointment_id>/update-status/', update_request_status),
+
 
 
 ]
