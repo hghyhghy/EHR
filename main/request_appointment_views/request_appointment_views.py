@@ -29,7 +29,8 @@ def listed_appointments(request):
             'gender':patient.gender,
             'phone_number':patient.phone_number,
             'scheduled_on':app.scheduled_on,
-            'venue':app.venue
+            'venue':app.venue,
+            'status':app.status
         });
 
     return  Response(data,  status=status.HTTP_200_OK)
