@@ -1,3 +1,7 @@
+
+{% extends "main/base.html" %}
+
+{% block content %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -710,6 +714,7 @@
     </div>
 </body>
 <script>
+
     // Update file name display and handle drag-and-drop
     function setupFileInput(containerId, inputId, fileNameId) {
         const container = document.getElementById(containerId);
@@ -754,3 +759,6 @@
     setupFileInput('prescriptionFileContainer', 'prescriptionFile', 'prescriptionFileName');
 </script>
 </html>
+<script src="{% static 'main/logout.js' %}"></script>
+
+{% endblock content %}
