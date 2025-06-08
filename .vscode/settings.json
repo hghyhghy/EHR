@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./EHR/main/throttling-permission"
+    ]
+}

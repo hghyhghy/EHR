@@ -1,0 +1,1032 @@
+
+.user_details_section{
+  width:110rem;
+  padding: 5rem;
+  background-color:  #211a1a;
+  min-height: 100vh;
+  padding-top: 1rem;
+  margin-left: 200px;
+}
+
+
+.doctor_details_section {
+  padding: 2rem;
+  min-height: 100vh;
+  margin-left: 200px; /* enough space for sidebar */
+  box-sizing: border-box;
+  width:83rem;
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #211a1a;
+}
+
+.login_email{
+  width: 70rem;
+  margin-left: 2rem;
+}
+
+.link {
+  text-align: right;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+.link a {
+  color: #347DFF;
+  text-decoration: none;
+  font-size: 14px;
+  position:relative;
+  top:2rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+/* .sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 200px;
+  background-color: #1f2937;
+  z-index: 100;
+} */
+/* 
+#header {
+  position: fixed;
+  left: 200px;
+  top: 0;
+  width: calc(100% - 200px);
+  background-color: #1f2937;
+} */
+
+
+.sidebar {
+  width: 200px;
+  background-color: #1f2937;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 20px;
+  display: flex;
+  flex-flow: column;
+  column-gap: 20px;
+}
+.sidebar h2 {
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+
+}
+.sidebar a {
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.sidebar a:hover {
+  background-color: #374151;
+}
+.sidebar svg {
+  margin-right: 10px;
+}
+#family_table {
+  width: 30rem;
+}
+
+
+
+
+
+/* #header {
+  background-color: #1f2937;
+  height: 4rem;
+  position: fixed;
+  top: 0;
+  left: 200px;
+  width: calc(100% - 200px);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+} */
+
+
+
+
+/* #header1 {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1rem;
+    column-gap: 2rem;
+    color: rgb(213, 230, 230);
+    font-weight: 100;
+    font-size: 20px;
+    margin-right: 2rem;
+    cursor: pointer;
+} */
+
+
+
+
+
+/* #profile-card1 {
+    background-color:rgb(255, 255, 255);
+    padding: 24px;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    width:50rem;
+} */
+
+
+    
+/* .container1 {
+  width: 80%;
+  margin: 0 auto;
+  background-color: white;
+} */
+
+
+#profile-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+#profile-card p {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+#profile-card a {
+    font-size: 0.875rem;
+    color: #e3e6ec;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+
+#user-info-card {
+    /* box-shadow: 0 4px 12px rgba(0,0,0,0.06); */
+    padding: 1rem 1rem;
+    width: 50rem;
+    max-width: 28rem;
+
+    /* Center it horizontally */
+    margin: 1rem auto 1rem auto; /* Top margin pushes below header */
+    text-align: center;
+}
+
+.button-group {
+  display: flex  !important;
+  gap: 0.5rem !important; /* space between buttons */
+}
+
+.button-group i {
+  padding: 0.25rem 0.5rem; /* smaller padding */
+  font-size: 1.5rem; /* smaller font size */
+  /* no rounded corners */
+  border: 1px solid transparent; /* base border */
+  cursor: pointer;
+  size : 5%;
+  transition: background-color 0.3s ease;
+}
+
+/* .button-group .delete-btn {
+  background-color: #616bde; /* Tailwind red-500 */
+  /* border-color: #a4add6;
+  padding: 10px;
+  border-radius: 4px;
+  
+} */ 
+/* button:hover{
+  box-sizing: border-box;
+  box-shadow: 0px 1px 17px 6px blue ;
+} */
+
+
+/* .button-group .edit-btn {
+  color: #3b82f6; /* Tailwind blue-500 */
+/* border-color: #3b82f6;
+  background-color: transparent;
+  border-radius: 4px;
+} */
+
+
+/* Header Container */
+
+
+/* Flex layout */
+
+/* Align links to the right */
+.nav-links {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
+}
+
+/* Nav item style */
+.nav-item {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.nav-item:hover {
+  text-decoration: none;
+}
+
+/* Button style (already exists, just for completeness) */
+#add_member {
+  background-color: #e3e7ee;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+#add_member:hover {
+  background-color: #2563eb;
+}
+
+
+.family-container {
+  position: relative;
+  text-align: center;
+  right: 70px;
+  width: 108%;
+  margin-top: -1rem;
+  font-family: sans-serif;
+  border-radius: 8px; /* Apply visible rounding */
+  background-color: #211a1a; /* Give it a visible background */
+   /* Optional: border to show rounding clearly */
+  overflow: hidden; /* Ensure children don’t break the rounded corners */
+}
+.family-header, .family-row  {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #c9cacc;
+  font-size: 14px;
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 2;
+  text-decoration: none;
+
+
+  
+}
+.family-header {
+  font-weight: bold;
+  color: #374151; /* gray-800 */
+  background-color: #f7fafc; 
+  font-weight:bold;/* slightly darker for header */
+  color: black;
+  
+}
+
+.family-cell {
+  flex: 2;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;  
+}
+
+.family-cell1{
+  margin-right: 4rem;
+}
+.family-cell2{
+  margin-right: 9rem;
+  position: relative;
+  left: 7rem;
+}
+#family-index {
+  background-color: #9a96c2 !important;
+  min-width: 2rem !important;
+  border-radius: 3rem;
+  padding-inline: 1rem;
+  padding-block: 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 6rem;
+} 
+
+
+.doctor-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  width: 280px;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* Add transition for smooth scaling and shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect: scale and stronger shadow */
+.doctor-container:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* .doctor-header,
+.doctor-row {
+
+} */
+/*  */
+
+
+
+
+
+.doctor-header {
+  font-weight: bold;
+  color: #374151; /* gray-800 */
+  background-color: #d8d9db; 
+  font-weight:bold;/* slightly darker for header */
+  color: black;
+}
+/* 
+.doctor-cell {
+  flex: 1;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+
+.button-group {
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem; /* space between buttons */
+}
+
+.button-group button {
+    padding: 6px 12px;
+    background-color: #f3f4f6;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.family-row{
+  background-color: #211a1a;
+  color: white;
+}
+#family-body{
+  margin-right: 1rem;
+}
+#doctor-body{
+  margin-right: 1rem;
+}
+
+.add-user-button{
+  background-color: rgb(94, 94, 192);
+  width: 150px;
+  margin-right: 10%;
+  border-radius: 4px;
+  position: relative;
+  left: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  height: 35px;
+  font-size: smaller;
+  margin-top: 1rem;
+}
+.add-user-button.a{
+  color: white;
+}
+#username_name{
+  position:relative;
+  top: 0.5rem;
+  left: 39rem;
+  width: 220px;
+}
+.family_member_main_card{
+  background-color: #211a1a;
+  width:75rem ;
+  padding: 3rem;
+  position: relative;
+  top: -2rem;
+  border-radius: 7px;
+}
+.family_member_header{
+  position: relative;
+  top: -19rem;
+  left: 13rem;
+  font: bolder;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: wheat;
+
+}
+.add_family_member_button{
+  position: relative;
+  display: flex;
+  justify-content: end;
+  justify-items: end;
+  align-items: ende;
+  width: 110px;
+  font-size: small;
+  border-radius: 4px;
+}
+.edit_family_member_button{
+  width: 50px;
+  border-radius: 5px;
+  font-size:medium;
+  font-weight: 100;
+}
+.class_name_to_show{
+  font-weight:400;
+  font-size: large;
+}
+.edit_class_show{
+  font-weight: 600;
+  color: wheat;
+}
+
+/*  */
+/* static/main/doctor_register.css */
+
+.doctor-form{
+  display: flex;
+  flex-direction: row;
+}
+.form-container {
+    margin: 3rem auto;
+    background-color: #313233;
+    padding: 2.5rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: wheat;
+}
+
+.form-group {
+    margin: 1.2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    color: white;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.form-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.form-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* doctor */
+.doctor-username {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #eeeded;
+  margin-bottom: 0.5rem;
+}
+
+.main-category-degree {
+  display: flex;
+  justify-content: start;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.doctor-phone_number {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.book-appointment-btn {
+  padding: 0.6rem 1rem;
+  background-color: #1500ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.book-appointment-btn:hover {
+  background-color: #0024ad;
+}
+
+.book-appointment-btn{
+  background-color: blue;
+  color: white;
+  height: 3rem;
+  width: 11rem;
+  font-size: small;
+  margin-top: 1rem;
+  border-radius: 5px;
+  font-weight: 100;
+}
+.grid-views {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+  justify-items: start;
+}
+
+
+/* Optional: make it responsive */
+/* @media (max-width: 1024px) {
+  .doctor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .doctor-grid {
+    grid-template-columns: 1fr;
+  }
+} */
+.doctor-row {
+  background-color:#313233;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 320px;
+  text-align: start;
+  transition: transform 0.3s ease;
+}
+.doctor-row:hover {
+  transform: translateY(-5px);
+}
+
+.Available-doctor{
+  position: relative;
+  right: 29rem;
+  top: 10px;
+  font-size: 2rem;
+}
+
+.search-bar-container {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    display: flex;
+    flex-direction:  row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 4rem;
+    max-width: 100rem;
+    
+}
+
+#doctor-search-input {
+    padding: 10px;
+    width:100rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+
+}
+#doctor-search-btn {
+    padding: 9px 12px;
+    background-color: #1463b7;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 80px;
+    margin-bottom: 1rem;
+}
+
+#doctor-search-btn:hover {
+    background-color: #0056b3;
+}
+
+/* doctor profile  */
+  * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* body {
+
+    } */
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+     /* Put sidebar and main content side by side */
+    min-height: 100vh;
+    width: max-content;
+}
+
+
+.sidebar_doctor {
+  position: relative;
+  left: 0.101m;
+    display: flex;
+    flex-direction:column;
+    align-items: start;
+    justify-content: start;
+    width: 250px;
+    background-color: #1a202c;
+    color: #ffffff;
+    padding: 24px;
+    /* height:60.4rem; */
+    overflow-y: auto;
+}
+
+    .sidebar-header {
+        display: flex;
+        align-items: start;
+        margin-bottom: 32px;
+        flex-direction: column;
+    }
+
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #e2e8f0;
+        border: 2px solid #4a5568;
+        margin-right: 16px;
+    }
+
+    .profile-info h2 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .profile-info h4 {
+        font-size: 14px;
+        font-weight: 400;
+        color: #a0aec0;
+        margin-bottom: 2px;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        margin-left:-0.7rem;
+    }
+
+    .nav-links li {
+        margin-bottom: 16px;
+    }
+
+    .nav-links a {
+        color: #a0aec0;
+        text-decoration: none;
+        font-size: 16px;
+        display: block;
+        padding: 10px;
+        border-radius: 6px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        background-color: #2b6cb0;
+        color: #ffffff;
+        width: 189px;;
+    }
+
+
+
+.main-content {
+    /* margin-left: 250px;  <-- REMOVE THIS LINE */
+    flex-grow: 1;
+    padding: 30px 3px;
+    background-color: #211a1a;
+    width: max-content;
+}
+
+    .container {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .appointments {
+      position: relative;
+      left:  -8rem;
+        background-color: #1f1c1c;
+        padding: 24px;
+        border-radius: 12px;
+        /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); */
+        width: 80rem;
+    }
+
+    .appointments h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #1a202c;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 14px 16px;
+        text-align: left;
+        border-bottom: 1px solid #edf2f7;
+        color: white;
+    }
+
+    th {
+        background-color: #f7fafc;
+        color: #2d3748;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+
+    .status {
+        padding: 6px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .status-pending {
+        background-color: #fefcbf;
+        color: #744210;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.2s;
+    }
+
+    .btn-approve {
+        background-color: #2b6cb0;
+        color: #ffffff;
+    }
+
+    .btn-approve:hover {
+        background-color: #2c5282;
+    }
+
+    .btn-reject {
+        background-color: #e2e8f0;
+        color: #2d3748;
+    }
+
+    .btn-reject:hover {
+        background-color: #cbd5e0;
+    }
+
+    .error-message {
+        color: #c53030;
+        font-size: 14px;
+        margin-top: 10px;
+        display: none;
+    }
+@media (max-width: 768px) {
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+
+/* appointment booking form  */
+.appointment-grid-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5em;
+    margin-bottom: 1.5em;
+    position: relative;
+    left: 6rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 0.5em;
+    font-size: 1em;
+}
+
+.book-btn {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 1em;
+    position: relative;
+    left: 6rem;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* reset password  css */
+
+.reset-form {
+    background: #313233;;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    width: 350px;
+}
+
+.reset-form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: wheat;
+}
+
+.reset-form label {
+    display: block;
+    margin-top: 10px;
+    color: wheat;
+}
+
+.reset-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    outline: none;
+}
+
+.reset-form button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.reset-form button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+#message {
+    margin-top: 15px;
+    color: red;
+    text-align: center;
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.pagination-buttons button {
+    padding: 0.5rem 1rem;
+    background-color: #4B5563;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination-btn {
+        position: relative;
+        right: 4rem;
+        margin-top: 1rem;
+        width: 90px;
+        padding: 12px;
+        background-color: #313233;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: 300;
+        font-size: 16px;
+        cursor: pointer;
+}
+
+.panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.panel.active {
+  max-height: 500px; /* or some large enough value to fit content */
+}
