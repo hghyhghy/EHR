@@ -19,6 +19,8 @@ from  main.request_password_reset.request import request_password_reset
 from  main.reset_password.reset import reset_password
 from  main.manage_medicalrecords.medical_records import *
 from  main.appointment_status_handle.status_handle import  *
+from  main.reset_password_doctor.reset_doctor_password import *
+from  main.doctor_email_validation_request.doctor_request import *
 
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
@@ -82,6 +84,14 @@ urlpatterns = [
     path('api/appointments/<int:appointment_id>/update-status/', update_request_status),
     #endpoint for category rendering
     path('api/categories/', get_categories, name='get_categories'),
+
+    #endpoint for reset doctor password 
+
+    path('api/verify-doctor-email/', doctor_request_reset, name='verify-doctor-email'),
+    path('api/reset-doctor-password/', reset_doctor_password, name='reset-doctor-password'),
+
+    path('reset_doctor_password/', TemplateView.as_view(template_name='main/reset_doctor_password.html'), name='reset_doctor_password'),
+
 
 
 

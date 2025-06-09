@@ -23,6 +23,7 @@
         <button type="button" onclick="window.location.href='/'" style="width: 100%; padding: 12px; background: #4b5563; color: #ffffff; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s;">Back to Home</button>
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 16px;">
           <a href="{% url 'doctor_registration' %}" style="color: #60a5fa; text-decoration: none; font-size: 14px; transition: text-decoration 0.3s;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">Don't have an account? Register</a>
+          <a href={% url 'reset_doctor_password' %} style="color: #60a5fa; text-decoration: none; font-size: 14px; transition: text-decoration 0.3s;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">Forgot Password?</a>
         </div>
       </form>
     </div>
