@@ -151,6 +151,7 @@ def login_user(request):
             except Session.DoesNotExist:
                 pass
             user_session.delete()
+            
         
         # Login the user (creates new session)
         login(request, user)

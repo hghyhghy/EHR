@@ -10,3 +10,6 @@ django-sslserver
 django-recaptcha
 django-simple-captcha
 requests
+google-genai
+python-dotenv
+reportlab

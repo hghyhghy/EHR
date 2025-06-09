@@ -57,9 +57,7 @@ class Category(models.Model):
 
 
 class DoctorProfile(models.Model):
-
     user =  models.OneToOneField(User,on_delete=models.CASCADE,related_name='doctor_profile')
-
     username =  models.CharField(max_length=100)
     email=models.EmailField()
     password=models.CharField(max_length=255)

@@ -543,6 +543,10 @@
         .category-btn{
             padding:12px
         }
+        .generate-button{
+            margin-left: 100px;
+            margin-right:0px;
+        }
         @media (max-width: 768px) {
             .record-details {
                 grid-template-columns: 1fr;
@@ -632,14 +636,19 @@
                 <h1>Medical Records</h1>
                 <p>Personal Health Information</p>
             </div>
-
+            
             <button class="add-button" onclick="openForm()" id="addButton">
                 <span>+</span>
                 Add New Medical Record
             </button>
+             <button id="generateReportButton" onclick =generate_report() class="add-button generate-button">Generate Report</button>
+            <!-- <div id="loading">Generating report... Please wait.</div>
+            <div id="error-message"></div>
+            <div id="summary-report">
+                <h2>Generated Comprehensive Report:</h2>
+                <pre id="summaryContent"></pre>
+            </div> -->
             <div class="category-buttons" ></div>
-
-
             <div class="records-section">
                 <div id="recordsContainer">
                     <div class="loading">Loading medical records...</div>

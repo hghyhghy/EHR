@@ -82,8 +82,7 @@ urlpatterns = [
     path('api/appointments/<int:appointment_id>/update-status/', update_request_status),
     #endpoint for category rendering
     path('api/categories/', get_categories, name='get_categories'),
-
-
+    path('generate-comprehensive-report/',generate_report, name='generate_report'),
 
 ]
 
