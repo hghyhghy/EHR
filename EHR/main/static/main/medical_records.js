@@ -310,6 +310,8 @@ async function loadCategories() {
         const allBtn = document.createElement('button');
         allBtn.textContent = 'All';
         allBtn.className = 'category-btn active'; // Start with "All" as active
+        allBtn.style.backgroundColor="wheat"
+        allBtn.style.color="black"
         allBtn.onclick = () => filterByCategory("All");
         container.appendChild(allBtn);
 
