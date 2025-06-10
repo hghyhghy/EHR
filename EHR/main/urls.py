@@ -84,6 +84,16 @@ urlpatterns = [
     path('api/appointments/<int:appointment_id>/update-status/', update_request_status),
     #endpoint for category rendering
     path('api/categories/', get_categories, name='get_categories'),
+    
+    path('api/verify-doctor-email/', doctor_request_reset, name='doctor_email_request'),
+    path('api/reset-doctor-password/', reset_doctor_password, name='doctor_password_reset'),
+    
+    path('reset_doctor_password', TemplateView.as_view(template_name='main/reset_doctor_password.html'), name='reset_doctor_password'),
+    
+
+    
+    
+    
 
     path('generate-comprehensive-report/',generate_report, name='generate_report'),
 

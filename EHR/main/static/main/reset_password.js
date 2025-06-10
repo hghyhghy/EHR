@@ -31,16 +31,18 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(res => res.json())
         .then(data => {
-            if (data.message) {
+            if (data.message == "Email verified. Proceed to reset.") {
                 messageDiv.innerText = data.message;
                 passwordInput.disabled = false;
                 passwordSection.style.display = 'block';
             } else {
                 messageDiv.innerText = 'Email verification failed';
+                passwordInput.disabled = true;
             }
         })
         .catch(err => {
             messageDiv.innerText = 'Server error';
+            passwordInput.disabled = true;
         });
     }
 

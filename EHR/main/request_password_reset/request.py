@@ -17,7 +17,7 @@ def request_password_reset(request):
 
     try:
         user=  User.objects.get(email=email)
-        if (user):
+        if hasattr(user,'profile'):
             return  Response({
            'message': 'Email verified. Proceed to reset.',
             'user_id':user.id
