@@ -178,20 +178,20 @@ def generate_report(request):
 
             # --- CRITICAL: Crafting the Prompt for Comprehensive Summary ---
             prompt = f"""
-            Please generate a comprehensive summary report in based on the following collection of patient records.
+            Please generate a comprehensive summary report in based on the following collection of patient records.These records are of one patient only.
             Each record provides details about medicines, prescribed tests, and potentially other information.
             The report should synthesize information across all records, identifying commonalities, trends, and key insights. 
             
             The report format should be:
-            1.  **Report Title:** A concise and relevant title (e.g., "Overview of Patient Health Records").
-            2.  **Introduction:** A brief introduction to the purpose of this summary and the data source.
-            3.  **Key Findings & Analysis:**
+              **Report Title:** A concise and relevant title (e.g., "Overview of Patient Health Records").
+              **Introduction:** A brief introduction to the purpose of this summary and the data source.
+              **Key Findings & Analysis:**
                 * Summarize common medicines prescribed across records.
                 * Identify frequently prescribed tests.
                 * Note any recurring health issues or patterns inferred from the records (e.g., common complaints).
                 * Highlight any significant individual cases or unique observations if they stand out.
-            4.  **Overall Conclusion/Summary:** A concluding paragraph summarizing the key takeaways from the analysis of all records.
-
+              **Overall Conclusion/Summary:** A concluding paragraph summarizing the key takeaways from the analysis of all records.
+            Don't include extra stars in result and the title should be bold
             Here is the data for summarization:
             ---
             {all_records_text}

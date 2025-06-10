@@ -574,9 +574,10 @@
             font-weight:semibold;
         }
 
-        .generate-button{
-            margin-left: 100px;
-            margin-right:0px;
+        .function-buttons{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
         }
         @media (max-width: 768px) {
             .record-details {
@@ -676,7 +677,7 @@
                 .select-items div:hover, .same-as-selected {
                 background-color: rgba(0, 0, 0, 0.1);
                 }
-
+            }
 
     </style>
 </head>
@@ -734,13 +735,16 @@
                 <p>Personal Health Information</p>
             </div>
             
-            <button class="add-button" onclick="openForm()" id="addButton">
-                <span>+</span>
-                Add New Medical Record
-            </button>
+            <div class = "function-buttons">
+                <button class="add-button" onclick="openForm()" id="addButton">
+                    <span>+</span>
+                    Add New Medical Record
+                </button>
+                <button id="generateReportButton" onclick = generate_report() class="add-button generate-button">Generate Report</button>
+            </div>
             <div class="category-buttons"></div>
 
-             <button id="generateReportButton" onclick =generate_report() class="add-button generate-button">Generate Report</button>
+             
             <!-- <div id="loading">Generating report... Please wait.</div>
             <div id="error-message"></div>
             <div id="summary-report">
