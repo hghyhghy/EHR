@@ -4,8 +4,8 @@ let allMedicalRecords = [];
 let csrfToken = '';
 let selectedCategory = null;
 const pathParts = window.location.pathname.split('/');
-const memberID = pathParts[pathParts.length - 2] || pathParts[pathParts.length - 1]; 
-
+const memberID = pathParts[pathParts.length - 2] || pathParts[pathParts.length - 1];
+let reportRecord;
 // Get CSRF token
 function getCSRFToken() {
     const cookies = document.cookie.split(';');
@@ -44,14 +44,14 @@ function showMessage(message, type = 'success') {
 // API calls - Unified fetch function
 async function fetchRecords(categoryName = null) {
     console.log("Fetching records - Member ID:", memberID, "Category:", categoryName);
-    
-    try { 
+
+    try {
         // Build URL with optional category parameter
         let url = `/api/medical-records/${memberID}/`;
         if (categoryName && categoryName.toLowerCase() !== 'all') {
             url += `?category=${encodeURIComponent(categoryName)}`;
         }
-        
+
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -64,10 +64,10 @@ async function fetchRecords(categoryName = null) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const result = await response.json();
         const records = result.records || [];
-        
+
         // Update global variables based on whether it's filtered or not
         if (!categoryName || categoryName.toLowerCase() === 'all') {
             // This is a fetch all records call
@@ -79,7 +79,7 @@ async function fetchRecords(categoryName = null) {
             medicalRecords = [...records];
             selectedCategory = categoryName;
         }
-        
+        reportRecord = medicalRecords;
         renderRecords();
         console.log(`Loaded ${records.length} records${categoryName ? ` for category: ${categoryName}` : ''}`);
 
@@ -93,12 +93,12 @@ async function fetchRecords(categoryName = null) {
 async function saveRecord(formData) {
     try {
         console.log("Saving record for member ID:", memberID);
-        
+
         // Debug: Log form data entries
         for (let [key, value] of formData.entries()) {
             console.log(key, value);
         }
-        
+
         const response = await fetch(`/api/add-medical-records/${memberID}/`, {
             method: 'POST',
             headers: {
@@ -107,7 +107,7 @@ async function saveRecord(formData) {
             body: formData,
             credentials: 'same-origin'
         });
-        
+
         console.log('Response status:', response.status);
         console.log('Response headers:', response.headers);
 
@@ -115,7 +115,7 @@ async function saveRecord(formData) {
             console.log("Success");
             const result = await response.json();
             console.log('Response result:', result);
-            
+
             showMessage('Medical record added successfully!', 'success');
             setTimeout(() => {
                 closeForm();
@@ -144,7 +144,7 @@ function renderRecords() {
     const container = document.getElementById('recordsContainer');
 
     if (medicalRecords.length === 0) {
-        const message = selectedCategory 
+        const message = selectedCategory
             ? `No medical records found for category "${selectedCategory}". Try selecting a different category or add new records.`
             : 'No medical records found. Click "Add New Medical Record" to get started.';
         container.innerHTML = `<div class="no-records">${message}</div>`;
@@ -217,10 +217,10 @@ function toggleAccordion(element) {
 // Simplified category filtering
 function filterByCategory(categoryName) {
     console.log("Filtering by category:", categoryName);
-    
+
     // Update active button styling
     updateActiveButton(categoryName);
-    
+
     // Fetch records with the selected category
     fetchRecords(categoryName);
 }
@@ -288,16 +288,16 @@ async function handleFormSubmit(e) {
     }
 
     const saveButton = document.getElementById('saveButton');
-    
+
     saveRecord(formData);
 }
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function () {
     console.log("DOM loaded, member ID:", memberID);
-    
+
     loadCategories();
-    loadCategoriesForForm() 
+    loadCategoriesForForm()
 });
 
 async function loadCategories() {
@@ -323,12 +323,12 @@ async function loadCategories() {
             btn.onclick = () => filterByCategory(category.name);
             container.appendChild(btn);
         });
-        
+
         console.log("Categories loaded:", data);
-        
+
         // Load all records initially
         fetchRecords();
-        
+
     } catch (err) {
         console.error("Failed to load categories", err);
         // Still try to load records even if categories fail
@@ -363,10 +363,10 @@ async function loadCategoriesForForm() {
         });
 
         // ADD THIS: Event listener to handle selection changes
-        selectElement.addEventListener('change', function() {
+        selectElement.addEventListener('change', function () {
             const selectedValue = this.value;
             // console.log('Selected category ID:', selectedValue);
-            
+
             // Optional: Store selected value for debugging
             if (selectedValue) {
                 console.log('Category selected:', selectedValue);
@@ -379,4 +379,124 @@ async function loadCategoriesForForm() {
     catch {
         alert("Not able to load categories!");
     }
+}
+async function generate_report() {
+    console.log(reportRecord)
+    if(!reportRecord || reportRecord.length === 0) {
+        alert("No records found!");
+    }
+    try {
+        // 2. Prepare the data as a single string for Gemini
+        let formattedRecords = "Comprehensive Patient Records:\n\n";
+        reportRecord.forEach((record, index) => {
+            formattedRecords += `--- Record ${index + 1} (ID: ${record.id}) ---\n`;
+            formattedRecords += `  Medicines Prescribed: ${record.medicines_name || 'N/A'}\n`;
+            formattedRecords += `  Prescribed Tests: ${record.prescribed_tests || 'N/A'}\n`;
+            // Including file paths as text - Gemini won't read image/PDF content directly
+            formattedRecords += `  Report File Path: ${record.report_file || 'N/A'}\n`;
+            formattedRecords += `  Prescription File Path: ${record.prescription_file || 'N/A'}\n`;
+
+            formattedRecords += "\n"; // Add a newline for readability between records
+        });
+        console.log(formattedRecords);
+        // 3. Send the formatted records to your Django backend
+        const response = await fetch('/generate-comprehensive-report/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({ allRecordsText: formattedRecords })
+        });
+
+    
+        
+        if (response.ok) {
+            const pdfBlob = await response.blob();
+            console.log('PDF Blob:', pdfBlob);
+            
+            // Create blob URL
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+            
+            // Method 1: Create a proper HTML page for the PDF
+            const newWindow = window.open('', '_blank');
+            if (newWindow) {
+                // Create the HTML structure using DOM methods instead of document.write()
+                const html = newWindow.document.createElement('html');
+                const head = newWindow.document.createElement('head');
+                const title = newWindow.document.createElement('title');
+                const style = newWindow.document.createElement('style');
+                const body = newWindow.document.createElement('body');
+                const iframe = newWindow.document.createElement('iframe');
+                
+                // Set content
+                title.textContent = 'Medical Report';
+                style.textContent = `
+                    body { margin: 0; padding: 0; }
+                    iframe { width: 100%; height: 100vh; border: none; }
+                `;
+                iframe.src = pdfUrl;
+                iframe.type = 'application/pdf';
+                
+                // Build the document structure
+                head.appendChild(title);
+                head.appendChild(style);
+                body.appendChild(iframe);
+                html.appendChild(head);
+                html.appendChild(body);
+                
+                // Replace the document content
+                newWindow.document.documentElement.replaceWith(html);
+                
+                // Optional: Add print functionality
+                setTimeout(() => {
+                    if (confirm('Would you like to print the report?')) {
+                        newWindow.print();
+                    }
+                }, 1000);
+            } else {
+                // Fallback if popup is blocked
+                alert('Popup blocked. Please allow popups for this site, or the PDF will be downloaded instead.');
+                
+                // Force download as fallback
+                const downloadLink = document.createElement('a');
+                downloadLink.href = pdfUrl;
+                downloadLink.download = 'medical_report.pdf';
+                downloadLink.style.display = 'none';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
+            
+            // Clean up blob URL after 2 minutes
+            setTimeout(() => {
+                URL.revokeObjectURL(pdfUrl);
+            }, 120000);
+            
+        } else {
+            const errorText = await response.text();
+            console.error('Server response:', errorText);
+            alert("Failed to generate report. Please try again.");
+        }
+    } catch (error) {
+        console.error('Error during report generation:', error);
+        alert('An error occurred while generating the report.');
+    }
+
+};
+
+// Function to get CSRF token (essential for Django POST requests in production)
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

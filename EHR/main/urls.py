@@ -85,13 +85,7 @@ urlpatterns = [
     #endpoint for category rendering
     path('api/categories/', get_categories, name='get_categories'),
 
-    #endpoint for reset doctor password 
-
-    path('api/verify-doctor-email/', doctor_request_reset, name='verify-doctor-email'),
-    path('api/reset-doctor-password/', reset_doctor_password, name='reset-doctor-password'),
-
-    path('reset_doctor_password/', TemplateView.as_view(template_name='main/reset_doctor_password.html'), name='reset_doctor_password'),
-
+    path('generate-comprehensive-report/',generate_report, name='generate_report'),
 
 
 
