@@ -30,9 +30,12 @@ async function handleLogin(event) {
 
     const data = await response.json();
     if (response.ok) {
-        localStorage.setItem('access', data.access);
-        localStorage.setItem('refresh', data.refresh);
-        window.location.href = "/user_details/";
+
+        document.getElementById('login-form').style.display = "none"
+        document.getElementById('otp-form').style.display ='flex'
+        document.getElementById("otp-user-id").value = data.user_id; 
+        alert('opt has been sent  kindly check  your email')
+
     } else {
         alert('login failed: ' + JSON.stringify(data));
     }

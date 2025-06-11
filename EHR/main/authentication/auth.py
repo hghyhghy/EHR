@@ -24,8 +24,11 @@ from django.utils.html import strip_tags
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.sessions.models import Session
+from  random import  randint
 
 
+def generate_otp():
+    return  str(randint(100000,999999))
 
 def verify_captcha(captcha_response):
     secret_key = '6LfiRFQrAAAAAGY8mMc55B7GqzvLCeteIuCILhMA'  # From Google reCAPTCHA dashboard
@@ -139,32 +142,47 @@ def login_user(request):
     except User.DoesNotExist:
         return Response({'message': 'Invalid email or password'}, status=status.HTTP_404_NOT_FOUND)
     
-    user = authenticate(username=user.username, password=password)
+    user_auth = authenticate(username=user.username, password=password)
+
+    if not user_auth:
+        return  Response({'message':'Invalid email  or password'},status=status.HTTP_400_BAD_REQUEST)
+
+    otp_code =  generate_otp()
+    EmailOTP.objects.create(user=user,otp = otp_code)
+    send_mail(
+
+        subject="Your OTP for Login",
+        message=f"Your OTP is {otp_code}. It is valid for 5 minutes.",
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[user.email],
+        fail_silently=False
+    )
     
-    if user is not None:
-        # Terminate all existing sessions for this user
-        existing_sessions = UserSession.objects.filter(user=user)
-        for user_session in existing_sessions:
-            try:
-                session = Session.objects.get(session_key=user_session.session_key)
-                session.delete()
-            except Session.DoesNotExist:
-                pass
-            user_session.delete()
+    return  Response({'message':'Otp has been send to your registered mail id  ,please verify  to  complete login ','user_id': user.id},status=status.HTTP_201_CREATED)
+    # if user is not None:
+    #     # Terminate all existing sessions for this user
+    #     existing_sessions = UserSession.objects.filter(user=user)
+    #     for user_session in existing_sessions:
+    #         try:
+    #             session = Session.objects.get(session_key=user_session.session_key)
+    #             session.delete()
+    #         except Session.DoesNotExist:
+    #             pass
+    #         user_session.delete()
             
         
-        # Login the user (creates new session)
-        login(request, user)
+    #     # Login the user (creates new session)
+    #     login(request, user)
         
-        # Track the new session
-        UserSession.objects.create(
-            user=user,
-            session_key=request.session.session_key
-        )
+    #     # Track the new session
+    #     UserSession.objects.create(
+    #         user=user,
+    #         session_key=request.session.session_key
+    #     )
         
-        return Response({'message': 'Login successful (session set)'})
-    else:
-        return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
+    #     return Response({'message': 'Login successful (session set)'})
+    # else:
+    #     return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
 
 @csrf_exempt
 @api_view(['POST'])

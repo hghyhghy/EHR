@@ -7,7 +7,7 @@
     <!-- Left Side: Form -->
     <div style="width: 100%; padding: 40px; display: flex; flex-direction: column; justify-content: center;">
       <h2 style="font-size: 24px; font-weight: bold; color: #e5e7eb; margin-bottom: 24px; text-align: center;">Admin Login</h2>
-      <form id="login-form" method="POST" style="display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto;">
+      <form id="login-form" method="POST" action="javascript:void(0);" style="display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto;">
         {% csrf_token %}
         <div style="display: flex; flex-direction: column; gap: 8px;">
           <label for="email" style="font-size: 14px; font-weight: medium; color: #d1d5db;">Email</label>
@@ -19,12 +19,25 @@
         </div>
         <div class="g-recaptcha" data-sitekey="6LfiRFQrAAAAAEvVlmv8xNpHwWJtKvCTbeTT5h5l"></div>
         <button type="submit" style="width: 100%; padding: 12px; background: #3b82f6; color: #ffffff; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s;">Login</button>
+        
         <button type="button" onclick="window.location.href='/'" style="width: 100%; padding: 12px; background: #4b5563; color: #ffffff; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s;">Back to Home</button>
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 16px;">
           <a href="{% url 'register' %}" style="color: #60a5fa; text-decoration: none; font-size: 14px; transition: text-decoration 0.3s;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">Don't have an account? Register</a>
           <a href="{% url 'reset_password' %}" style="color: #60a5fa; text-decoration: none; font-size: 14px; transition: text-decoration 0.3s;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">Forgot Password?</a>
         </div>
       </form>
+<form id="otp-form" method="POST" action="#" style="display: none; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto; animation: fadeIn 0.8s ease-out;">
+        {% csrf_token %}
+        <input type="hidden" id="otp-user-id" name="user_id">
+        <h2 style="font-size: 24px; font-weight: bold; color: #e5e7eb; margin-bottom: 24px; text-align: center;">Verify OTP</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label for="otp-input" style="font-size: 14px; font-weight: medium; color: #d1d5db;">Enter OTP</label>
+          <input type="text" id="otp-input" name="otp" placeholder="Enter 6-digit OTP" maxlength="6" required style="width: 100%; padding: 10px; border: 1px solid #4b5563; border-radius: 6px; font-size: 14px; outline: none; background: #374151; color: #e5e7eb; transition: border-color 0.3s, box-shadow 0.3s; text-align: center; letter-spacing: 4px;" onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.2);'" onblur="this.style.borderColor='#4b5563'; this.style.boxShadow='none';">
+        </div>
+        <button type="submit" id="verify-btn" style="width: 100%; padding: 12px; background: #3b82f6; color: #ffffff; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s;">Verify OTP</button>
+        <button type="button" onclick="document.getElementById('otp-form').style.display='none'; document.getElementById('login-form').style.display='flex';" style="width: 100%; padding: 12px; background: #4b5563; color: #ffffff; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s;">Back to Login</button>
+      </form>
+      
     </div>
     <!-- Right Side: EHRGenix Text -->
     <div style="width: 100%; padding: 40px; background: #1e3a8a; display: flex; flex-direction: column; align-items: center; justify-content: center; animation: slideInRight 0.8s ease-out;">
@@ -36,10 +49,9 @@
 {% endblock %}
 {% block script %}
 <script src="{% static 'main/login.js' %}"></script>
+<script src="{% static 'main/verify_otp.js' %}"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script>
-  const csrfToken = '{{ csrf_token }}';
-</script>
+
 <style>
   /* Animation Keyframes */
   @keyframes fadeIn {

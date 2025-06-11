@@ -21,6 +21,7 @@ from  main.manage_medicalrecords.medical_records import *
 from  main.appointment_status_handle.status_handle import  *
 from  main.reset_password_doctor.reset_doctor_password import *
 from  main.doctor_email_validation_request.doctor_request import *
+from  main.otp_verification.otp_verification import  *
 
 urlpatterns = [
     # Serve templates at root paths (for frontend display)
@@ -96,6 +97,7 @@ urlpatterns = [
     
 
     path('generate-comprehensive-report/',generate_report, name='generate_report'),
+    path('api/verify-otp/',verify_otp, name='verify_otp'),
 
 
 

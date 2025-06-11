@@ -4,6 +4,8 @@ import  uuid
 from  django.core.exceptions  import  ValidationError
 from django.conf import settings
 import os
+from django.utils import timezone
+from datetime import timedelta
 
 class UserProfile(models.Model):
     GENDER_CHOICES = [
@@ -129,3 +131,11 @@ class UserSession(models.Model):
     
     class Meta:
         unique_together = ('user', 'session_key')
+
+class  EmailOTP(models.Model):
+    user =  models.ForeignKey(User,on_delete=models.CASCADE)
+    otp =  models.CharField(max_length=6)
+    created_at =  models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        return  self.created_at >= timezone.now() -  timedelta(minutes=5)
