@@ -1,4 +1,6 @@
 
+env
+.env
 ehrenv
 ehrvenv/
 main/__pycache__/
