@@ -247,3 +247,16 @@ LOGGING = {
 # EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # For GmailAdd commentMore actions
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ehrad2025@gmail.com'
+EMAIL_HOST_PASSWORD = 'jexn xgek ckus yphy'  # Use app password for Gmail
+DEFAULT_FROM_EMAIL = 'ehrad2025@gmail.com'
+
+#session management
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 86400  # 24 hours
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
