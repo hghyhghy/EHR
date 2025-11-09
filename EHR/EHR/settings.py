@@ -139,42 +139,6 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# DATABASE_URL= 'postgresql://neondb_owner:npg_bpETsi9P0OvD@ep-polished-surf-a59y5fes-pooler.us-east-2.aws.neon.tech/EHR?sslmode=require'
-# tmpPostgres = urlparse(os.getenv(DATABASE_URL))
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': tmpPostgres.path[1:],
-#         'USER': tmpPostgres.username,
-#         'PASSWORD': tmpPostgres.password,
-#         'HOST': tmpPostgres.hostname,
-#         'PORT': 5432,
-#     }
-# }  
-
-# mysql://root:eQoNlGKBBohQUKzjExsEfFRnjildEIgb@yamanote.proxy.rlwy.net:33385/railway
-#mysql://root:@hopper.proxy.rlwy.net:32071/railway
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.efnxobqifzeznmsztpcn',    
-        'PASSWORD': 'instaily2025',
-        'HOST':'aws-0-ap-south-1.pooler.supabase.com',  # or IP/remote host like 'db.example.com'
-        'PORT':'6543',        # default MySQL port
-    }
-}
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'EHR',
-#         'USER': 'root',
-#         'PASSWORD': 'subham0902003@#',
-#         'HOST': 'localhost',   # or IP/remote host like 'db.example.com'
-#         'PORT': '3306',        # default MySQL port
-#     }
-# }
 
 
 CORS_ALLOWED_ORIGINS = [
